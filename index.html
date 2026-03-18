@@ -15,88 +15,90 @@
   background: #ffffff;
   z-index: 800;
   display: flex;
-  flex-direction: column; align-items: center; justify-content: center;
-  gap: 32px;
-  transition: opacity .8s cubic-bezier(.4,0,.2,1), visibility .8s;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  transition: opacity .8s ease, visibility .8s;
 }
 #splash.out { opacity: 0; visibility: hidden; pointer-events: none; }
 
-/* pulsing ring behind bubble */
+/* outer pulse rings */
 .splash-ring {
   position: absolute;
-  width: 340px; height: 340px;
   border-radius: 50%;
-  border: 2px solid rgba(16,118,248,.15);
-  animation: pulseRing 2.2s ease-in-out infinite;
+  border: 2px solid rgba(16,118,248,.12);
   pointer-events: none;
+  animation: pulseRing 2.4s ease-in-out infinite;
 }
-.splash-ring:nth-child(2) { width: 420px; height: 420px; animation-delay: .4s; border-color: rgba(16,118,248,.08); }
+.splash-ring-1 { width: 360px; height: 360px; }
+.splash-ring-2 { width: 450px; height: 450px; animation-delay: .5s; border-color: rgba(16,118,248,.06); }
 @keyframes pulseRing {
   0%,100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.04); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: .4; }
 }
 
-/* bubble circle */
-.splash-bubble {
-  width: 260px; height: 260px;
+/* blue circle bubble */
+#splash-bubble {
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
-  background: var(--blue);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; z-index: 2;
-  opacity: 0;
-  overflow: hidden;
-  animation: bubbleIn .7s cubic-bezier(.34,1.56,.64,1) .2s forwards;
-  box-shadow: 0 24px 64px rgba(16,118,248,.4), 0 4px 20px rgba(16,118,248,.25);
-  cursor: none;
-  flex-shrink: 0;
-}
-@keyframes bubbleIn {
-  from { opacity:0; transform: scale(.6); }
-  to   { opacity:1; transform: scale(1); }
-}
-.splash-logo-text {
+  background: #1076F8;
   display: flex;
   flex-direction: column;
   align-items: center;
-  line-height: .88;
-  gap: 0;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  cursor: none;
+  box-shadow: 0 20px 60px rgba(16,118,248,.4), 0 4px 20px rgba(16,118,248,.2);
+  opacity: 0;
+  animation: bubbleIn .65s cubic-bezier(.34,1.56,.64,1) .25s forwards;
 }
-.splash-logo-text span {
+@keyframes bubbleIn {
+  from { opacity:0; transform:scale(.5); }
+  to   { opacity:1; transform:scale(1); }
+}
+
+/* text logo inside bubble */
+.bubble-text {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  line-height: 1; gap: 0; color: #ffffff;
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 58px;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: #ffffff;
-  display: block;
+  font-weight: 900; text-transform: uppercase;
   text-align: center;
 }
-.splash-logo-text span:first-child { font-size: 44px; letter-spacing: .1em; }
+.bubble-text .b-the  { font-size: 36px; letter-spacing: .12em; }
+.bubble-text .b-crtv { font-size: 58px; letter-spacing: .04em; line-height: .9; }
+.bubble-text .b-hub  { font-size: 58px; letter-spacing: .04em; line-height: .9; }
 
-/* click to enter */
+/* enter button */
 #enter-btn {
   position: relative; z-index: 2;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700; font-size: 14px; letter-spacing: .35em;
-  text-transform: uppercase;
-  color: var(--blue);
   background: none; border: none;
-  cursor: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 14px;
+  letter-spacing: .35em; text-transform: uppercase;
+  color: #1076F8; cursor: none;
   opacity: 0;
-  animation: fadeUp .6s ease .8s forwards;
-  transition: letter-spacing .3s, opacity .2s;
+  animation: fadeUp .6s ease .85s forwards;
+  transition: letter-spacing .3s;
 }
 #enter-btn:hover { letter-spacing: .5em; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
 
 .splash-tag {
   position: relative; z-index: 2;
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700; font-size: 10px; letter-spacing: .45em;
-  text-transform: uppercase;
-  color: rgba(16,118,248,.4);
+  font-weight: 700; font-size: 10px;
+  letter-spacing: .4em; text-transform: uppercase;
+  color: rgba(16,118,248,.35);
   opacity: 0;
   animation: fadeUp .6s ease 1.1s forwards;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:none; }
 }
 
 /* HERO */
@@ -208,8 +210,15 @@
 
 <!-- SPLASH -->
 <div id="splash">
-  <div class="splash-vline"></div>
-  <img class="splash-logo" src="assets/logo-primary-white.png"  alt="CRTV Hub">
+  <div class="splash-ring splash-ring-1"></div>
+  <div class="splash-ring splash-ring-2"></div>
+  <div id="splash-bubble">
+    <div class="bubble-text">
+      <span class="b-the">THE</span>
+      <span class="b-crtv">CRTV</span>
+      <span class="b-hub">HUB</span>
+    </div>
+  </div>
   <button id="enter-btn">CLICK TO ENTER</button>
   <span class="splash-tag">ONLY REBELS RECREATE THE WORLD</span>
 </div>
