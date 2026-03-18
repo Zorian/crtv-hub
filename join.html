@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CRTV HUB — Join</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* BENEFITS */
+#benefits { padding:100px 0; }
+.benefits-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:64px; }
+.benefit-card { background:var(--grey1); padding:48px 32px; border-top:2px solid transparent; transition:border-color .3s; }
+.benefit-card:hover { border-color:var(--lime); }
+.benefit-icon { font-size:36px; margin-bottom:24px; }
+.benefit-title { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:.05em; color:var(--offwhite); margin-bottom:12px; }
+.benefit-body { font-size:14px; line-height:1.9; color:rgba(240,237,232,.55); }
+
+/* FORM SECTION */
+#join-form-section { background:var(--grey1); padding:100px 0; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.form-left { position:sticky; top:100px; }
+.form-left p { font-size:16px; line-height:2; color:rgba(240,237,232,.65); margin-top:24px; margin-bottom:40px; max-width:440px; }
+.join-form { display:flex; flex-direction:column; gap:20px; }
+.form-group { display:flex; flex-direction:column; gap:8px; }
+.form-group label { font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:.3em; color:var(--muted); }
+.form-group input, .form-group select, .form-group textarea {
+  background:var(--grey2); border:1px solid var(--grey3); color:var(--offwhite);
+  font-family:'DM Sans',sans-serif; font-size:15px; padding:16px 20px;
+  outline:none; cursor:none; transition:border-color .2s;
+  appearance:none; -webkit-appearance:none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--lime); }
+.form-group textarea { min-height:120px; resize:vertical; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.form-submit { background:var(--lime); border:none; color:var(--black); font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:.2em; padding:18px 40px; cursor:none; transition:transform .2s,opacity .2s; position:relative; overflow:hidden; }
+.form-submit::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,.3); transform:translateX(-110%) skewX(-15deg); transition:transform .35s; }
+.form-submit:hover::after { transform:translateX(110%) skewX(-15deg); }
+.form-submit:hover { transform:scale(1.02); }
+.form-note { font-size:12px; color:var(--muted); line-height:1.6; }
+
+/* SOCIALS SECTION */
+#socials { padding:100px 0; text-align:center; }
+.social-links { display:flex; gap:2px; justify-content:center; margin-top:56px; flex-wrap:wrap; }
+.social-link {
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+  background:var(--grey1); padding:56px 48px; min-width:200px;
+  border-bottom:2px solid transparent; transition:border-color .3s,background .3s;
+  cursor:none;
+}
+.social-link:hover { border-color:var(--lime); background:var(--grey2); }
+.social-icon { font-size:32px; }
+.social-name { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.1em; color:var(--offwhite); }
+.social-handle { font-size:12px; color:var(--muted); }
+
+@media(max-width:960px){
+  .benefits-grid { grid-template-columns:1fr 1fr; }
+  .form-grid { grid-template-columns:1fr; gap:48px; }
+  .form-left { position:static; }
+  .form-row { grid-template-columns:1fr; }
+  .social-links { flex-direction:column; align-items:stretch; }
+}
+</style>
+</head>
+<body>
+<div id="dot"></div><div id="ring"></div>
+<nav id="nav" class="solid">
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649.png'" alt="CRTV"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li><li><a href="about.html">ABOUT</a></li>
+    <li><a href="events.html">EVENTS</a></li><li><a href="media.html">MEDIA</a></li>
+    <li><a href="join.html" class="nav-cta">JOIN / SIGN UP</a></li>
+  </ul>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+<div id="mob-nav">
+  <a href="index.html">HOME</a><a href="about.html">ABOUT</a>
+  <a href="events.html">EVENTS</a><a href="media.html">MEDIA</a>
+  <a href="join.html">JOIN / SIGN UP</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero" style="padding:140px 0 80px;">
+  <div class="container" style="position:relative;z-index:2;">
+    <span class="eyebrow">Be Part Of It</span>
+    <h1 class="display-title" style="font-size:clamp(72px,10vw,140px);">Join the<br>Movement.</h1>
+    <p class="serif-sub">Create with us. Build with us. Move with us.</p>
+  </div>
+  <div class="page-hero-label">JOIN</div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="container">
+    <div class="rev"><span class="eyebrow">What You Get</span><h2 class="display-title">Why Join?</h2></div>
+    <div class="benefits-grid">
+      <div class="benefit-card rev">
+        <div class="benefit-icon">🎬</div>
+        <div class="benefit-title">Access to Events</div>
+        <div class="benefit-body">Get early access and priority entry to all CRTV Hub events, showcases, and cyphers.</div>
+      </div>
+      <div class="benefit-card rev d1">
+        <div class="benefit-icon">🤝</div>
+        <div class="benefit-title">Community Network</div>
+        <div class="benefit-body">Connect with dancers, filmmakers, musicians, and creatives building the next chapter of culture.</div>
+      </div>
+      <div class="benefit-card rev d2">
+        <div class="benefit-icon">📣</div>
+        <div class="benefit-title">Platform & Spotlight</div>
+        <div class="benefit-body">Opportunities to be featured, showcased, and promoted across CRTV Hub's growing platforms.</div>
+      </div>
+      <div class="benefit-card rev d3">
+        <div class="benefit-icon">🚀</div>
+        <div class="benefit-title">Collaboration Ops</div>
+        <div class="benefit-body">Get matched with projects, brands, and opportunities that fit your creative direction.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap"><div class="ticker-row" data-ticker="CREATE, BUILD, MOVE, GROW, CONNECT, COLLABORATE, PERFORM, SHOWCASE"></div></div>
+
+<!-- FORM -->
+<section id="join-form-section">
+  <div class="container">
+    <div class="form-grid">
+      <div class="form-left rev">
+        <span class="eyebrow">Sign Up</span>
+        <h2 class="display-title">Let's get<br>you in.</h2>
+        <p>Fill in the form and we'll be in touch. Whether you're a dancer, filmmaker, musician, or brand — there's a place for you here.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);"><span style="color:var(--lime);">✓</span> Open to all creatives</div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);"><span style="color:var(--lime);">✓</span> UK-based &amp; global community</div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);"><span style="color:var(--lime);">✓</span> No subscription fee to join</div>
+        </div>
+      </div>
+      <div class="rev d1">
+        <form class="join-form" action="mailto:thecreativehub.hq@gmail.com" method="post" enctype="text/plain">
+          <div class="form-row">
+            <div class="form-group"><label>First Name *</label><input type="text" name="first_name" placeholder="Your first name" required></div>
+            <div class="form-group"><label>Last Name *</label><input type="text" name="last_name" placeholder="Your last name" required></div>
+          </div>
+          <div class="form-group"><label>Email Address *</label><input type="email" name="email" placeholder="your@email.com" required></div>
+          <div class="form-group"><label>Instagram Handle</label><input type="text" name="instagram" placeholder="@yourhandle"></div>
+          <div class="form-group">
+            <label>I Am A... *</label>
+            <select name="role" required>
+              <option value="">Select your creative discipline</option>
+              <option>Dancer / Choreographer</option>
+              <option>Filmmaker / Videographer</option>
+              <option>Musician / Artist</option>
+              <option>Photographer</option>
+              <option>Brand / Company</option>
+              <option>Event Organiser</option>
+              <option>Other Creative</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Tell Us About Yourself</label><textarea name="message" placeholder="What are you working on? What brings you to CRTV Hub?"></textarea></div>
+          <button type="submit" class="form-submit">SUBMIT APPLICATION</button>
+          <p class="form-note">We'll be in touch within 48 hours. By submitting you agree to be added to the CRTV Hub community list.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIALS -->
+<section id="socials">
+  <div class="container">
+    <div class="rev"><span class="eyebrow">Stay Connected</span><h2 class="display-title">Follow Us.</h2></div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/thecrtvhubuk" target="_blank" class="social-link rev">
+        <div class="social-icon">📸</div><div class="social-name">Instagram</div><div class="social-handle">@thecrtvhubuk</div>
+      </a>
+      <a href="http://tiktok.com/@thecreativehubagency" target="_blank" class="social-link rev d1">
+        <div class="social-icon">🎵</div><div class="social-name">TikTok</div><div class="social-handle">@thecreativehubagency</div>
+      </a>
+      <a href="https://www.youtube.com/@thecrtvhub" target="_blank" class="social-link rev d2">
+        <div class="social-icon">▶️</div><div class="social-name">YouTube</div><div class="social-handle">@thecrtvhub</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649-1024x670.png'" alt="CRTV Hub"></div>
+    <div class="ft-col"><h5>PAGES</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="media.html">Media</a></li><li><a href="events.html">Events</a></li></ul></div>
+    <div class="ft-col"><h5>GET INVOLVED</h5><ul><li><a href="join.html">Join / Sign Up</a></li><li><a href="mailto:thecreativehub.hq@gmail.com">Contact Us</a></li></ul></div>
+    <div class="ft-col"><h5>FOLLOW</h5><ul><li><a href="http://tiktok.com/@thecreativehubagency" target="_blank">TikTok</a></li><li><a href="https://www.instagram.com/thecrtvhubuk" target="_blank">Instagram</a></li><li><a href="https://www.youtube.com/@thecrtvhub" target="_blank">YouTube</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="ft-copy">© 2026 The CRTV Hub. All rights reserved.</span><span class="ft-copy">Built by Creatives. Powered by Culture.</span></div>
+</footer>
+<script src="shared.js"></script>
+</body></html>
