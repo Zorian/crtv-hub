@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CRTV HUB — About</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+#nav { background: rgba(6,6,6,.97); border-bottom: 1px solid var(--grey2); }
+.page-hero { padding: 160px 0 100px; border-bottom: 1px solid var(--grey2); position:relative; overflow:hidden; }
+.page-hero-bg { position:absolute; inset:0; background-size:cover; background-position:center; filter:brightness(.15); }
+.page-hero-bg::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.012) 2px,rgba(255,255,255,.012) 4px); }
+.page-hero-label { font-family:'Bebas Neue',sans-serif; font-size:clamp(120px,18vw,220px); line-height:.85; letter-spacing:.02em; text-transform:uppercase; color:rgba(240,237,232,.04); position:absolute; bottom:-20px; right:-10px; pointer-events:none; white-space:nowrap; }
+
+/* STORY */
+#story { padding:130px 0; }
+.story-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:80px; align-items:start; }
+.story-text { position:sticky; top:130px; }
+.story-text p { font-size:17px; line-height:2; color:rgba(240,237,232,.7); margin-top:24px; margin-bottom:24px; max-width:480px; }
+.story-visual { display:flex; flex-direction:column; gap:2px; }
+.story-img { width:100%; aspect-ratio:16/10; object-fit:cover; filter:brightness(.85); transition:filter .4s; }
+.story-img:hover { filter:brightness(1); }
+.story-quote { background:var(--lime); padding:48px 40px; }
+.story-quote blockquote { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(22px,3vw,36px); color:var(--black); line-height:1.4; }
+.story-quote cite { display:block; margin-top:16px; font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:.3em; color:rgba(0,0,0,.5); font-style:normal; }
+
+/* MISSION */
+#mission { background:var(--grey1); padding:130px 0; }
+.mission-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:64px; }
+.mission-card { background:var(--grey2); padding:48px 36px; border-top:2px solid transparent; transition:border-color .3s; }
+.mission-card:hover { border-color:var(--lime); }
+.mission-num { font-family:'Bebas Neue',sans-serif; font-size:72px; color:rgba(216,255,62,.2); line-height:1; margin-bottom:24px; }
+.mission-title { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:.05em; color:var(--offwhite); margin-bottom:16px; }
+.mission-body { font-size:14px; line-height:1.9; color:rgba(240,237,232,.55); }
+
+/* TEAM */
+#team { padding:130px 0; }
+.team-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:64px; }
+.team-card { position:relative; overflow:hidden; aspect-ratio:3/4; }
+.team-card img { width:100%; height:100%; object-fit:cover; filter:grayscale(.6) brightness(.8); transition:filter .4s,transform .5s; }
+.team-card:hover img { filter:grayscale(0) brightness(.9); transform:scale(1.04); }
+.team-info { position:absolute; bottom:0; left:0; right:0; padding:28px 24px; background:linear-gradient(to top,rgba(6,6,6,.92) 0%,transparent 100%); }
+.team-name { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:.05em; color:var(--offwhite); }
+.team-role { font-size:11px; letter-spacing:.25em; text-transform:uppercase; color:var(--lime); margin-top:4px; }
+.team-ph { width:100%; height:100%; object-fit:cover; }
+
+/* PLACEHOLDER team card */
+.team-ph-box { background:var(--grey1); aspect-ratio:3/4; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+.team-ph-box .ph-icon { font-size:40px; opacity:.2; }
+.team-ph-box .ph-lbl { font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:.3em; color:var(--muted); }
+
+/* JOIN CTA */
+#about-cta { background:var(--grey1); padding:130px 0; text-align:center; }
+.about-cta-inner { max-width:640px; margin:0 auto; }
+.about-cta-inner p { font-size:16px; line-height:1.9; color:rgba(240,237,232,.6); margin:24px 0 40px; }
+.btn-row { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+@media(max-width:960px){
+  .story-grid { grid-template-columns:1fr; gap:48px; }
+  .story-text { position:static; }
+  .mission-cols { grid-template-columns:1fr; }
+  .team-grid { grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div id="dot"></div><div id="ring"></div>
+<nav id="nav" class="solid">
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649.png'" alt="CRTV"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li><li><a href="about.html">ABOUT</a></li>
+    <li><a href="events.html">EVENTS</a></li><li><a href="media.html">MEDIA</a></li>
+    <li><a href="join.html" class="nav-cta">JOIN / SIGN UP</a></li>
+  </ul>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+<div id="mob-nav">
+  <a href="index.html">HOME</a><a href="about.html">ABOUT</a>
+  <a href="events.html">EVENTS</a><a href="media.html">MEDIA</a>
+  <a href="join.html">JOIN / SIGN UP</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('assets/about-hero.jpg')"></div>
+  <div class="container" style="position:relative;z-index:2;">
+    <span class="eyebrow">Our Story</span>
+    <h1 class="display-title" style="font-size:clamp(72px,10vw,140px);">Who<br>We Are.</h1>
+    <p class="serif-sub" style="max-width:560px;">A creative media house built from passion, purpose, and an unshakeable belief in the power of culture.</p>
+  </div>
+  <div class="page-hero-label">ABOUT</div>
+</section>
+
+<!-- STORY -->
+<section id="story">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-text rev">
+        <span class="eyebrow">The Story</span>
+        <h2 class="display-title">Where it<br>all began.</h2>
+        <p>THE CRTV HUB was born from a simple belief: that creatives deserve a platform, a community, and a space to be seen. What started as a small collective has grown into a full creative media house.</p>
+        <p>From underground dance cyphers to music video productions for global artists, every project we take on is an act of cultural contribution — not just content creation.</p>
+        <a href="join.html" class="btn-fill" style="margin-top:12px;">JOIN THE MOVEMENT</a>
+      </div>
+      <div class="story-visual rev d1">
+        <img class="story-img" src="assets/about-1.jpg" onerror="this.style.display='none'" alt="CRTV Story">
+        <div class="story-quote">
+          <blockquote>"Built by creatives. Powered by culture. Driven by community."</blockquote>
+          <cite>— THE CRTV HUB</cite>
+        </div>
+        <img class="story-img" src="assets/about-2.jpg" onerror="this.style.display='none'" alt="CRTV Culture">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="container">
+    <div class="rev"><span class="eyebrow">What Drives Us</span><h2 class="display-title">Our Mission.</h2></div>
+    <div class="mission-cols">
+      <div class="mission-card rev">
+        <div class="mission-num">01</div>
+        <div class="mission-title">Create Opportunities</div>
+        <div class="mission-body">We open doors for emerging creatives who deserve to be seen — regardless of where they come from or who they know.</div>
+      </div>
+      <div class="mission-card rev d1">
+        <div class="mission-num">02</div>
+        <div class="mission-title">Spotlight Talent</div>
+        <div class="mission-body">Every artist, dancer, filmmaker and storyteller we work with gets the platform and production quality their talent deserves.</div>
+      </div>
+      <div class="mission-card rev d2">
+        <div class="mission-num">03</div>
+        <div class="mission-title">Build Culture</div>
+        <div class="mission-body">We don't just make content — we build spaces, movements, and communities that shape what culture looks like next.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <div class="rev"><span class="eyebrow">The People</span><h2 class="display-title">The Team.</h2></div>
+    <div class="team-grid">
+      <div class="team-card rev">
+        <div class="team-ph-box"><div class="ph-icon">👤</div><div class="ph-lbl">PHOTO COMING</div></div>
+        <div class="team-info"><div class="team-name">Team Member</div><div class="team-role">Founder / Director</div></div>
+      </div>
+      <div class="team-card rev d1">
+        <div class="team-ph-box"><div class="ph-icon">👤</div><div class="ph-lbl">PHOTO COMING</div></div>
+        <div class="team-info"><div class="team-name">Team Member</div><div class="team-role">Creative Lead</div></div>
+      </div>
+      <div class="team-card rev d2">
+        <div class="team-ph-box"><div class="ph-icon">👤</div><div class="ph-lbl">PHOTO COMING</div></div>
+        <div class="team-info"><div class="team-name">Team Member</div><div class="team-role">Events Director</div></div>
+      </div>
+      <div class="team-card rev d3">
+        <div class="team-ph-box"><div class="ph-icon">👤</div><div class="ph-lbl">PHOTO COMING</div></div>
+        <div class="team-info"><div class="team-name">Team Member</div><div class="team-role">Production</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="about-cta">
+  <div class="about-cta-inner rev">
+    <span class="eyebrow">Get Involved</span>
+    <h2 class="display-title">Ready to<br>create?</h2>
+    <p>Whether you're an artist, brand, or creative looking for a home — there's a place for you here.</p>
+    <div class="btn-row">
+      <a href="join.html" class="btn-fill">JOIN THE COMMUNITY</a>
+      <a href="media.html" class="btn-ghost">SEE OUR WORK</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649-1024x670.png'" alt="CRTV Hub"></div>
+    <div class="ft-col"><h5>PAGES</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="media.html">Media</a></li><li><a href="events.html">Events</a></li></ul></div>
+    <div class="ft-col"><h5>GET INVOLVED</h5><ul><li><a href="join.html">Join / Sign Up</a></li><li><a href="mailto:thecreativehub.hq@gmail.com">Contact Us</a></li></ul></div>
+    <div class="ft-col"><h5>FOLLOW</h5><ul><li><a href="http://tiktok.com/@thecreativehubagency" target="_blank">TikTok</a></li><li><a href="https://www.instagram.com/thecrtvhubuk" target="_blank">Instagram</a></li><li><a href="https://www.youtube.com/@thecrtvhub" target="_blank">YouTube</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="ft-copy">© 2026 The CRTV Hub. All rights reserved.</span><span class="ft-copy">Built by Creatives. Powered by Culture.</span></div>
+</footer>
+<script src="shared.js"></script>
+</body></html>
