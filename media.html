@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CRTV HUB — Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* FILTER BAR */
+#filter-bar { padding:40px 0 0; background:var(--grey1); border-bottom:1px solid var(--grey2); }
+.filter-inner { display:flex; gap:0; overflow-x:auto; scrollbar-width:none; }
+.filter-inner::-webkit-scrollbar { display:none; }
+.filter-btn {
+  font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:.2em;
+  color:var(--muted); background:none; border:none; border-bottom:2px solid transparent;
+  padding:16px 32px; cursor:none; white-space:nowrap; transition:color .2s,border-color .2s;
+}
+.filter-btn:hover { color:var(--offwhite); }
+.filter-btn.active { color:var(--lime); border-bottom-color:var(--lime); }
+
+/* GRID */
+#media-grid { padding:80px 0 130px; }
+.grid-wrap { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+.media-item {
+  position:relative; overflow:hidden; display:block; aspect-ratio:16/10; cursor:none;
+}
+.media-item.featured { grid-column:span 2; aspect-ratio:16/8; }
+.media-item img { width:100%; height:100%; object-fit:cover; filter:brightness(.72); transition:transform .65s,filter .65s; }
+.media-item:hover img { transform:scale(1.06); filter:brightness(.45); }
+.media-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(6,6,6,.88) 0%,transparent 50%); display:flex; flex-direction:column; justify-content:flex-end; padding:28px; }
+.media-cat { font-size:10px; letter-spacing:.35em; text-transform:uppercase; color:var(--lime); margin-bottom:6px; }
+.media-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(18px,2vw,26px); letter-spacing:.04em; color:var(--offwhite); transform:translateY(6px); transition:transform .4s; }
+.media-item:hover .media-title { transform:none; }
+.media-client { font-size:11px; color:rgba(240,237,232,.45); margin-top:4px; }
+.play-btn { position:absolute; top:20px; right:20px; width:48px; height:48px; border-radius:50%; background:var(--lime); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.6); transition:opacity .3s,transform .3s; }
+.play-btn svg { fill:var(--black); margin-left:3px; }
+.media-item:hover .play-btn { opacity:1; transform:scale(1); }
+
+@media(max-width:960px){
+  .grid-wrap { grid-template-columns:1fr; }
+  .media-item.featured { grid-column:span 1; aspect-ratio:16/10; }
+}
+</style>
+</head>
+<body>
+<div id="dot"></div><div id="ring"></div>
+<nav id="nav" class="solid">
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649.png'" alt="CRTV"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li><li><a href="about.html">ABOUT</a></li>
+    <li><a href="events.html">EVENTS</a></li><li><a href="media.html">MEDIA</a></li>
+    <li><a href="join.html" class="nav-cta">JOIN / SIGN UP</a></li>
+  </ul>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+<div id="mob-nav">
+  <a href="index.html">HOME</a><a href="about.html">ABOUT</a>
+  <a href="events.html">EVENTS</a><a href="media.html">MEDIA</a>
+  <a href="join.html">JOIN / SIGN UP</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero" style="padding:140px 0 80px;">
+  <div class="container" style="position:relative;z-index:2;">
+    <span class="eyebrow">Selected Work</span>
+    <h1 class="display-title" style="font-size:clamp(72px,10vw,140px);">Our<br>Projects.</h1>
+    <p class="serif-sub">Music videos, short films, campaigns, and cultural moments.</p>
+  </div>
+  <div class="page-hero-label">MEDIA</div>
+</section>
+
+<!-- FILTER BAR -->
+<div id="filter-bar">
+  <div class="container">
+    <div class="filter-inner">
+      <button class="filter-btn active" data-filter="all">ALL</button>
+      <button class="filter-btn" data-filter="music-video">MUSIC VIDEOS</button>
+      <button class="filter-btn" data-filter="short-film">SHORT FILMS</button>
+      <button class="filter-btn" data-filter="get-to-know">GET TO KNOW ME</button>
+      <button class="filter-btn" data-filter="dance">DANCE</button>
+      <button class="filter-btn" data-filter="campaign">CAMPAIGNS</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEDIA GRID -->
+<section id="media-grid">
+  <div class="container">
+    <div class="grid-wrap" id="grid-wrap">
+
+      <a href="https://www.youtube.com/watch?v=dqJ8oud7l2Q" target="_blank" class="media-item featured rev" data-cat="music-video">
+        <img src="assets/port-1.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/dqJ8oud7l2Q-HD.jpg'" alt="Biig Piig">
+        <div class="media-overlay"><div class="media-cat">Music Video</div><div class="media-title">Biig Piig — Feels Right</div><div class="media-client">Client: Biig Piig</div></div>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=jHlGiSYxJC0" target="_blank" class="media-item rev" data-cat="campaign">
+        <img src="assets/port-nike.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/maxresdefault.webp'" alt="Nike">
+        <div class="media-overlay"><div class="media-cat">Campaign</div><div class="media-title">Lose Count — Stronger Than One</div><div class="media-client">Client: Nike</div></div>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="media-item rev d1" data-cat="music-video">
+        <img src="assets/port-2.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/channels4_banner.jpg'" alt="JBEE">
+        <div class="media-overlay"><div class="media-cat">Music Video</div><div class="media-title">JBEE — 24'S</div><div class="media-client">Client: JBEE</div></div>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=HST5VJs8qC4" target="_blank" class="media-item rev" data-cat="short-film">
+        <img src="assets/port-3.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/398143622_6735031366575353_3516649951948309757_n-e1773412953687.jpg'" alt="Upsycle">
+        <div class="media-overlay"><div class="media-cat">Short Film</div><div class="media-title">UPSYCLE HYPEWEAR Vol.1</div><div class="media-client">Client: Upsycle Hypewear</div></div>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=KV8XAK4Fn6A" target="_blank" class="media-item rev d1" data-cat="get-to-know">
+        <img src="assets/port-louis.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/nsGbD-q9NIk-HD.jpg'" alt="Louis">
+        <div class="media-overlay"><div class="media-cat">Get To Know Me</div><div class="media-title">Louis Lasa Tarbuck</div><div class="media-client">Series</div></div>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      </a>
+
+      <a href="https://youtu.be/xyVyj0M_llY" target="_blank" class="media-item rev d2" data-cat="get-to-know">
+        <img src="assets/port-nok.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/5P87JlJQ8-M-HD.jpg'" alt="Nokuthulah">
+        <div class="media-overlay"><div class="media-cat">Get To Know Me</div><div class="media-title">Nokuthulah H</div><div class="media-client">Series</div></div>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=sPs63uGzWuI" target="_blank" class="media-item rev" data-cat="get-to-know">
+        <img src="assets/port-james.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/HST5VJs8qC4-HQ-1.jpg'" alt="James">
+        <div class="media-overlay"><div class="media-cat">Get To Know Me</div><div class="media-title">James Olusegun</div><div class="media-client">Series</div></div>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=zy-ooB1l5QE" target="_blank" class="media-item featured rev d1" data-cat="dance">
+        <img src="assets/port-dance.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/HST5VJs8qC4-HQ-1.jpg'" alt="Dance">
+        <div class="media-overlay"><div class="media-cat">Dance</div><div class="media-title">New Gen Entertainment — Dance Your Style Cypher</div><div class="media-client">New Gen Entertainment</div></div>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649-1024x670.png'" alt="CRTV Hub"></div>
+    <div class="ft-col"><h5>PAGES</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="media.html">Media</a></li><li><a href="events.html">Events</a></li></ul></div>
+    <div class="ft-col"><h5>GET INVOLVED</h5><ul><li><a href="join.html">Join / Sign Up</a></li><li><a href="mailto:thecreativehub.hq@gmail.com">Contact Us</a></li></ul></div>
+    <div class="ft-col"><h5>FOLLOW</h5><ul><li><a href="http://tiktok.com/@thecreativehubagency" target="_blank">TikTok</a></li><li><a href="https://www.instagram.com/thecrtvhubuk" target="_blank">Instagram</a></li><li><a href="https://www.youtube.com/@thecrtvhub" target="_blank">YouTube</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="ft-copy">© 2026 The CRTV Hub. All rights reserved.</span><span class="ft-copy">Built by Creatives. Powered by Culture.</span></div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+/* Filter logic */
+const btns = document.querySelectorAll('.filter-btn');
+const items = document.querySelectorAll('.media-item');
+btns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    btns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    items.forEach(item => {
+      const show = f==='all' || item.dataset.cat===f;
+      item.style.display = show ? 'block' : 'none';
+    });
+  });
+});
+</script>
+</body></html>
