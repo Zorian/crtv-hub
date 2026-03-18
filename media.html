@@ -4,52 +4,157 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE CRTV HUB — Media</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-/* FILTER BAR */
-#filter-bar { padding:40px 0 0; background:var(--grey1); border-bottom:1px solid var(--grey2); }
-.filter-inner { display:flex; gap:0; overflow-x:auto; scrollbar-width:none; }
-.filter-inner::-webkit-scrollbar { display:none; }
+/* ── FILTER BAR ── */
+#filter-bar { background: var(--grey1); border-bottom: 1px solid rgba(16,118,248,.15); padding: 0; }
+.filter-inner { display: flex; overflow-x: auto; scrollbar-width: none; max-width: 1380px; margin: 0 auto; padding: 0 52px; }
+.filter-inner::-webkit-scrollbar { display: none; }
 .filter-btn {
-  font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:.2em;
-  color:var(--muted); background:none; border:none; border-bottom:2px solid transparent;
-  padding:16px 32px; cursor:none; white-space:nowrap; transition:color .2s,border-color .2s;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--muted); background: none; border: none;
+  border-bottom: 2px solid transparent;
+  padding: 18px 28px; cursor: none; white-space: nowrap;
+  transition: color .2s, border-color .2s;
 }
-.filter-btn:hover { color:var(--offwhite); }
-.filter-btn.active { color:var(--lime); border-bottom-color:var(--lime); }
+.filter-btn:hover { color: var(--white); }
+.filter-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
 
-/* GRID */
-#media-grid { padding:80px 0 130px; }
-.grid-wrap { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
-.media-item {
-  position:relative; overflow:hidden; display:block; aspect-ratio:16/10; cursor:none;
+/* ── GRID ── */
+#media-section { padding: 80px 0 130px; }
+.media-grid {
+  column-count: 3;
+  column-gap: 4px;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 52px;
 }
-.media-item.featured { grid-column:span 2; aspect-ratio:16/8; }
-.media-item img { width:100%; height:100%; object-fit:cover; filter:brightness(.72); transition:transform .65s,filter .65s; }
-.media-item:hover img { transform:scale(1.06); filter:brightness(.45); }
-.media-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(6,6,6,.88) 0%,transparent 50%); display:flex; flex-direction:column; justify-content:flex-end; padding:28px; }
-.media-cat { font-size:10px; letter-spacing:.35em; text-transform:uppercase; color:var(--lime); margin-bottom:6px; }
-.media-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(18px,2vw,26px); letter-spacing:.04em; color:var(--offwhite); transform:translateY(6px); transition:transform .4s; }
-.media-item:hover .media-title { transform:none; }
-.media-client { font-size:11px; color:rgba(240,237,232,.45); margin-top:4px; }
-.play-btn { position:absolute; top:20px; right:20px; width:48px; height:48px; border-radius:50%; background:var(--lime); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.6); transition:opacity .3s,transform .3s; }
-.play-btn svg { fill:var(--black); margin-left:3px; }
-.media-item:hover .play-btn { opacity:1; transform:scale(1); }
+.media-card {
+  break-inside: avoid;
+  margin-bottom: 4px;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  cursor: none;
+}
+.media-card img {
+  width: 100%;
+  display: block;
+  filter: brightness(.85);
+  transition: transform .55s cubic-bezier(.25,.46,.45,.94), filter .55s ease;
+}
+.media-card:hover img { transform: scale(1.04); filter: brightness(.55); }
+.media-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,17,56,.9) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.media-card:hover .media-card-overlay { opacity: 1; }
+.media-card-cat {
+  font-size: 9px; letter-spacing: .4em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 4px;
+}
+.media-card-title {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: clamp(16px, 1.8vw, 22px); letter-spacing: .04em;
+  text-transform: uppercase; color: var(--white); line-height: 1.1;
+}
+/* zoom icon */
+.media-card-icon {
+  position: absolute; top: 16px; right: 16px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: scale(.5);
+  transition: opacity .3s, transform .3s;
+  font-size: 16px;
+}
+.media-card:hover .media-card-icon { opacity: 1; transform: scale(1); }
+
+/* ── LIGHTBOX ── */
+#lightbox {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,11,38,.97);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 40px;
+  backdrop-filter: blur(8px);
+}
+#lightbox.open { display: flex; }
+.lb-inner {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  animation: lbIn .3s ease;
+}
+@keyframes lbIn { from { opacity: 0; transform: scale(.95); } to { opacity: 1; transform: scale(1); } }
+#lb-img {
+  width: 100%;
+  max-height: 82vh;
+  object-fit: contain;
+  display: block;
+}
+.lb-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0 0;
+}
+.lb-info { display: flex; flex-direction: column; gap: 4px; }
+.lb-cat { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--blue); }
+.lb-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: .05em; text-transform: uppercase; color: var(--white); }
+.lb-close {
+  position: absolute; top: -48px; right: 0;
+  background: none; border: none; color: var(--white);
+  font-size: 28px; cursor: none;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(255,255,255,.2);
+  transition: border-color .2s, color .2s;
+}
+.lb-close:hover { border-color: var(--blue); color: var(--blue); }
+.lb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  display: flex; gap: 0;
+}
+.lb-nav-btn {
+  background: rgba(0,17,56,.8);
+  border: 1.5px solid rgba(16,118,248,.3);
+  color: var(--white); font-size: 20px; cursor: none;
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s;
+}
+.lb-nav-btn:hover { background: var(--blue); border-color: var(--blue); }
+#lb-prev { left: -70px; position: absolute; }
+#lb-next { right: -70px; position: absolute; }
+.lb-counter { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .2em; color: var(--muted); }
 
 @media(max-width:960px){
-  .grid-wrap { grid-template-columns:1fr; }
-  .media-item.featured { grid-column:span 1; aspect-ratio:16/10; }
+  .media-grid { column-count: 2; padding: 0 24px; }
+  .filter-inner { padding: 0 24px; }
+  #lb-prev, #lb-next { display: none; }
+  #lightbox { padding: 20px; }
+}
+@media(max-width:600px){
+  .media-grid { column-count: 1; }
 }
 </style>
 </head>
 <body>
 <div id="dot"></div><div id="ring"></div>
+
+<!-- NAV -->
 <nav id="nav" class="solid">
-  <a class="nav-logo" href="index.html"><img src="assets/logo-primary-white.png"  alt="CRTV"></a>
+  <a class="nav-logo" href="index.html"><img src="assets/logo-primary-white.png" alt="CRTV"></a>
   <ul class="nav-links">
-    <li><a href="index.html">HOME</a></li><li><a href="about.html">ABOUT</a></li>
-    <li><a href="events.html">EVENTS</a></li><li><a href="media.html">MEDIA</a></li>
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="events.html">EVENTS</a></li>
+    <li><a href="media.html" class="active">MEDIA</a></li>
     <li><a href="join.html" class="nav-cta">JOIN / SIGN UP</a></li>
   </ul>
   <div class="burger" id="burger"><span></span><span></span><span></span></div>
@@ -65,86 +170,184 @@
   <div class="container" style="position:relative;z-index:2;">
     <span class="eyebrow">Selected Work</span>
     <h1 class="display-title" style="font-size:clamp(72px,10vw,140px);">Our<br>Projects.</h1>
-    <p class="serif-sub">Music videos, short films, campaigns, and cultural moments.</p>
+    <p class="serif-sub">Film. Events. Culture. Captured.</p>
   </div>
   <div class="page-hero-label">MEDIA</div>
 </section>
 
 <!-- FILTER BAR -->
 <div id="filter-bar">
-  <div class="container">
-    <div class="filter-inner">
-      <button class="filter-btn active" data-filter="all">ALL</button>
-      <button class="filter-btn" data-filter="music-video">MUSIC VIDEOS</button>
-      <button class="filter-btn" data-filter="short-film">SHORT FILMS</button>
-      <button class="filter-btn" data-filter="get-to-know">GET TO KNOW ME</button>
-      <button class="filter-btn" data-filter="dance">DANCE</button>
-      <button class="filter-btn" data-filter="campaign">CAMPAIGNS</button>
-    </div>
+  <div class="filter-inner">
+    <button class="filter-btn active" data-filter="all">ALL</button>
+    <button class="filter-btn" data-filter="film">FILM & PRODUCTION</button>
+    <button class="filter-btn" data-filter="bts">BEHIND THE SCENES</button>
+    <button class="filter-btn" data-filter="show">THE CRTV SHOW</button>
+    <button class="filter-btn" data-filter="creative">CREATIVE</button>
   </div>
 </div>
 
 <!-- MEDIA GRID -->
-<section id="media-grid">
-  <div class="container">
-    <div class="grid-wrap" id="grid-wrap">
+<section id="media-section">
+  <div class="media-grid" id="media-grid">
 
-      <a href="https://www.youtube.com/watch?v=dqJ8oud7l2Q" target="_blank" class="media-item featured rev" data-cat="music-video">
-        <img src="assets/port-1.jpg" alt="Biig Piig">
-        <div class="media-overlay"><div class="media-cat">Music Video</div><div class="media-title">Biig Piig — Feels Right</div><div class="media-client">Client: Biig Piig</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-
-      <a href="https://www.youtube.com/watch?v=jHlGiSYxJC0" target="_blank" class="media-item rev" data-cat="campaign">
-        <img src="assets/port-nike.jpg" alt="Nike">
-        <div class="media-overlay"><div class="media-cat">Campaign</div><div class="media-title">Lose Count — Stronger Than One</div><div class="media-client">Client: Nike</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-
-      <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="media-item rev d1" data-cat="music-video">
-        <img src="assets/port-2.jpg" alt="JBEE">
-        <div class="media-overlay"><div class="media-cat">Music Video</div><div class="media-title">JBEE — 24'S</div><div class="media-client">Client: JBEE</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-
-      <a href="https://www.youtube.com/watch?v=HST5VJs8qC4" target="_blank" class="media-item rev" data-cat="short-film">
-        <img src="assets/port-3.jpg" alt="Upsycle">
-        <div class="media-overlay"><div class="media-cat">Short Film</div><div class="media-title">UPSYCLE HYPEWEAR Vol.1</div><div class="media-client">Client: Upsycle Hypewear</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-
-      <a href="https://www.youtube.com/watch?v=KV8XAK4Fn6A" target="_blank" class="media-item rev d1" data-cat="get-to-know">
-        <img src="assets/port-louis.jpg" alt="Louis">
-        <div class="media-overlay"><div class="media-cat">Get To Know Me</div><div class="media-title">Louis Lasa Tarbuck</div><div class="media-client">Series</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-
-      <a href="https://youtu.be/xyVyj0M_llY" target="_blank" class="media-item rev d2" data-cat="get-to-know">
-        <img src="assets/port-nok.jpg" alt="Nokuthulah">
-        <div class="media-overlay"><div class="media-cat">Get To Know Me</div><div class="media-title">Nokuthulah H</div><div class="media-client">Series</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-
-      <a href="https://www.youtube.com/watch?v=sPs63uGzWuI" target="_blank" class="media-item rev" data-cat="get-to-know">
-        <img src="assets/port-james.jpg" alt="James">
-        <div class="media-overlay"><div class="media-cat">Get To Know Me</div><div class="media-title">James Olusegun</div><div class="media-client">Series</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-
-      <a href="https://www.youtube.com/watch?v=zy-ooB1l5QE" target="_blank" class="media-item featured rev d1" data-cat="dance">
-        <img src="assets/port-dance.jpg" alt="Dance">
-        <div class="media-overlay"><div class="media-cat">Dance</div><div class="media-title">New Gen Entertainment — Dance Your Style Cypher</div><div class="media-client">New Gen Entertainment</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-
+    <!-- FILM & PRODUCTION -->
+    <div class="media-card" data-cat="film" data-title="Cinematic Production" data-src="assets/film-candle.jpg">
+      <img src="assets/film-candle.jpg" alt="Cinematic candle scene" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Film</div><div class="media-card-title">Cinematic Production</div></div>
+      <div class="media-card-icon">⤢</div>
     </div>
+
+    <div class="media-card" data-cat="bts" data-title="On Location — London" data-src="assets/bts-london.jpg">
+      <img src="assets/bts-london.jpg" alt="London BTS" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Behind The Scenes</div><div class="media-card-title">On Location — London</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="show" data-title="The CRTV Show — Studio Set" data-src="assets/show-final.jpg">
+      <img src="assets/show-final.jpg" alt="CRTV Show" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">The CRTV Show</div><div class="media-card-title">The CRTV Show — Studio Set</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="film" data-title="Studio Lighting Setup" data-src="assets/film-light.jpg">
+      <img src="assets/film-light.jpg" alt="Film lighting" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Film</div><div class="media-card-title">Studio Lighting Setup</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="show" data-title="The CRTV Show — Live Recording" data-src="assets/show-studio.jpg">
+      <img src="assets/show-studio.jpg" alt="CRTV Show recording" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">The CRTV Show</div><div class="media-card-title">Live Recording</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="creative" data-title="The CRTV HUB — Newspaper Set" data-src="assets/news-set.jpg">
+      <img src="assets/news-set.jpg" alt="Newspaper set" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Creative</div><div class="media-card-title">The CRTV HUB Newspaper Set</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="film" data-title="Street Filming — London" data-src="assets/film-street2.jpg">
+      <img src="assets/film-street2.jpg" alt="Street filming" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Film</div><div class="media-card-title">Street Filming — London</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="show" data-title="The CRTV Show — Guests" data-src="assets/show-guests.jpg">
+      <img src="assets/show-guests.jpg" alt="Show guests" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">The CRTV Show</div><div class="media-card-title">The CRTV Show — Guests</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="film" data-title="Directing On Set" data-src="assets/film-directing.jpg">
+      <img src="assets/film-directing.jpg" alt="Directing" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Film</div><div class="media-card-title">Directing On Set</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="creative" data-title="Set Design — Pattern Cutting" data-src="assets/creative-work.jpg">
+      <img src="assets/creative-work.jpg" alt="Creative work" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Creative</div><div class="media-card-title">Set Design — Pattern Cutting</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="show" data-title="The CRTV Show — Multi-Cam" data-src="assets/show-monitor.jpg">
+      <img src="assets/show-monitor.jpg" alt="Show monitor" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">The CRTV Show</div><div class="media-card-title">Multi-Camera Recording</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="bts" data-title="Sound Design — Boom Op" data-src="assets/show-bw.jpg">
+      <img src="assets/show-b&w.jpg" alt="Boom operator" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Behind The Scenes</div><div class="media-card-title">Sound Design</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="creative" data-title="Get To Know Me — Interview Set" data-src="assets/interview-chair.jpg">
+      <img src="assets/interview-chair.jpg" alt="Interview set" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Creative</div><div class="media-card-title">Get To Know Me — Interview Set</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="film" data-title="Camera Monitor — On Set" data-src="assets/film-monitor.jpg">
+      <img src="assets/film-monitor.jpg" alt="Film monitor" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Film</div><div class="media-card-title">Camera Monitor — On Set</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="show" data-title="The CRTV Show — Full Crew" data-src="assets/show-recording.jpg">
+      <img src="assets/show-recording.jpg" alt="Show crew" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">The CRTV Show</div><div class="media-card-title">Full Crew Recording</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="show" data-title="The CRTV Show — Setup" data-src="assets/show-setup.jpg">
+      <img src="assets/show-setup.jpg" alt="Show setup" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">The CRTV Show</div><div class="media-card-title">Studio Setup</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <!-- Previous batch -->
+    <div class="media-card" data-cat="bts" data-title="Production Crew — Upsycle" data-src="assets/hero-1.jpg">
+      <img src="assets/hero-1.jpg" alt="Production" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Behind The Scenes</div><div class="media-card-title">Production Crew — Upsycle</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="film" data-title="Warehouse Production" data-src="assets/hero-4.jpg">
+      <img src="assets/hero-4.jpg" alt="Warehouse shoot" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Film</div><div class="media-card-title">Warehouse Production</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="bts" data-title="ARRI Camera — Street" data-src="assets/port-3.jpg">
+      <img src="assets/port-3.jpg" alt="ARRI street" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Behind The Scenes</div><div class="media-card-title">ARRI Camera — On Location</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="creative" data-title="Green Outfit Campaign" data-src="assets/hero-3.jpg">
+      <img src="assets/hero-3.jpg" alt="Campaign" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Creative</div><div class="media-card-title">Upsycle — Campaign Shoot</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="bts" data-title="Director + DP — London Streets" data-src="assets/port-1.jpg">
+      <img src="assets/port-1.jpg" alt="Director and DP" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Behind The Scenes</div><div class="media-card-title">Director + DP — London</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
+    <div class="media-card" data-cat="bts" data-title="Purple Studio — Podcast Recording" data-src="assets/about-2.jpg">
+      <img src="assets/about-2.jpg" alt="Purple studio" loading="lazy">
+      <div class="media-card-overlay"><div class="media-card-cat">Behind The Scenes</div><div class="media-card-title">Purple Studio — Podcast</div></div>
+      <div class="media-card-icon">⤢</div>
+    </div>
+
   </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <div class="lb-inner">
+    <button class="lb-close" id="lb-close">✕</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lb-nav-btn" id="lb-prev">←</button>
+    <button class="lb-nav-btn" id="lb-next">→</button>
+    <div class="lb-meta">
+      <div class="lb-info">
+        <div class="lb-cat" id="lb-cat"></div>
+        <div class="lb-title" id="lb-title"></div>
+      </div>
+      <div class="lb-counter" id="lb-counter"></div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo"><img src="assets/logo-primary-white.png"  alt="CRTV Hub"></div>
+    <div class="footer-logo"><img src="assets/logo-primary-white.png" alt="CRTV Hub"></div>
     <div class="ft-col"><h5>PAGES</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="media.html">Media</a></li><li><a href="events.html">Events</a></li></ul></div>
     <div class="ft-col"><h5>GET INVOLVED</h5><ul><li><a href="join.html">Join / Sign Up</a></li><li><a href="mailto:thecreativehub.hq@gmail.com">Contact Us</a></li></ul></div>
     <div class="ft-col"><h5>FOLLOW</h5><ul><li><a href="http://tiktok.com/@thecreativehubagency" target="_blank">TikTok</a></li><li><a href="https://www.instagram.com/thecrtvhubuk" target="_blank">Instagram</a></li><li><a href="https://www.youtube.com/@thecrtvhub" target="_blank">YouTube</a></li></ul></div>
@@ -154,19 +357,68 @@
 
 <script src="shared.js"></script>
 <script>
-/* Filter logic */
-const btns = document.querySelectorAll('.filter-btn');
-const items = document.querySelectorAll('.media-item');
-btns.forEach(btn => {
+/* ── FILTER ── */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const cards = Array.from(document.querySelectorAll('.media-card'));
+
+filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    btns.forEach(b=>b.classList.remove('active'));
+    filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const f = btn.dataset.filter;
-    items.forEach(item => {
-      const show = f==='all' || item.dataset.cat===f;
-      item.style.display = show ? 'block' : 'none';
+    cards.forEach(c => {
+      c.style.display = (f === 'all' || c.dataset.cat === f) ? 'block' : 'none';
     });
   });
 });
+
+/* ── LIGHTBOX ── */
+const lb     = document.getElementById('lightbox');
+const lbImg  = document.getElementById('lb-img');
+const lbCat  = document.getElementById('lb-cat');
+const lbTit  = document.getElementById('lb-title');
+const lbCnt  = document.getElementById('lb-counter');
+let visibleCards = cards;
+let lbIndex = 0;
+
+function openLB(card) {
+  // Get currently visible cards
+  visibleCards = cards.filter(c => c.style.display !== 'none');
+  lbIndex = visibleCards.indexOf(card);
+  showLB();
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function showLB() {
+  const c = visibleCards[lbIndex];
+  lbImg.src = c.dataset.src;
+  lbCat.textContent = c.querySelector('.media-card-cat').textContent;
+  lbTit.textContent = c.dataset.title;
+  lbCnt.textContent = (lbIndex + 1) + ' / ' + visibleCards.length;
+}
+
+function closeLB() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+  lbImg.src = '';
+}
+
+cards.forEach(card => {
+  card.addEventListener('click', () => openLB(card));
+});
+
+document.getElementById('lb-close').addEventListener('click', closeLB);
+document.getElementById('lb-prev').addEventListener('click', () => { lbIndex = (lbIndex - 1 + visibleCards.length) % visibleCards.length; showLB(); });
+document.getElementById('lb-next').addEventListener('click', () => { lbIndex = (lbIndex + 1) % visibleCards.length; showLB(); });
+
+lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLB();
+  if (e.key === 'ArrowLeft') { lbIndex = (lbIndex - 1 + visibleCards.length) % visibleCards.length; showLB(); }
+  if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % visibleCards.length; showLB(); }
+});
 </script>
-</body></html>
+</body>
+</html>
