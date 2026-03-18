@@ -98,6 +98,7 @@
   max-height: 82vh;
   object-fit: contain;
   display: block;
+  transition: opacity .25s ease;
 }
 .lb-meta {
   display: flex; align-items: center; justify-content: space-between;
@@ -390,9 +391,61 @@ function openLB(card) {
   document.body.style.overflow = 'hidden';
 }
 
+
+/* ── HD Drive URL map ── */
+const HD_URLS = {
+  "hero-1.jpg": "https://drive.google.com/uc?export=view&id=1LXXESURh7wGL5gZrVOWXe8jVGYW014ro",
+  "hero-2.jpg": "https://drive.google.com/uc?export=view&id=1-NoFTvzchyQJwTrO6E9MoLTxvtyeClHl",
+  "hero-3.jpg": "https://drive.google.com/uc?export=view&id=1s7LKjBzZj_j7NbM_l9J2w7Vi8cYZPraE",
+  "hero-4.jpg": "https://drive.google.com/uc?export=view&id=1IX1HkNFVV3xL7wSrd7SBFF5icSbOt5ya",
+  "hero-5.jpg": "https://drive.google.com/uc?export=view&id=1DqaZgbCGYuedKblr4Pad66laBbAcmYpT",
+  "about-1.jpg": "https://drive.google.com/uc?export=view&id=1vW0B42JxHzuZKjEaGEQSIOmN1rs67Yus",
+  "about-2.jpg": "https://drive.google.com/uc?export=view&id=17s0fcJHc1ergA9zOZSqEnL-Pgr2QuJ3s",
+  "about-3.jpg": "https://drive.google.com/uc?export=view&id=1_QHGouwgmaPp6pZ2Kqx3u1H_pHz3-_hv",
+  "about-4.jpg": "https://drive.google.com/uc?export=view&id=1RUtOpCzzQ1m4Z2sNwNtevIa3AsH3d7Gi",
+  "port-1.jpg": "https://drive.google.com/uc?export=view&id=1wB7MqkG_2WT5up3Ihx-Fd-xID1G7WK1f",
+  "port-2.jpg": "https://drive.google.com/uc?export=view&id=10TFfDHWg2IVdBJb3gp0LTptq_ORLtgfs",
+  "port-3.jpg": "https://drive.google.com/uc?export=view&id=1Fu8H4uTFuUmLkWBKuho45CpNv8m9V88g",
+  "port-4.jpg": "https://drive.google.com/uc?export=view&id=1xk5VTdtZ5POVZgpQOFhskFJIK1qHPnOj",
+  "port-5.jpg": "https://drive.google.com/uc?export=view&id=1bjUVoTiFXQpLeKGdfNWbWtAoWkybB3bE",
+  "event-1.jpg": "https://drive.google.com/uc?export=view&id=1UU2MMjMPakRuAwleWh6b80cjJrYkXOcr",
+  "event-2.jpg": "https://drive.google.com/uc?export=view&id=1PzapCqzm-MPNsPzZZwbE0AFR1tq0Wg-Z",
+  "event-3.jpg": "https://drive.google.com/uc?export=view&id=1ffWui1bbdZGvR-aVXmgzdebjiEVXlVak",
+  "bts-1.jpg": "https://drive.google.com/uc?export=view&id=1o7Xe-iyisG_E58_-COFoGYEJyiJUMyG8",
+  "bts-london.jpg": "https://drive.google.com/uc?export=view&id=1qMWxBITe1jdsAwDPDlRHCN1zhQ_LRr1Y",
+  "film-candle.jpg": "https://drive.google.com/uc?export=view&id=1V_vI2E2pVKuaZneup4wcR54Xxw8Qu-C6",
+  "film-light.jpg": "https://drive.google.com/uc?export=view&id=1etTrtBmMlYa7xrZv487WXb008ceBHQmk",
+  "film-street2.jpg": "https://drive.google.com/uc?export=view&id=1wB7MqkG_2WT5up3Ihx-Fd-xID1G7WK1f",
+  "film-monitor.jpg": "https://drive.google.com/uc?export=view&id=1kZYnBWaqATSuv8DoaIN0M5nbRzJy0hSr",
+  "film-directing.jpg": "https://drive.google.com/uc?export=view&id=1fcZw1snpI9kDIPdaot2ufasrtBu24zST",
+  "show-set.jpg": "https://drive.google.com/uc?export=view&id=12sTNas9HEr15ShEfLK8uMbvxXhrLb-9o",
+  "show-studio.jpg": "https://drive.google.com/uc?export=view&id=1ch_qFAL0wRxJ0wMwTJEZx-7gMcim0cP3",
+  "show-guests.jpg": "https://drive.google.com/uc?export=view&id=19xESHIybdBsfaoWkIh7DSLUF4j7jnbJR",
+  "show-bw.jpg": "https://drive.google.com/uc?export=view&id=1TJzWkBKe5ssHwVRdS06I08W06gR9iVhM",
+  "show-monitor.jpg": "https://drive.google.com/uc?export=view&id=1HKuimfadW7KuIPVH-bmbQsGmxg-87rHq",
+  "interview-chair.jpg": "https://drive.google.com/uc?export=view&id=1_QHGouwgmaPp6pZ2Kqx3u1H_pHz3-_hv",
+  "show-recording.jpg": "https://drive.google.com/uc?export=view&id=1NbYp8x3Fm4Sia00aT7ML3AOH24XDlx5O",
+  "news-set.jpg": "https://drive.google.com/uc?export=view&id=1Sy5lGGOwrbYt1mDIA-Qdnur3nen--Fqc",
+  "show-final.jpg": "https://drive.google.com/uc?export=view&id=1gF9E48yB3lGHwdE86xl830TZp8bS8YMS",
+  "show-setup.jpg": "https://drive.google.com/uc?export=view&id=14QizhZfKOwN5ZKmbF9qd1TaYn9yAnRln",
+  "creative-work.jpg": "https://drive.google.com/uc?export=view&id=1Sy5lGGOwrbYt1mDIA-Qdnur3nen--Fqc",
+};
+
+function getHdUrl(assetPath) {
+  const fname = assetPath.replace('assets/', '');
+  return HD_URLS[fname] || assetPath;
+}
 function showLB() {
   const c = visibleCards[lbIndex];
-  lbImg.src = c.dataset.src;
+  // Show thumbnail immediately, swap to HD from Drive
+  const thumb = c.dataset.src;
+  const hdUrl = getHdUrl(thumb);
+  lbImg.src = thumb; // show fast first
+  lbImg.style.opacity = '0.6';
+  const tmp = new Image();
+  tmp.onload = () => { lbImg.src = hdUrl; lbImg.style.opacity = '1'; };
+  tmp.onerror = () => { lbImg.src = thumb; lbImg.style.opacity = '1'; };
+  tmp.src = hdUrl;
   lbCat.textContent = c.querySelector('.media-card-cat').textContent;
   lbTit.textContent = c.dataset.title;
   lbCnt.textContent = (lbIndex + 1) + ' / ' + visibleCards.length;
