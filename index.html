@@ -1,696 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE CRTV HUB — Only Rebels Recreate The World</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CRTV HUB — Home</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
 <style>
-/* ─── RESET & TOKENS ─────────────────────────────────── */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-:root {
-  --black:   #060606;
-  --offwhite:#f0ede8;
-  --lime:    #d8ff3e;
-  --grey1:   #111111;
-  --grey2:   #1c1c1c;
-  --grey3:   #2e2e2e;
-  --muted:   #666;
-}
-body {
-  background: var(--black);
-  color: var(--offwhite);
-  font-family: 'DM Sans', sans-serif;
-  overflow-x: hidden;
-  cursor: none;
-}
-a { text-decoration: none; color: inherit; }
-img { display: block; max-width: 100%; }
+/* ── HOME SPECIFIC ── */
 
-/* ─── CUSTOM CURSOR ──────────────────────────────────── */
-#dot {
-  width: 7px; height: 7px;
-  background: var(--lime);
-  border-radius: 50%;
-  position: fixed; top: 0; left: 0;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-50%,-50%);
-}
-#ring {
-  width: 38px; height: 38px;
-  border: 1.5px solid rgba(216,255,62,.45);
-  border-radius: 50%;
-  position: fixed; top: 0; left: 0;
-  pointer-events: none; z-index: 9998;
-  transform: translate(-50%,-50%);
-  transition: width .25s ease, height .25s ease, border-color .25s;
-}
-body.hovering #ring { width: 60px; height: 60px; border-color: var(--lime); }
-
-/* ─── SPLASH ─────────────────────────────────────────── */
+/* SPLASH */
 #splash {
-  position: fixed; inset: 0;
-  background: var(--black);
-  z-index: 800;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
+  position: fixed; inset: 0; background: var(--black); z-index: 800;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px;
   transition: opacity .9s cubic-bezier(.4,0,.2,1), visibility .9s;
 }
 #splash.out { opacity: 0; visibility: hidden; pointer-events: none; }
 #splash::before {
-  content: '';
-  position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.015) 2px,rgba(255,255,255,.015) 4px);
   pointer-events: none;
 }
-.splash-logo {
-  width: min(220px, 55vw);
-  opacity: 0;
-  animation: fadeUp .8s ease .25s forwards;
-  position: relative; z-index: 2;
-}
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(24px); }
-  to   { opacity:1; transform:translateY(0); }
-}
+.splash-logo { width: min(220px,55vw); opacity:0; animation: fadeUp .8s ease .25s forwards; position:relative; z-index:2; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
 #enter-btn {
-  position: relative; z-index: 2;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px;
-  letter-spacing: .3em;
-  color: var(--black);
-  background: var(--lime);
-  border: none;
-  padding: 15px 48px;
-  cursor: none;
-  opacity: 0;
-  animation: fadeUp .7s ease .7s forwards;
-  overflow: hidden;
-  transition: transform .2s;
+  position:relative; z-index:2;
+  font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:.3em;
+  color:var(--black); background:var(--lime); border:none; padding:15px 48px; cursor:none;
+  opacity:0; animation:fadeUp .7s ease .7s forwards; overflow:hidden; transition:transform .2s;
 }
-#enter-btn::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: rgba(255,255,255,.3);
-  transform: translateX(-110%) skewX(-20deg);
-  transition: transform .4s ease;
-}
-#enter-btn:hover::after { transform: translateX(110%) skewX(-20deg); }
-#enter-btn:hover { transform: scale(1.04); }
-#enter-btn:active { transform: scale(.97); }
-.splash-tagline {
-  position: relative; z-index: 2;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 11px;
-  letter-spacing: .45em;
-  color: var(--muted);
-  opacity: 0;
-  animation: fadeUp .7s ease 1s forwards;
-}
-.splash-vline {
-  position: absolute; bottom: 0; left: 50%;
-  width: 1px; height: 0;
-  background: linear-gradient(to bottom, var(--lime), transparent);
-  animation: growV 1.4s ease 1.2s forwards;
-}
-@keyframes growV { to { height: 140px; } }
+#enter-btn::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,.3); transform:translateX(-110%) skewX(-20deg); transition:transform .4s; }
+#enter-btn:hover::after { transform:translateX(110%) skewX(-20deg); }
+#enter-btn:hover { transform:scale(1.04); }
+.splash-tag { position:relative; z-index:2; font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:.45em; color:var(--muted); opacity:0; animation:fadeUp .7s ease 1s forwards; }
+.splash-vline { position:absolute; bottom:0; left:50%; width:1px; height:0; background:linear-gradient(to bottom,var(--lime),transparent); animation:growV 1.4s ease 1.2s forwards; }
+@keyframes growV { to{height:140px} }
 
-/* ─── NAVBAR ─────────────────────────────────────────── */
-#nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 500;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 52px;
-  background: linear-gradient(to bottom, rgba(6,6,6,.9) 0%, transparent 100%);
-  transition: background .35s, padding .35s;
-}
-#nav.scrolled {
-  background: rgba(6,6,6,.97);
-  padding: 14px 52px;
-  border-bottom: 1px solid var(--grey2);
-}
-.nav-logo img { height: 40px; }
-.nav-links {
-  display: flex; align-items: center; list-style: none;
-  gap: 44px;
-}
-.nav-links a {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px;
-  letter-spacing: .18em;
-  color: var(--offwhite);
-  position: relative;
-  transition: color .2s;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute; bottom: -5px; left: 0;
-  height: 1px; width: 0;
-  background: var(--lime);
-  transition: width .3s ease;
-}
-.nav-links a:hover { color: var(--lime); }
-.nav-links a:hover::after { width: 100%; }
-.nav-cta {
-  background: var(--lime) !important;
-  color: var(--black) !important;
-  padding: 11px 24px;
-}
-.nav-cta::after { display: none !important; }
-.nav-cta:hover { opacity: .85; color: var(--black) !important; }
+/* HERO */
+#hero { position:relative; height:100svh; overflow:hidden; background:var(--black); }
+.slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; z-index:1; }
+.slide.active { opacity:1; z-index:2; }
+.slide-flash { position:absolute; inset:0; background:var(--black); opacity:0; pointer-events:none; z-index:3; }
+.slide.flickering .slide-flash { animation:flickAnim .28s steps(1) forwards; }
+@keyframes flickAnim { 0%{opacity:0} 15%{opacity:.9} 30%{opacity:0} 50%{opacity:.75} 65%{opacity:0} 82%{opacity:.45} 100%{opacity:0} }
+.slide-fog { position:absolute; inset:0; background:linear-gradient(to top,rgba(6,6,6,.95) 0%,rgba(6,6,6,.3) 40%,transparent 70%),linear-gradient(to right,rgba(6,6,6,.7) 0%,transparent 55%); z-index:4; }
+.slide-body { position:absolute; bottom:96px; left:52px; z-index:5; max-width:680px; }
+.slide-tag { display:inline-block; font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:.4em; text-transform:uppercase; color:var(--lime); margin-bottom:14px; opacity:0; transform:translateY(16px); transition:opacity .5s .1s,transform .5s .1s; }
+.slide.active .slide-tag { opacity:1; transform:none; }
+.slide-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(58px,9vw,118px); line-height:.88; letter-spacing:.02em; text-transform:uppercase; margin-bottom:30px; opacity:0; transform:translateY(24px); transition:opacity .55s .25s,transform .55s .25s; }
+.slide.active .slide-title { opacity:1; transform:none; }
+.slide-actions { display:flex; gap:14px; flex-wrap:wrap; opacity:0; transform:translateY(16px); transition:opacity .5s .42s,transform .5s .42s; }
+.slide.active .slide-actions { opacity:1; transform:none; }
+.hero-meta { position:absolute; bottom:96px; right:52px; z-index:10; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+.slide-counter { font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:.2em; color:var(--muted); }
+.slide-counter em { color:var(--offwhite); font-style:normal; }
+.prog-track { width:72px; height:2px; background:var(--grey3); overflow:hidden; }
+.prog-bar { height:100%; background:var(--lime); width:0%; transition:width .12s linear; }
+.hero-nav { position:absolute; bottom:38px; right:52px; z-index:10; display:flex; gap:6px; }
+.h-btn { width:46px; height:46px; border:1.5px solid rgba(240,237,232,.18); background:none; color:var(--offwhite); font-size:18px; cursor:none; display:flex; align-items:center; justify-content:center; transition:background .2s,border-color .2s,color .2s; }
+.h-btn:hover { background:var(--lime); border-color:var(--lime); color:var(--black); }
+.thumb-strip { position:absolute; bottom:0; left:0; right:0; height:3px; display:flex; z-index:10; }
+.thumb-seg { flex:1; background:rgba(240,237,232,.1); position:relative; overflow:hidden; cursor:none; }
+.thumb-seg.done { background:rgba(240,237,232,.32); }
+.thumb-seg .seg-fill { position:absolute; inset:0; background:var(--lime); transform:scaleX(0); transform-origin:left; }
 
-.burger { display: none; flex-direction: column; gap: 5px; cursor: none; }
-.burger span { display: block; width: 22px; height: 2px; background: var(--offwhite); transition: all .3s; }
-.burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-.burger.open span:nth-child(2) { opacity: 0; }
-.burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
-#mob-nav {
-  display: none;
-  position: fixed; inset: 0;
-  background: var(--black);
-  z-index: 490;
-  flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 28px;
-}
-#mob-nav.open { display: flex; }
-#mob-nav a {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 52px;
-  letter-spacing: .05em;
-  color: var(--offwhite);
-  transition: color .2s;
-}
-#mob-nav a:hover { color: var(--lime); }
+/* ABOUT/MANIFESTO */
+#manifesto { padding:130px 0; }
+.manifesto-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+.manifesto-text p { font-size:17px; line-height:1.95; color:rgba(240,237,232,.68); max-width:500px; margin-top:28px; }
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+.stat-cell { background:var(--grey1); padding:44px 36px; border-bottom:2px solid transparent; transition:border-color .3s; }
+.stat-cell:hover { border-color:var(--lime); }
+.stat-num { font-family:'Bebas Neue',sans-serif; font-size:64px; color:var(--lime); line-height:1; }
+.stat-lbl { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-top:10px; }
 
-/* ─── HERO ───────────────────────────────────────────── */
-#hero {
-  position: relative;
-  height: 100svh;
-  overflow: hidden;
-  background: var(--black);
-}
-.slide {
-  position: absolute; inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  z-index: 1;
-}
-.slide.active { opacity: 1; z-index: 2; }
+/* BRANDS */
+#brands { padding:100px 0; }
+.brand-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:2px; margin-top:52px; }
+.brand-tile { aspect-ratio:1; background:var(--grey1); display:flex; align-items:center; justify-content:center; padding:22px; transition:background .3s; }
+.brand-tile:hover { background:var(--grey2); }
+.brand-tile img { width:100%; max-width:64px; height:64px; object-fit:contain; filter:grayscale(1) brightness(.45); transition:filter .3s; }
+.brand-tile:hover img { filter:grayscale(0) brightness(1); }
 
-/* flicker overlay */
-.slide-flash {
-  position: absolute; inset: 0;
-  background: var(--black);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 3;
-}
-.slide.flickering .slide-flash { animation: flickAnim .28s steps(1) forwards; }
-@keyframes flickAnim {
-  0%   { opacity: 0; }
-  15%  { opacity: .9; }
-  30%  { opacity: 0; }
-  50%  { opacity: .75; }
-  65%  { opacity: 0; }
-  82%  { opacity: .45; }
-  100% { opacity: 0; }
-}
+/* SERVICES */
+#services { background:var(--grey1); padding:130px 0; }
+.svc-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.svc-list { list-style:none; counter-reset:svc; margin-top:48px; }
+.svc-item { counter-increment:svc; display:flex; align-items:center; gap:22px; font-family:'Bebas Neue',sans-serif; font-size:clamp(22px,2.8vw,38px); letter-spacing:.04em; padding:26px 0; border-bottom:1px solid var(--grey2); cursor:none; position:relative; overflow:hidden; transition:color .3s; }
+.svc-item::before { content:counter(svc,decimal-leading-zero); font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:.1em; color:var(--lime); min-width:30px; }
+.svc-item::after { content:''; position:absolute; left:-100%; inset-block:0; width:100%; background:rgba(216,255,62,.04); transition:left .4s; }
+.svc-item:hover { color:var(--lime); }
+.svc-item:hover::after { left:0; }
+.vision-col { position:sticky; top:130px; }
+.vision-col p { font-size:16px; line-height:2; color:rgba(240,237,232,.6); margin-top:28px; margin-bottom:44px; }
 
-.slide-fog {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to top, rgba(6,6,6,.95) 0%, rgba(6,6,6,.3) 40%, transparent 70%),
-    linear-gradient(to right, rgba(6,6,6,.7) 0%, transparent 55%);
-  z-index: 4;
-}
-.slide-body {
-  position: absolute; bottom: 96px; left: 52px;
-  z-index: 5; max-width: 680px;
-}
-.slide-tag {
-  display: inline-block;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: .4em;
-  text-transform: uppercase;
-  color: var(--lime);
-  margin-bottom: 14px;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity .5s .1s, transform .5s .1s;
-}
-.slide.active .slide-tag { opacity: 1; transform: none; }
-.slide-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(58px, 9vw, 118px);
-  line-height: .88;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-  margin-bottom: 30px;
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity .55s .25s, transform .55s .25s;
-}
-.slide.active .slide-title { opacity: 1; transform: none; }
-.slide-actions {
-  display: flex; gap: 14px; flex-wrap: wrap;
-  opacity: 0; transform: translateY(16px);
-  transition: opacity .5s .42s, transform .5s .42s;
-}
-.slide.active .slide-actions { opacity: 1; transform: none; }
+/* PORTFOLIO TEASE */
+#portfolio-tease { padding:130px 0; }
+.port-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:56px; }
+.port-item { position:relative; overflow:hidden; display:block; aspect-ratio:16/10; }
+.port-item.span2 { grid-column:1/-1; aspect-ratio:21/9; }
+.port-item img { width:100%; height:100%; object-fit:cover; transition:transform .65s,filter .65s; filter:brightness(.72); }
+.port-item:hover img { transform:scale(1.06); filter:brightness(.45); }
+.port-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(6,6,6,.85) 0%,transparent 55%); display:flex; flex-direction:column; justify-content:flex-end; padding:30px; }
+.port-client { font-size:10px; letter-spacing:.35em; text-transform:uppercase; color:var(--lime); margin-bottom:6px; }
+.port-name { font-family:'Bebas Neue',sans-serif; font-size:clamp(20px,2.4vw,30px); letter-spacing:.04em; color:var(--offwhite); transform:translateY(8px); transition:transform .4s; }
+.port-item:hover .port-name { transform:none; }
+.play-btn { position:absolute; top:22px; right:22px; width:50px; height:50px; border-radius:50%; background:var(--lime); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.6); transition:opacity .3s,transform .3s; }
+.play-btn svg { fill:var(--black); margin-left:3px; }
+.port-item:hover .play-btn { opacity:1; transform:scale(1); }
+.port-see-all { margin-top:40px; display:flex; justify-content:flex-end; }
 
-/* buttons */
-.btn-fill {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; letter-spacing: .15em;
-  color: var(--black); background: var(--lime);
-  padding: 14px 32px;
-  display: inline-flex; align-items: center; gap: 8px;
-  cursor: none; position: relative; overflow: hidden;
-  transition: transform .2s;
-}
-.btn-fill::after {
-  content: ''; position: absolute; inset: 0;
-  background: rgba(255,255,255,.3);
-  transform: translateX(-110%) skewX(-15deg);
-  transition: transform .35s ease;
-}
-.btn-fill:hover::after { transform: translateX(110%) skewX(-15deg); }
-.btn-fill:hover { transform: scale(1.03); }
-.btn-ghost {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; letter-spacing: .15em;
-  color: var(--offwhite);
-  border: 1.5px solid rgba(240,237,232,.3);
-  padding: 13px 30px;
-  display: inline-flex; align-items: center; gap: 8px;
-  cursor: none;
-  transition: border-color .25s, color .25s;
-}
-.btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
+/* EVENTS TEASE */
+#events-tease { background:var(--grey1); padding:130px 0; }
+.events-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:56px; }
+.event-card { background:var(--grey2); padding:40px 32px; border-top:2px solid transparent; transition:border-color .3s,background .3s; cursor:none; position:relative; overflow:hidden; }
+.event-card:hover { border-color:var(--lime); background:var(--grey3); }
+.event-date { font-family:'Bebas Neue',sans-serif; font-size:48px; color:var(--lime); line-height:1; }
+.event-month { font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; }
+.event-name { font-family:'Bebas Neue',sans-serif; font-size:clamp(22px,2.5vw,32px); letter-spacing:.04em; color:var(--offwhite); margin-bottom:10px; line-height:1.1; }
+.event-loc { font-size:13px; color:var(--muted); display:flex; align-items:center; gap:8px; }
+.event-tag { position:absolute; top:20px; right:20px; font-family:'Bebas Neue',sans-serif; font-size:10px; letter-spacing:.2em; background:rgba(216,255,62,.15); color:var(--lime); padding:6px 12px; }
 
-/* hero counter */
-.hero-meta {
-  position: absolute; bottom: 96px; right: 52px;
-  z-index: 10;
-  display: flex; flex-direction: column;
-  align-items: flex-end; gap: 10px;
-}
-.slide-counter {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 12px; letter-spacing: .2em;
-  color: var(--muted);
-}
-.slide-counter em { color: var(--offwhite); font-style: normal; }
-.prog-track {
-  width: 72px; height: 2px;
-  background: var(--grey3); overflow: hidden;
-}
-.prog-bar {
-  height: 100%; background: var(--lime);
-  width: 0%; transition: width .12s linear;
-}
-.hero-nav {
-  position: absolute; bottom: 38px; right: 52px;
-  z-index: 10; display: flex; gap: 6px;
-}
-.h-btn {
-  width: 46px; height: 46px;
-  border: 1.5px solid rgba(240,237,232,.18);
-  background: none; color: var(--offwhite);
-  font-size: 18px; cursor: none;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .2s, border-color .2s, color .2s;
-}
-.h-btn:hover { background: var(--lime); border-color: var(--lime); color: var(--black); }
+/* JOIN CTA */
+#join-cta { padding:160px 0; text-align:center; position:relative; overflow:hidden; }
+#join-cta::before { content:'JOIN'; font-family:'Bebas Neue',sans-serif; font-size:clamp(140px,22vw,280px); letter-spacing:.02em; color:rgba(240,237,232,.025); position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap; pointer-events:none; }
+.join-inner { position:relative; z-index:2; max-width:700px; margin:0 auto; }
+.join-inner .display-title { font-size:clamp(52px,7vw,110px); }
+.join-inner p { font-size:17px; line-height:1.9; color:rgba(240,237,232,.65); margin:28px auto 44px; max-width:500px; }
+.join-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
 
-/* thumb strip */
-.thumb-strip {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 3px; display: flex; z-index: 10;
-}
-.thumb-seg {
-  flex: 1; background: rgba(240,237,232,.1);
-  position: relative; overflow: hidden; cursor: none;
-}
-.thumb-seg.done { background: rgba(240,237,232,.32); }
-.thumb-seg .seg-fill {
-  position: absolute; inset: 0;
-  background: var(--lime);
-  transform: scaleX(0); transform-origin: left;
-}
-
-/* ─── TICKER ─────────────────────────────────────────── */
-.ticker-wrap {
-  overflow: hidden;
-  border-top: 1px solid var(--grey2);
-  border-bottom: 1px solid var(--grey2);
-  padding: 13px 0;
-}
-.ticker-wrap.inv { background: var(--lime); border-color: var(--lime); }
-.ticker-row {
-  display: flex; white-space: nowrap;
-  animation: roll 22s linear infinite;
-}
-.ticker-wrap.inv .ticker-row { animation-direction: reverse; animation-duration: 18s; }
-@keyframes roll { to { transform: translateX(-50%); } }
-.t-item {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; letter-spacing: .28em;
-  color: var(--grey3);
-  padding: 0 30px;
-  display: inline-flex; align-items: center; gap: 30px;
-}
-.t-item::after { content: '◆'; font-size: 7px; color: var(--lime); }
-.ticker-wrap.inv .t-item { color: var(--black); }
-.ticker-wrap.inv .t-item::after { color: rgba(0,0,0,.3); }
-
-/* ─── LAYOUT UTILS ───────────────────────────────────── */
-.container { max-width: 1380px; margin: 0 auto; padding: 0 52px; }
-.eyebrow {
-  display: block; font-size: 10px; letter-spacing: .45em;
-  text-transform: uppercase; color: var(--lime); margin-bottom: 14px;
-}
-.display-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(52px, 6.5vw, 100px);
-  line-height: .9; letter-spacing: .02em; text-transform: uppercase;
-}
-.serif-sub {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: clamp(18px, 2vw, 26px);
-  color: var(--muted); margin-top: 16px; line-height: 1.55;
-}
-.rev {
-  opacity: 0; transform: translateY(36px);
-  transition: opacity .8s ease, transform .8s ease;
-}
-.rev.in { opacity: 1; transform: none; }
-.rev.d1 { transition-delay: .12s; }
-.rev.d2 { transition-delay: .24s; }
-.rev.d3 { transition-delay: .36s; }
-
-/* ─── ABOUT ──────────────────────────────────────────── */
-#about { padding: 130px 0; }
-.about-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: center;
-}
-.about-body p {
-  font-size: 17px; line-height: 1.95;
-  color: rgba(240,237,232,.68);
-  max-width: 500px; margin-top: 28px;
-}
-.stat-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-}
-.stat-cell {
-  background: var(--grey1); padding: 44px 36px;
-  border-bottom: 2px solid transparent;
-  transition: border-color .3s;
-}
-.stat-cell:hover { border-color: var(--lime); }
-.stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 64px; color: var(--lime); line-height: 1;
-}
-.stat-lbl {
-  font-size: 11px; letter-spacing: .22em;
-  text-transform: uppercase; color: var(--muted); margin-top: 10px;
-}
-
-/* ─── BRANDS ─────────────────────────────────────────── */
-#brands { padding: 100px 0; }
-.brand-grid {
-  display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px;
-  margin-top: 52px;
-}
-.brand-tile {
-  aspect-ratio: 1; background: var(--grey1);
-  display: flex; align-items: center; justify-content: center;
-  padding: 22px; transition: background .3s;
-}
-.brand-tile:hover { background: var(--grey2); }
-.brand-tile img {
-  width: 100%; max-width: 64px; height: 64px;
-  object-fit: contain;
-  filter: grayscale(1) brightness(.45);
-  transition: filter .3s;
-}
-.brand-tile:hover img { filter: grayscale(0) brightness(1); }
-
-/* ─── SERVICES / VISION ──────────────────────────────── */
-#services { background: var(--grey1); padding: 130px 0; }
-.svc-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: start;
-}
-.svc-list { list-style: none; counter-reset: svc; margin-top: 48px; }
-.svc-item {
-  counter-increment: svc;
-  display: flex; align-items: center; gap: 22px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(22px, 2.8vw, 38px); letter-spacing: .04em;
-  padding: 26px 0; border-bottom: 1px solid var(--grey2);
-  cursor: none; position: relative; overflow: hidden;
-  transition: color .3s;
-}
-.svc-item::before {
-  content: counter(svc, decimal-leading-zero);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px; letter-spacing: .1em;
-  color: var(--lime); min-width: 30px;
-}
-.svc-item::after {
-  content: ''; position: absolute; left: -100%; inset-block: 0;
-  width: 100%; background: rgba(216,255,62,.04);
-  transition: left .4s ease;
-}
-.svc-item:hover { color: var(--lime); }
-.svc-item:hover::after { left: 0; }
-.vision-col { position: sticky; top: 130px; }
-.vision-col p {
-  font-size: 16px; line-height: 2;
-  color: rgba(240,237,232,.6);
-  margin-top: 28px; margin-bottom: 44px;
-}
-.btn-group { display: flex; gap: 14px; flex-wrap: wrap; }
-
-/* ─── PORTFOLIO ──────────────────────────────────────── */
-#portfolio { padding: 130px 0; }
-.port-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 2px; margin-top: 56px;
-}
-.port-item {
-  position: relative; overflow: hidden;
-  display: block; aspect-ratio: 16/10;
-}
-.port-item.span2 { grid-column: 1 / -1; aspect-ratio: 21/9; }
-.port-item img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform .65s ease, filter .65s ease;
-  filter: brightness(.72);
-}
-.port-item:hover img { transform: scale(1.06); filter: brightness(.45); }
-.port-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(6,6,6,.85) 0%, transparent 55%);
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 30px;
-}
-.port-client {
-  font-size: 10px; letter-spacing: .35em;
-  text-transform: uppercase; color: var(--lime); margin-bottom: 6px;
-}
-.port-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(20px, 2.4vw, 30px); letter-spacing: .04em;
-  color: var(--offwhite);
-  transform: translateY(8px); transition: transform .4s ease;
-}
-.port-item:hover .port-name { transform: none; }
-.play-btn {
-  position: absolute; top: 22px; right: 22px;
-  width: 50px; height: 50px; border-radius: 50%;
-  background: var(--lime);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; transform: scale(.6);
-  transition: opacity .3s, transform .3s;
-}
-.play-btn svg { fill: var(--black); margin-left: 3px; }
-.port-item:hover .play-btn { opacity: 1; transform: scale(1); }
-
-/* ─── FOOTER ─────────────────────────────────────────── */
-footer { background: var(--grey1); padding: 90px 0 44px; border-top: 1px solid var(--grey2); }
-.footer-body {
-  display: grid; grid-template-columns: 180px 1fr 1fr;
-  gap: 80px; padding-bottom: 72px; margin-bottom: 40px;
-  border-bottom: 1px solid var(--grey2);
-}
-.footer-logo img { width: 110px; opacity: .75; }
-.ft-col h5 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 12px; letter-spacing: .3em; color: var(--muted); margin-bottom: 24px;
-}
-.ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.ft-col a {
-  font-size: 15px; color: rgba(240,237,232,.65);
-  display: inline-flex; align-items: center; gap: 10px;
-  transition: color .2s, gap .2s;
-}
-.ft-col a::before { content: '→'; font-size: 11px; color: var(--lime); }
-.ft-col a:hover { color: var(--lime); gap: 16px; }
-.footer-bottom {
-  display: flex; align-items: center; justify-content: space-between;
-}
-.ft-copy { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
-
-/* ─── RESPONSIVE ─────────────────────────────────────── */
-@media (max-width: 960px) {
-  #nav, #nav.scrolled { padding: 16px 24px; }
-  .nav-links { display: none; }
-  .burger { display: flex; }
-  .container { padding: 0 24px; }
-  .about-grid, .svc-grid, .footer-body { grid-template-columns: 1fr; gap: 48px; }
-  .port-grid { grid-template-columns: 1fr; }
-  .port-item.span2 { aspect-ratio: 16/10; }
-  .brand-grid { grid-template-columns: repeat(3, 1fr); }
-  .slide-body { left: 24px; bottom: 100px; }
-  .hero-meta, .hero-nav { right: 24px; }
-  .footer-body { grid-template-columns: 1fr; gap: 36px; }
+@media(max-width:960px){
+  .manifesto-grid,.svc-grid { grid-template-columns:1fr; gap:48px; }
+  .port-grid { grid-template-columns:1fr; }
+  .port-item.span2 { aspect-ratio:16/10; }
+  .brand-grid { grid-template-columns:repeat(3,1fr); }
+  .events-grid { grid-template-columns:1fr; }
+  .slide-body { left:24px; bottom:100px; }
+  .hero-meta,.hero-nav { right:24px; }
 }
 </style>
 </head>
 <body>
-
-<div id="dot"></div>
-<div id="ring"></div>
+<div id="dot"></div><div id="ring"></div>
 
 <!-- SPLASH -->
 <div id="splash">
   <div class="splash-vline"></div>
-  <img class="splash-logo" src="https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649.png" alt="CRTV Hub">
+  <img class="splash-logo" src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649.png'" alt="CRTV Hub">
   <button id="enter-btn">CLICK TO ENTER</button>
-  <span class="splash-tagline">ONLY REBELS RECREATE THE WORLD</span>
+  <span class="splash-tag">ONLY REBELS RECREATE THE WORLD</span>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
-  <a class="nav-logo" href="#"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649.png" alt="CRTV"></a>
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649.png'" alt="CRTV"></a>
   <ul class="nav-links">
-    <li><a href="#">HOME</a></li>
-    <li><a href="#about">ABOUT</a></li>
-    <li><a href="#">EVENTS</a></li>
-    <li><a href="#portfolio">MEDIA</a></li>
-    <li><a href="#" class="nav-cta">JOIN / SIGN UP</a></li>
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="events.html">EVENTS</a></li>
+    <li><a href="media.html">MEDIA</a></li>
+    <li><a href="join.html" class="nav-cta">JOIN / SIGN UP</a></li>
   </ul>
   <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </nav>
 <div id="mob-nav">
-  <a href="#">HOME</a>
-  <a href="#about">ABOUT</a>
-  <a href="#">EVENTS</a>
-  <a href="#portfolio">MEDIA</a>
-  <a href="#">JOIN / SIGN UP</a>
+  <a href="index.html">HOME</a><a href="about.html">ABOUT</a>
+  <a href="events.html">EVENTS</a><a href="media.html">MEDIA</a>
+  <a href="join.html">JOIN / SIGN UP</a>
 </div>
 
-<!-- HERO -->
+<!-- HERO SLIDER -->
 <section id="hero">
-  <div class="slide active" style="background-image:url('https://crtv.axocreate.com/wp-content/uploads/2026/01/maxresdefault.webp')">
+  <div class="slide active" style="background-image:url('assets/hero-1.jpg')">
     <div class="slide-flash"></div><div class="slide-fog"></div>
     <div class="slide-body">
       <span class="slide-tag">Client: Nike</span>
       <h1 class="slide-title">Lose Count —<br>Stronger<br>Than One</h1>
       <div class="slide-actions">
-        <a href="https://crtv.axocreate.com/events/" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
         <a href="https://www.youtube.com/watch?v=d18iNOeTkmk" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
       </div>
     </div>
   </div>
-
-  <div class="slide" style="background-image:url('https://crtv.axocreate.com/wp-content/uploads/2026/01/channels4_banner.jpg')">
+  <div class="slide" style="background-image:url('assets/hero-2.jpg')">
     <div class="slide-flash"></div><div class="slide-fog"></div>
     <div class="slide-body">
       <span class="slide-tag">Client: JBEE</span>
       <h1 class="slide-title">JBEE —<br>24'S</h1>
       <div class="slide-actions">
-        <a href="https://crtv.axocreate.com/events/" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
         <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
       </div>
     </div>
   </div>
-
-  <div class="slide" style="background-image:url('https://crtv.axocreate.com/wp-content/uploads/2026/01/dqJ8oud7l2Q-HD.jpg')">
+  <div class="slide" style="background-image:url('assets/hero-3.jpg')">
     <div class="slide-flash"></div><div class="slide-fog"></div>
     <div class="slide-body">
       <span class="slide-tag">Client: Biig Piig</span>
       <h1 class="slide-title">Biig Piig —<br>Feels Right</h1>
       <div class="slide-actions">
-        <a href="https://crtv.axocreate.com/events/" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
         <a href="https://www.youtube.com/watch?v=dqJ8oud7l2Q" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
       </div>
     </div>
   </div>
-
-  <div class="slide" style="background-image:url('https://crtv.axocreate.com/wp-content/uploads/2026/01/398143622_6735031366575353_3516649951948309757_n-e1773412953687.jpg')">
+  <div class="slide" style="background-image:url('assets/hero-4.jpg')">
     <div class="slide-flash"></div><div class="slide-fog"></div>
     <div class="slide-body">
       <span class="slide-tag">Client: Upsycle Hypewear</span>
       <h1 class="slide-title">UPSYCLE<br>Vol.1<br>Short Film</h1>
       <div class="slide-actions">
-        <a href="https://crtv.axocreate.com/events/" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
         <a href="https://www.youtube.com/watch?v=HST5VJs8qC4" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
       </div>
     </div>
   </div>
-
-  <div class="slide" style="background-image:url('https://crtv.axocreate.com/wp-content/uploads/2026/01/nsGbD-q9NIk-HD.jpg')">
-    <div class="slide-flash"></div><div class="slide-fog"></div>
-    <div class="slide-body">
-      <span class="slide-tag">Get To Know Me</span>
-      <h1 class="slide-title">Louis Lasa<br>Tarbuck</h1>
-      <div class="slide-actions">
-        <a href="https://crtv.axocreate.com/events/" class="btn-fill">JOIN CREATING OUR MOTION</a>
-        <a href="https://www.youtube.com/watch?v=KV8XAK4Fn6A" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="slide" style="background-image:url('https://crtv.axocreate.com/wp-content/uploads/2026/01/HST5VJs8qC4-HQ-1.jpg')">
+  <div class="slide" style="background-image:url('assets/hero-5.jpg')">
     <div class="slide-flash"></div><div class="slide-fog"></div>
     <div class="slide-body">
       <span class="slide-tag">New Gen Entertainment</span>
       <h1 class="slide-title">Dance Your<br>Style Cypher</h1>
       <div class="slide-actions">
-        <a href="https://crtv.axocreate.com/events/" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
         <a href="https://www.youtube.com/watch?v=zy-ooB1l5QE" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
       </div>
     </div>
   </div>
-
-  <div class="slide" style="background-image:url('https://crtv.axocreate.com/wp-content/uploads/2026/01/5P87JlJQ8-M-HD.jpg')">
-    <div class="slide-flash"></div><div class="slide-fog"></div>
-    <div class="slide-body">
-      <span class="slide-tag">Get To Know Me</span>
-      <h1 class="slide-title">James<br>Olusegun</h1>
-      <div class="slide-actions">
-        <a href="https://crtv.axocreate.com/events/" class="btn-fill">JOIN CREATING OUR MOTION</a>
-        <a href="https://www.youtube.com/watch?v=sPs63uGzWuI" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
-      </div>
-    </div>
-  </div>
-
   <div class="hero-meta">
-    <div class="slide-counter"><em id="curr-num">01</em> / <span id="total-num">07</span></div>
+    <div class="slide-counter"><em id="curr-num">01</em> / <span id="total-num">05</span></div>
     <div class="prog-track"><div class="prog-bar" id="prog-bar"></div></div>
   </div>
   <div class="hero-nav">
@@ -700,16 +237,14 @@ footer { background: var(--grey1); padding: 90px 0 44px; border-top: 1px solid v
   <div class="thumb-strip" id="thumb-strip"></div>
 </section>
 
-<!-- TICKER 1 -->
-<div class="ticker-wrap">
-  <div class="ticker-row" id="tick1"></div>
-</div>
+<!-- TICKER -->
+<div class="ticker-wrap"><div class="ticker-row" data-ticker="PODCAST, MUSIC, LIVE, FILM, EVENTS, CULTURE, DANCE, CREATIVE"></div></div>
 
-<!-- ABOUT -->
-<section id="about">
+<!-- MANIFESTO -->
+<section id="manifesto">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-body rev">
+    <div class="manifesto-grid">
+      <div class="rev">
         <span class="eyebrow">What We Are</span>
         <h2 class="display-title">Built by<br>Creatives.</h2>
         <p class="serif-sub">Powered by culture.</p>
@@ -749,15 +284,12 @@ footer { background: var(--grey1); padding: 90px 0 44px; border-top: 1px solid v
   </div>
 </section>
 
-<!-- SERVICES / VISION -->
+<!-- SERVICES -->
 <section id="services">
   <div class="container">
     <div class="svc-grid">
       <div>
-        <div class="rev">
-          <span class="eyebrow">What We Do</span>
-          <h2 class="display-title">Film.<br>Events.<br>Culture.</h2>
-        </div>
+        <div class="rev"><span class="eyebrow">What We Do</span><h2 class="display-title">Film.<br>Events.<br>Culture.</h2></div>
         <ul class="svc-list">
           <li class="svc-item rev">Film Production &amp; Visual Storytelling</li>
           <li class="svc-item rev d1">Live Events &amp; Global Dance Platforms</li>
@@ -769,214 +301,148 @@ footer { background: var(--grey1); padding: 90px 0 44px; border-top: 1px solid v
         <span class="eyebrow">The Vision</span>
         <h2 class="display-title">More than<br>content.<br>A movement.</h2>
         <p>From underground dance cyphers to global stages, we are building a world where creatives are valued, supported, and seen. Our work bridges film, community, and live experiences — locally and globally.</p>
-        <div class="btn-group">
-          <a href="https://www.youtube.com/watch?v=dqJ8oud7l2Q" target="_blank" class="btn-fill">EXPLORE</a>
-          <a href="https://crtv.axocreate.com/about/" class="btn-ghost">ABOUT US</a>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="media.html" class="btn-fill">EXPLORE WORK</a>
+          <a href="about.html" class="btn-ghost">ABOUT US</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TICKER 2 (lime) -->
-<div class="ticker-wrap inv">
-  <div class="ticker-row" id="tick2"></div>
-</div>
+<!-- TICKER LIME -->
+<div class="ticker-wrap inv"><div class="ticker-row" data-ticker="THE CRTV HUB, THE CRTV HUB, THE CRTV HUB, THE CRTV HUB, THE CRTV HUB, THE CRTV HUB"></div></div>
 
-<!-- PORTFOLIO -->
-<section id="portfolio">
+<!-- PORTFOLIO TEASE -->
+<section id="portfolio-tease">
   <div class="container">
-    <div class="rev">
-      <span class="eyebrow">Selected Work</span>
-      <h2 class="display-title">Our<br>Projects.</h2>
-    </div>
+    <div class="rev"><span class="eyebrow">Selected Work</span><h2 class="display-title">Our Projects.</h2></div>
     <div class="port-grid">
       <a href="https://www.youtube.com/watch?v=dqJ8oud7l2Q" target="_blank" class="port-item span2 rev">
-        <img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/dqJ8oud7l2Q-HD.jpg" alt="Biig Piig">
+        <img src="assets/port-1.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/dqJ8oud7l2Q-HD.jpg'" alt="Biig Piig">
         <div class="port-overlay"><div class="port-client">Client: Biig Piig</div><div class="port-name">Feels Right — Official Video</div></div>
         <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
       </a>
       <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="port-item rev">
-        <img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/channels4_banner.jpg" alt="JBEE">
+        <img src="assets/port-2.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/channels4_banner.jpg'" alt="JBEE">
         <div class="port-overlay"><div class="port-client">Client: JBEE</div><div class="port-name">JBEE — 24'S</div></div>
         <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
       </a>
-      <a href="https://www.youtube.com/watch?v=jHlGiSYxJC0" target="_blank" class="port-item rev d1">
-        <img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/maxresdefault.webp" alt="Nike">
-        <div class="port-overlay"><div class="port-client">Client: Nike</div><div class="port-name">Lose Count — Stronger Than One</div></div>
+      <a href="https://www.youtube.com/watch?v=HST5VJs8qC4" target="_blank" class="port-item rev d1">
+        <img src="assets/port-3.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/398143622_6735031366575353_3516649951948309757_n-e1773412953687.jpg'" alt="Upsycle">
+        <div class="port-overlay"><div class="port-client">Client: Upsycle Hypewear</div><div class="port-name">Vol.1 Short Film</div></div>
         <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
       </a>
-      <a href="https://www.youtube.com/watch?v=HST5VJs8qC4" target="_blank" class="port-item rev">
-        <img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/398143622_6735031366575353_3516649951948309757_n-e1773412953687.jpg" alt="Upsycle">
-        <div class="port-overlay"><div class="port-client">Client: Upsycle Hypewear</div><div class="port-name">UPSYCLE HYPEWEAR — Vol.1 Short Film</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
-      <a href="https://www.youtube.com/watch?v=zy-ooB1l5QE" target="_blank" class="port-item rev d1">
-        <img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/HST5VJs8qC4-HQ-1.jpg" alt="Dance Cypher">
-        <div class="port-overlay"><div class="port-client">New Gen Entertainment</div><div class="port-name">Dance Your Style Cypher</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
-      </a>
+    </div>
+    <div class="port-see-all rev"><a href="media.html" class="btn-ghost">VIEW ALL PROJECTS →</a></div>
+  </div>
+</section>
+
+<!-- EVENTS TEASE -->
+<section id="events-tease">
+  <div class="container">
+    <div class="rev"><span class="eyebrow">Upcoming</span><h2 class="display-title">Events.</h2></div>
+    <div class="events-grid">
+      <div class="event-card rev">
+        <div class="event-date">TBC</div>
+        <div class="event-month">Date Coming Soon</div>
+        <div class="event-name">Creating Our Motion</div>
+        <div class="event-loc">📍 London, UK</div>
+        <div class="event-tag">UPCOMING</div>
+      </div>
+      <div class="event-card rev d1">
+        <div class="event-date">TBC</div>
+        <div class="event-month">Date Coming Soon</div>
+        <div class="event-name">CRTV Showcase Vol.2</div>
+        <div class="event-loc">📍 TBC</div>
+        <div class="event-tag">COMING SOON</div>
+      </div>
+      <div class="event-card rev d2">
+        <div class="event-date">TBC</div>
+        <div class="event-month">Date Coming Soon</div>
+        <div class="event-name">Dance Your Style</div>
+        <div class="event-loc">📍 TBC</div>
+        <div class="event-tag">COMING SOON</div>
+      </div>
+    </div>
+    <div style="margin-top:40px;" class="rev"><a href="events.html" class="btn-ghost">VIEW ALL EVENTS →</a></div>
+  </div>
+</section>
+
+<!-- JOIN CTA -->
+<section id="join-cta">
+  <div class="join-inner rev">
+    <span class="eyebrow">Be Part Of It</span>
+    <h2 class="display-title">Create with us.<br>Build with us.<br>Move with us.</h2>
+    <p>Join the CRTV community and be part of a movement building the next generation of creative culture.</p>
+    <div class="join-btns">
+      <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
+      <a href="media.html" class="btn-ghost">EXPLORE WORK</a>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="container">
-    <div class="footer-body">
-      <div class="footer-logo"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649-1024x670.png" alt="CRTV Hub"></div>
-      <div class="ft-col">
-        <h5>QUICK LINKS</h5>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#portfolio">Media</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Join / Sign Up</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h5>STAY CONNECTED</h5>
-        <ul>
-          <li><a href="http://tiktok.com/@thecreativehubagency" target="_blank">TikTok</a></li>
-          <li><a href="https://www.instagram.com/thecrtvhubuk" target="_blank">Instagram</a></li>
-          <li><a href="https://www.youtube.com/@thecrtvhub" target="_blank">YouTube</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span class="ft-copy">© 2026 The CRTV Hub. All rights reserved.</span>
-      <span class="ft-copy">Built by Creatives. Powered by Culture.</span>
-    </div>
+  <div class="footer-inner">
+    <div class="footer-logo"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649-1024x670.png'" alt="CRTV Hub"></div>
+    <div class="ft-col"><h5>PAGES</h5><ul>
+      <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+      <li><a href="media.html">Media</a></li><li><a href="events.html">Events</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>GET INVOLVED</h5><ul>
+      <li><a href="join.html">Join / Sign Up</a></li>
+      <li><a href="mailto:thecreativehub.hq@gmail.com">Contact Us</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>FOLLOW</h5><ul>
+      <li><a href="http://tiktok.com/@thecreativehubagency" target="_blank">TikTok</a></li>
+      <li><a href="https://www.instagram.com/thecrtvhubuk" target="_blank">Instagram</a></li>
+      <li><a href="https://www.youtube.com/@thecrtvhub" target="_blank">YouTube</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="ft-copy">© 2026 The CRTV Hub. All rights reserved.</span>
+    <span class="ft-copy">Built by Creatives. Powered by Culture.</span>
   </div>
 </footer>
 
+<script src="shared.js"></script>
 <script>
-/* ── CURSOR ─────────────────────────────────────── */
-const dot = document.getElementById('dot');
-const ring = document.getElementById('ring');
-let mx=0, my=0, rx=0, ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-(function animCursor(){
-  rx += (mx-rx)*.18; ry += (my-ry)*.18;
-  dot.style.transform  = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-  ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-  requestAnimationFrame(animCursor);
-})();
-document.querySelectorAll('a,button,.brand-tile,.port-item,.svc-item,.stat-cell').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
-});
-
-/* ── SPLASH ─────────────────────────────────────── */
-document.body.style.overflow = 'hidden';
-document.getElementById('enter-btn').addEventListener('click', () => {
+/* HOME: splash + hero slider */
+document.body.style.overflow='hidden';
+document.getElementById('enter-btn').addEventListener('click',()=>{
   document.getElementById('splash').classList.add('out');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 });
 
-/* ── NAV SCROLL ─────────────────────────────────── */
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY>60);
-});
+const slides=Array.from(document.querySelectorAll('.slide'));
+const N=slides.length;
+let cur=0, animFrame=null, segStart=null;
+const SEG_MS=6000;
+document.getElementById('total-num').textContent=String(N).padStart(2,'0');
 
-/* ── MOBILE NAV ─────────────────────────────────── */
-const burger=document.getElementById('burger'), mobNav=document.getElementById('mob-nav');
-burger.addEventListener('click',()=>{ burger.classList.toggle('open'); mobNav.classList.toggle('open'); });
-mobNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ burger.classList.remove('open'); mobNav.classList.remove('open'); }));
-
-/* ── HERO SLIDER with FLICKER ───────────────────── */
-const slides = Array.from(document.querySelectorAll('.slide'));
-const N = slides.length;
-let cur = 0, animFrame = null, segStart = null;
-const SEG_MS = 6000;
-
-document.getElementById('total-num').textContent = String(N).padStart(2,'0');
-
-// Build thumb strip
-const strip = document.getElementById('thumb-strip');
-slides.forEach((_,i)=>{
-  const s = document.createElement('div');
-  s.className='thumb-seg';
-  s.addEventListener('click',()=>goTo(i));
-  strip.appendChild(s);
-});
-const segs = Array.from(strip.querySelectorAll('.thumb-seg'));
+const strip=document.getElementById('thumb-strip');
+slides.forEach((_,i)=>{ const s=document.createElement('div'); s.className='thumb-seg'; s.addEventListener('click',()=>goTo(i)); strip.appendChild(s); });
+const segs=Array.from(strip.querySelectorAll('.thumb-seg'));
 
 function goTo(idx){
   cancelAnimationFrame(animFrame);
-  const prev = slides[cur];
-  cur = ((idx % N) + N) % N;
-  const next = slides[cur];
-
-  // update counter
-  document.getElementById('curr-num').textContent = String(cur+1).padStart(2,'0');
-
-  // update strip state
-  segs.forEach((s,i)=>{
-    s.classList.remove('active','done');
-    s.innerHTML='';
-    if(i<cur) s.classList.add('done');
-  });
-
-  // flicker then switch
-  if(prev !== next){
-    prev.classList.add('flickering');
-    setTimeout(()=>{
-      prev.classList.remove('active','flickering');
-      next.classList.add('active');
-      startSeg();
-    }, 280);
-  } else {
-    startSeg();
-  }
+  const prev=slides[cur]; cur=((idx%N)+N)%N; const next=slides[cur];
+  document.getElementById('curr-num').textContent=String(cur+1).padStart(2,'0');
+  segs.forEach((s,i)=>{ s.classList.remove('active','done'); s.innerHTML=''; if(i<cur) s.classList.add('done'); });
+  if(prev!==next){ prev.classList.add('flickering'); setTimeout(()=>{ prev.classList.remove('active','flickering'); next.classList.add('active'); startSeg(); },280); }
+  else startSeg();
 }
-
 function startSeg(){
-  const seg = segs[cur];
-  seg.classList.add('active');
-  const fill = document.createElement('div');
-  fill.className='seg-fill';
-  seg.innerHTML=''; seg.appendChild(fill);
-
-  segStart = performance.now();
-  let done=false;
-
-  function tick(now){
-    const pct = Math.min((now-segStart)/SEG_MS*100, 100);
-    fill.style.transform = `scaleX(${pct/100})`;
-    document.getElementById('prog-bar').style.width = pct+'%';
-    if(pct<100){ animFrame=requestAnimationFrame(tick); }
-    else if(!done){ done=true; document.getElementById('prog-bar').style.width='0%'; goTo(cur+1); }
-  }
-  animFrame = requestAnimationFrame(tick);
+  const seg=segs[cur]; seg.classList.add('active');
+  const fill=document.createElement('div'); fill.className='seg-fill'; seg.innerHTML=''; seg.appendChild(fill);
+  segStart=performance.now(); let done=false;
+  function tick(now){ const pct=Math.min((now-segStart)/SEG_MS*100,100); fill.style.transform=`scaleX(${pct/100})`; document.getElementById('prog-bar').style.width=pct+'%'; if(pct<100){ animFrame=requestAnimationFrame(tick); } else if(!done){ done=true; document.getElementById('prog-bar').style.width='0%'; goTo(cur+1); } }
+  animFrame=requestAnimationFrame(tick);
 }
-
 document.getElementById('next-btn').addEventListener('click',()=>goTo(cur+1));
 document.getElementById('prev-btn').addEventListener('click',()=>goTo(cur-1));
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight') goTo(cur+1);
-  if(e.key==='ArrowLeft')  goTo(cur-1);
-});
-
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') goTo(cur+1); if(e.key==='ArrowLeft') goTo(cur-1); });
 goTo(0);
-
-/* ── TICKERS ────────────────────────────────────── */
-function buildTicker(id, words, reps){
-  const row = document.getElementById(id);
-  let html='';
-  for(let r=0;r<reps*2;r++){
-    words.forEach(w=>{ html+=`<span class="t-item">${w}</span>`; });
-  }
-  row.innerHTML=html;
-}
-buildTicker('tick1',['PODCAST','MUSIC','LIVE','FILM','EVENTS','CULTURE','DANCE','CREATIVE'],3);
-buildTicker('tick2',['THE CRTV HUB','THE CRTV HUB','THE CRTV HUB','THE CRTV HUB','THE CRTV HUB','THE CRTV HUB','THE CRTV HUB','THE CRTV HUB'],3);
-
-/* ── SCROLL REVEAL ──────────────────────────────── */
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
-},{threshold:0.1});
-document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
 </script>
-</body>
-</html>
+</body></html>
