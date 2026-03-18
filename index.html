@@ -28,6 +28,7 @@
   border-radius: 50%;
   border: 2px solid rgba(16,118,248,.15);
   animation: pulseRing 2.2s ease-in-out infinite;
+  pointer-events: none;
 }
 .splash-ring:nth-child(2) { width: 420px; height: 420px; animation-delay: .4s; border-color: rgba(16,118,248,.08); }
 @keyframes pulseRing {
@@ -43,17 +44,23 @@
   display: flex; align-items: center; justify-content: center;
   position: relative; z-index: 2;
   opacity: 0;
+  overflow: hidden;
   animation: bubbleIn .7s cubic-bezier(.34,1.56,.64,1) .2s forwards;
-  box-shadow: 0 20px 60px rgba(16,118,248,.35), 0 4px 16px rgba(16,118,248,.2);
+  box-shadow: 0 24px 64px rgba(16,118,248,.4), 0 4px 20px rgba(16,118,248,.25);
   cursor: none;
+  flex-shrink: 0;
 }
 @keyframes bubbleIn {
   from { opacity:0; transform: scale(.6); }
   to   { opacity:1; transform: scale(1); }
 }
 .splash-bubble img {
-  width: 75%;
+  width: 68%;
+  height: auto;
+  display: block;
+  object-fit: contain;
   filter: brightness(0) invert(1);
+  flex-shrink: 0;
 }
 
 /* click to enter */
