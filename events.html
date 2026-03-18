@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CRTV HUB — Events</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* UPCOMING EVENTS */
+#upcoming { padding:100px 0; }
+.events-list { display:flex; flex-direction:column; gap:2px; margin-top:56px; }
+.event-row {
+  display:grid; grid-template-columns:120px 1fr 200px auto;
+  align-items:center; gap:32px;
+  background:var(--grey1); padding:36px 40px;
+  border-left:2px solid transparent;
+  transition:border-color .3s, background .3s;
+  cursor:none;
+}
+.event-row:hover { border-color:var(--lime); background:var(--grey2); }
+.event-row-date { font-family:'Bebas Neue',sans-serif; }
+.event-row-day { font-size:56px; color:var(--lime); line-height:1; }
+.event-row-month { font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
+.event-row-info {}
+.event-row-name { font-family:'Bebas Neue',sans-serif; font-size:clamp(24px,3vw,40px); letter-spacing:.04em; color:var(--offwhite); margin-bottom:8px; }
+.event-row-meta { display:flex; gap:24px; font-size:13px; color:var(--muted); }
+.event-row-meta span { display:flex; align-items:center; gap:6px; }
+.event-row-status { font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:.2em; padding:8px 16px; border:1px solid; text-align:center; }
+.event-row-status.upcoming { color:var(--lime); border-color:var(--lime); }
+.event-row-status.sold-out { color:var(--muted); border-color:var(--grey3); }
+.event-row-status.soon { color:var(--offwhite); border-color:var(--grey3); }
+.event-row-cta .btn-fill { font-size:12px; padding:12px 24px; }
+.event-row-cta .btn-ghost { font-size:12px; padding:11px 22px; }
+
+/* PAST EVENTS */
+#past-events { background:var(--grey1); padding:100px 0; }
+.past-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:56px; }
+.past-card { position:relative; overflow:hidden; aspect-ratio:4/3; }
+.past-card img { width:100%; height:100%; object-fit:cover; filter:grayscale(.7) brightness(.6); transition:filter .4s,transform .5s; }
+.past-card:hover img { filter:grayscale(0) brightness(.75); transform:scale(1.04); }
+.past-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(6,6,6,.9) 0%,transparent 60%); display:flex; flex-direction:column; justify-content:flex-end; padding:28px; }
+.past-year { font-size:10px; letter-spacing:.35em; text-transform:uppercase; color:var(--lime); margin-bottom:6px; }
+.past-name { font-family:'Bebas Neue',sans-serif; font-size:clamp(20px,2.5vw,30px); letter-spacing:.04em; color:var(--offwhite); }
+.past-loc { font-size:12px; color:rgba(240,237,232,.5); margin-top:6px; }
+
+/* CTA BAND */
+#events-cta { padding:130px 0; text-align:center; position:relative; overflow:hidden; }
+#events-cta::before { content:'EVENTS'; font-family:'Bebas Neue',sans-serif; font-size:clamp(120px,18vw,220px); color:rgba(240,237,232,.025); position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap; pointer-events:none; }
+.events-cta-inner { position:relative; z-index:2; max-width:640px; margin:0 auto; }
+.events-cta-inner p { font-size:16px; line-height:1.9; color:rgba(240,237,232,.6); margin:24px 0 40px; }
+.btn-row { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+@media(max-width:960px){
+  .event-row { grid-template-columns:80px 1fr; gap:20px; }
+  .event-row-status,.event-row-cta { display:none; }
+  .past-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div id="dot"></div><div id="ring"></div>
+<nav id="nav" class="solid">
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649.png'" alt="CRTV"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li><li><a href="about.html">ABOUT</a></li>
+    <li><a href="events.html">EVENTS</a></li><li><a href="media.html">MEDIA</a></li>
+    <li><a href="join.html" class="nav-cta">JOIN / SIGN UP</a></li>
+  </ul>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+<div id="mob-nav">
+  <a href="index.html">HOME</a><a href="about.html">ABOUT</a>
+  <a href="events.html">EVENTS</a><a href="media.html">MEDIA</a>
+  <a href="join.html">JOIN / SIGN UP</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero" style="padding:140px 0 80px;">
+  <div class="container" style="position:relative;z-index:2;">
+    <span class="eyebrow">What's On</span>
+    <h1 class="display-title" style="font-size:clamp(72px,10vw,140px);">Events.</h1>
+    <p class="serif-sub">Live experiences. Cultural moments. Built for creatives.</p>
+  </div>
+  <div class="page-hero-label">EVENTS</div>
+</section>
+
+<!-- UPCOMING -->
+<section id="upcoming">
+  <div class="container">
+    <div class="rev"><span class="eyebrow">What's Coming</span><h2 class="display-title">Upcoming Events.</h2></div>
+    <div class="events-list">
+      <div class="event-row rev">
+        <div class="event-row-date"><div class="event-row-day">TBC</div><div class="event-row-month">2026</div></div>
+        <div class="event-row-info">
+          <div class="event-row-name">Creating Our Motion</div>
+          <div class="event-row-meta"><span>📍 London, UK</span><span>🎟 Free Entry</span><span>🎬 Film + Dance + Music</span></div>
+        </div>
+        <div class="event-row-status upcoming">UPCOMING</div>
+        <div class="event-row-cta"><a href="join.html" class="btn-fill">REGISTER</a></div>
+      </div>
+      <div class="event-row rev d1">
+        <div class="event-row-date"><div class="event-row-day">TBC</div><div class="event-row-month">2026</div></div>
+        <div class="event-row-info">
+          <div class="event-row-name">CRTV Showcase Vol.2</div>
+          <div class="event-row-meta"><span>📍 TBC</span><span>🎟 TBC</span><span>🎬 Showcase + Networking</span></div>
+        </div>
+        <div class="event-row-status soon">COMING SOON</div>
+        <div class="event-row-cta"><a href="join.html" class="btn-ghost">STAY UPDATED</a></div>
+      </div>
+      <div class="event-row rev d2">
+        <div class="event-row-date"><div class="event-row-day">TBC</div><div class="event-row-month">2026</div></div>
+        <div class="event-row-info">
+          <div class="event-row-name">Dance Your Style — Open Cypher</div>
+          <div class="event-row-meta"><span>📍 TBC</span><span>🎟 Free</span><span>💃 All Styles Welcome</span></div>
+        </div>
+        <div class="event-row-status soon">COMING SOON</div>
+        <div class="event-row-cta"><a href="join.html" class="btn-ghost">STAY UPDATED</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap inv"><div class="ticker-row" data-ticker="CREATING OUR MOTION, DANCE YOUR STYLE, CRTV SHOWCASE, LIVE EVENTS, CULTURE, COMMUNITY"></div></div>
+
+<!-- PAST EVENTS -->
+<section id="past-events">
+  <div class="container">
+    <div class="rev"><span class="eyebrow">Look Back</span><h2 class="display-title">Past Events.</h2></div>
+    <div class="past-grid">
+      <div class="past-card rev">
+        <img src="assets/event-1.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/HST5VJs8qC4-HQ-1.jpg'" alt="Event 1">
+        <div class="past-overlay"><div class="past-year">2025</div><div class="past-name">Dance Your Style Cypher</div><div class="past-loc">London, UK</div></div>
+      </div>
+      <div class="past-card rev d1">
+        <img src="assets/event-2.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/dqJ8oud7l2Q-HD.jpg'" alt="Event 2">
+        <div class="past-overlay"><div class="past-year">2025</div><div class="past-name">CRTV Showcase Vol.1</div><div class="past-loc">London, UK</div></div>
+      </div>
+      <div class="past-card rev d2">
+        <img src="assets/event-3.jpg" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/maxresdefault.webp'" alt="Event 3">
+        <div class="past-overlay"><div class="past-year">2024</div><div class="past-name">Creating Our Motion</div><div class="past-loc">London, UK</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="events-cta">
+  <div class="events-cta-inner rev">
+    <span class="eyebrow">Don't Miss Out</span>
+    <h2 class="display-title">Be in the<br>room.</h2>
+    <p>Sign up to stay updated on all upcoming CRTV events, drops, and community moments.</p>
+    <div class="btn-row">
+      <a href="join.html" class="btn-fill">JOIN THE COMMUNITY</a>
+      <a href="media.html" class="btn-ghost">WATCH HIGHLIGHTS</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><img src="assets/logo.png" onerror="this.src='https://crtv.axocreate.com/wp-content/uploads/2026/01/Image-1-e1769234730649-1024x670.png'" alt="CRTV Hub"></div>
+    <div class="ft-col"><h5>PAGES</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="media.html">Media</a></li><li><a href="events.html">Events</a></li></ul></div>
+    <div class="ft-col"><h5>GET INVOLVED</h5><ul><li><a href="join.html">Join / Sign Up</a></li><li><a href="mailto:thecreativehub.hq@gmail.com">Contact Us</a></li></ul></div>
+    <div class="ft-col"><h5>FOLLOW</h5><ul><li><a href="http://tiktok.com/@thecreativehubagency" target="_blank">TikTok</a></li><li><a href="https://www.instagram.com/thecrtvhubuk" target="_blank">Instagram</a></li><li><a href="https://www.youtube.com/@thecrtvhub" target="_blank">YouTube</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="ft-copy">© 2026 The CRTV Hub. All rights reserved.</span><span class="ft-copy">Built by Creatives. Powered by Culture.</span></div>
+</footer>
+<script src="shared.js"></script>
+</body></html>
