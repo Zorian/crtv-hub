@@ -244,13 +244,7 @@
 
 }
 
-/* ─── SVC IMAGE STRIP ─── */
-.svc-img-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-  margin-top: 4px;
-}
+
 .svc-strip-img {
   overflow: hidden;
   aspect-ratio: 4/3;
@@ -292,6 +286,53 @@
 .port-item:hover .port-hover-cta span {
   border-color:#fff;
   background: rgba(16,118,248,.25);
+}
+
+/* ─── MEDIA CAROUSEL ─── */
+#media-carousel-wrap {
+  width: 100%;
+  overflow: hidden;
+  padding: 48px 0;
+  background: var(--grey1);
+  border-top: 1px solid rgba(16,118,248,.12);
+  border-bottom: 1px solid rgba(16,118,248,.12);
+  cursor: none;
+}
+.carousel-track {
+  display: flex;
+  gap: 6px;
+  width: max-content;
+  animation: carouselScroll 40s linear infinite;
+}
+#media-carousel-wrap:hover .carousel-track {
+  animation-play-state: paused;
+}
+@keyframes carouselScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.car-card {
+  flex-shrink: 0;
+  width: 280px;
+  height: 200px;
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+.car-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(.8);
+  transition: filter .4s, transform .5s;
+}
+.car-card:hover img {
+  filter: brightness(1);
+  transform: scale(1.04);
+}
+@media(max-width:960px){
+  .car-card { width: 220px; height: 160px; }
+  #media-carousel-wrap { padding: 32px 0; }
 }
 </style>
 </head>
@@ -509,12 +550,7 @@
           <li class="svc-item">Creative Strategy &amp; Brand Storytelling</li>
           <li class="svc-item">Community Building &amp; Talent Development</li>
         </ul>
-        <!-- image strip fills the gap -->
-        <div class="svc-img-strip rev">
-          <div class="svc-strip-img"><img src="assets/film-candle.jpg" alt="Film"></div>
-          <div class="svc-strip-img"><img src="assets/event-1.jpg" alt="Events"></div>
-          <div class="svc-strip-img"><img src="assets/bts-london.jpg" alt="Culture"></div>
-        </div>
+
       </div>
 
       <div class="vision-col rev d1">
