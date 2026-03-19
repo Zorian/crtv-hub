@@ -288,25 +288,57 @@
 
 /* ─── MEDIA CAROUSEL ─── */
 #media-carousel-wrap {
-  width: 100%;
-  overflow: hidden;
-  padding: 48px 0;
-  background: var(--grey1);
-  border-top: 1px solid rgba(16,118,248,.12);
-  border-bottom: 1px solid rgba(16,118,248,.12);
-  cursor: none;
+  width: 100%; overflow: hidden; padding: 0;
+  background: var(--navy); position: relative;
+  user-select: none;
 }
 .carousel-track {
-  display: flex;
-  gap: 6px;
-  width: max-content;
-  animation: carouselScroll 40s linear infinite;
+  display: flex; gap: 4px; width: max-content;
+  animation: carouselScroll 45s linear infinite;
+  cursor: grab;
 }
-#media-carousel-wrap:hover .carousel-track {
-  animation-play-state: paused;
+.carousel-track:active { cursor: grabbing; }
+#media-carousel-wrap:hover .carousel-track { animation-play-state: paused; }
+@keyframes carouselScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.car-card {
+  flex-shrink: 0; width: 300px; height: 400px;
+  overflow: hidden; display: block; position: relative; text-decoration: none;
 }
-@keyframes carouselScroll {
-  from { transform: translateX(0); }
+.car-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: center top;
+  display: block; filter: brightness(.85);
+  transition: filter .4s, transform .6s;
+}
+.car-card:hover img { filter: brightness(.28); transform: scale(1.04); }
+.car-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .35s;
+}
+.car-card:hover .car-overlay { opacity: 1; }
+.car-overlay-btn {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .28em; text-transform: uppercase;
+  color: #fff; border: 1.5px solid rgba(255,255,255,.8);
+  padding: 14px 28px; background: rgba(16,118,248,.3);
+  backdrop-filter: blur(4px); white-space: nowrap;
+}
+.car-card:hover .car-overlay-btn { background: var(--blue); border-color: var(--blue); }
+/* drag cursor bar */
+.carousel-drag-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; padding: 18px 0 8px;
+  background: var(--navy);
+}
+.drag-hint {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 10px;
+  letter-spacing: .35em; text-transform: uppercase; color: var(--muted);
+}
+.drag-track { width: 120px; height: 2px; background: var(--grey3); position: relative; overflow: hidden; border-radius: 2px; }
+.drag-fill { height: 100%; width: 40%; background: var(--blue); border-radius: 2px; animation: dragSlide 3s ease-in-out infinite; }
+@keyframes dragSlide { 0%{transform:translateX(-100%)} 50%{transform:translateX(150%)} 100%{transform:translateX(-100%)} }
+
   to   { transform: translateX(-50%); }
 }
 .car-card {
@@ -641,41 +673,41 @@
 <!-- MEDIA CAROUSEL -->
 <div id="media-carousel-wrap">
   <div class="carousel-track">
-    <a href="media.html" class="car-card"><img src="assets/DSC05969.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06273.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3684.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00772.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06195.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00731.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3553.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06140.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00584.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06020.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3177.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00786.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06294.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3631.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00625.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06187.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3476.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00530.jpg" alt="" loading="lazy"></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC05969.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06273.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3684.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00772.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06195.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00731.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3553.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06140.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00584.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06020.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3177.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00786.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06294.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3631.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00625.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06187.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3476.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00530.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
     <!-- duplicate for seamless loop -->
-    <a href="media.html" class="car-card"><img src="assets/DSC05969.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06273.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3684.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00772.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06195.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00731.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3553.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06140.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00584.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06020.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3177.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00786.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06294.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSCF3631.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC00625.jpg" alt="" loading="lazy"></a>
-    <a href="media.html" class="car-card"><img src="assets/DSC06187.jpg" alt="" loading="lazy"></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC05969.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06273.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3684.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00772.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06195.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00731.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3553.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06140.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00584.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06020.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3177.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00786.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06294.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSCF3631.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC00625.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
+    <a href="media.html" class="car-card"><img src="assets/DSC06187.jpg" alt="" loading="lazy"><div class="car-overlay"><div class="car-overlay-btn">VIEW OUR PROJECTS</div></div></a>
   </div>
 </div>
 
@@ -977,26 +1009,3 @@ document.addEventListener('touchstart', playClick, {passive:true});
 </script>
 </body>
 </html>
-  <!-- BOTTOM: 4 service cards -->
-  <div class="svc-mag-cards">
-    <div class="svc-mag-card rev">
-      <div class="svc-card-num">01</div>
-      <div class="svc-card-title">Film Production</div>
-      <div class="svc-card-body">Cinematic storytelling for artists, brands &amp; culture.</div>
-    </div>
-    <div class="svc-mag-card rev d1">
-      <div class="svc-card-num">02</div>
-      <div class="svc-card-title">Live Events</div>
-      <div class="svc-card-body">From underground cyphers to global stages.</div>
-    </div>
-    <div class="svc-mag-card rev d2">
-      <div class="svc-card-num">03</div>
-      <div class="svc-card-title">Creative Strategy</div>
-      <div class="svc-card-body">Brand storytelling connecting culture to commerce.</div>
-    </div>
-    <div class="svc-mag-card rev d3">
-      <div class="svc-card-num">04</div>
-      <div class="svc-card-title">Community</div>
-      <div class="svc-card-body">Building ecosystems where creatives thrive &amp; grow.</div>
-    </div>
-  </div>
