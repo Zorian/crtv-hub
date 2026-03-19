@@ -358,7 +358,7 @@
   </div>
 
   <!-- Fallback image (mobile + loading) -->
-  <div class="slide-fallback" id="slide-fallback" style="background-image:url('assets/hero-1.jpg')"></div>
+  <div class="slide-fallback" id="slide-fallback" style="background-image:url('assets/hero-1.jpg');opacity:1;"></div>
 
   <!-- Flicker overlay -->
   <div id="hero-flicker"></div>
@@ -776,40 +776,60 @@ const slamObs = new IntersectionObserver(entries=>{
     slamLines.forEach((line, i)=>{
       setTimeout(()=> line.classList.add('in'), i * 120);
     });
-    setTimeout(()=> slamSub.classList.add('in'), slamLines.length * 120 + 100);
+    if(slamSub) setTimeout(()=> slamSub.classList.add('in'), slamLines.length * 120 + 100);
     slamObs.disconnect();
   }
-},{threshold:0.3});
-if(slamLines[0]) slamObs.observe(slamLines[0].parentElement);
+},{threshold:0.05});
+if(slamLines[0]) slamObs.observe(slamLines[0].closest('section') || slamLines[0].parentElement);
+
+// Fallback for immediate visibility
+setTimeout(()=>{
+  if(slamLines[0]){
+    const r = slamLines[0].getBoundingClientRect();
+    if(r.top < window.innerHeight){
+      slamLines.forEach((l,i)=> setTimeout(()=>l.classList.add('in'), i*120));
+      if(slamSub) setTimeout(()=>slamSub.classList.add('in'), slamLines.length*120+100);
+    }
+  }
+},600);
 
 /* ═══════════════════════════════════════════════
    STATS COUNTER
 ═══════════════════════════════════════════════ */
 const statEls = document.querySelectorAll('[data-count]');
+function animateStat(el){
+  if(el.dataset.animated) return;
+  el.dataset.animated = '1';
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  if(target === 0){ el.textContent = suffix; return; }
+  const dur = 1600;
+  const startTime = performance.now();
+  function countUp(now){
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed/dur, 1);
+    const ease = 1 - Math.pow(1-progress, 3);
+    el.textContent = Math.floor(ease * target) + suffix;
+    if(progress < 1) requestAnimationFrame(countUp);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(countUp);
+}
+
 const statObs = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
-    if(!entry.isIntersecting) return;
-    const el = entry.target;
-    const target = parseInt(el.dataset.count);
-    const suffix = el.dataset.suffix;
-    if(target === 0){ el.textContent = suffix; statObs.unobserve(el); return; }
-    let start = 0;
-    const dur = 1400;
-    const startTime = performance.now();
-    function countUp(now){
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed/dur, 1);
-      const ease = 1 - Math.pow(1-progress, 3);
-      const val = Math.floor(ease * target);
-      el.textContent = val + suffix;
-      if(progress < 1) requestAnimationFrame(countUp);
-      else el.textContent = target + suffix;
-    }
-    requestAnimationFrame(countUp);
-    statObs.unobserve(el);
+    if(entry.isIntersecting) animateStat(entry.target);
   });
-},{threshold:0.5});
+},{threshold:0.1, rootMargin:'0px 0px -50px 0px'});
 statEls.forEach(el=> statObs.observe(el));
+
+// Fallback: if already visible on load, animate after short delay
+setTimeout(()=>{
+  statEls.forEach(el=>{
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight) animateStat(el);
+  });
+}, 800);
 
 /* ═══════════════════════════════════════════════
    SERVICE ITEMS SLIDE IN
