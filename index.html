@@ -243,53 +243,6 @@
   .hero-meta,.hero-nav{right:24px;}
 }
 
-/* ─── SERVICES IMAGE MOSAIC ─────────────────── */
-#services { background: var(--grey1); padding: 130px 0; }
-.svc-mosaic { width: 100%; }
-
-/* All panels hidden except active */
-.svc-panel {
-  display: none;
-  animation: panelIn .5s cubic-bezier(.16,1,.3,1) both;
-}
-.svc-panel.active { display: block; }
-@keyframes panelIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: none; }
-}
-
-/* 3-image asymmetric grid */
-.svc-panel-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 220px 220px;
-  gap: 4px;
-  margin-bottom: 18px;
-}
-.sp-img { overflow: hidden; background: var(--grey2); }
-.sp-img img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform .7s ease, filter .5s;
-  filter: brightness(.85);
-}
-.sp-img:hover img { transform: scale(1.06); filter: brightness(1); }
-.sp-main { grid-column: 1; grid-row: 1 / 3; }
-.sp-a    { grid-column: 2; grid-row: 1; }
-.sp-b    { grid-column: 2; grid-row: 2; }
-
-.sp-label {
-  padding: 16px 0 0;
-  border-top: 1px solid rgba(16,118,248,.25);
-  display: flex; flex-direction: column; gap: 6px;
-}
-.sp-label p { font-size: 14px; line-height: 1.8; color: rgba(240,237,232,.6); }
-
-/* Highlight active service row */
-.svc-item.active-svc { color: var(--blue) !important; }
-
-@media(max-width:960px){
-  .svc-panel { display: block !important; margin-bottom: 32px; }
-  .svc-panel-grid { grid-template-rows: 160px 160px; }
 }
 </style>
 </head>
@@ -409,8 +362,8 @@
   </div>
   <div class="vid-slide" id="slide-3">
     <video autoplay muted loop playsinline preload="auto" class="hero-video">
-      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
-      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915108/copy_DC5E2476-9E06-406A-9243-014FAE8F5F71_gcdbkj.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915108/copy_DC5E2476-9E06-406A-9243-014FAE8F5F71_gcdbkj.mp4" type="video/mp4">
     </video>
     <div class="hero-fog"></div>
     <div class="hero-body">
@@ -424,8 +377,8 @@
   </div>
   <div class="vid-slide" id="slide-4">
     <video autoplay muted loop playsinline preload="auto" class="hero-video">
-      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915108/copy_DC5E2476-9E06-406A-9243-014FAE8F5F71_gcdbkj.mp4" type="video/mp4">
-      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915108/copy_DC5E2476-9E06-406A-9243-014FAE8F5F71_gcdbkj.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
     </video>
     <div class="hero-fog"></div>
     <div class="hero-body">
@@ -498,61 +451,24 @@
 <section id="services">
   <div class="container">
     <div class="svc-grid">
-
-      <!-- LEFT: title + list -->
       <div>
         <div class="rev"><span class="eyebrow">What We Do</span><h2 class="display-title">Film.<br>Events.<br>Culture.</h2></div>
         <ul class="svc-list">
-          <li class="svc-item" data-svc="0">Film Production &amp; Visual Storytelling</li>
-          <li class="svc-item" data-svc="1">Live Events &amp; Global Dance Platforms</li>
-          <li class="svc-item" data-svc="2">Creative Strategy &amp; Brand Storytelling</li>
-          <li class="svc-item" data-svc="3">Community Building &amp; Talent Development</li>
+          <li class="svc-item">Film Production &amp; Visual Storytelling</li>
+          <li class="svc-item">Live Events &amp; Global Dance Platforms</li>
+          <li class="svc-item">Creative Strategy &amp; Brand Storytelling</li>
+          <li class="svc-item">Community Building &amp; Talent Development</li>
         </ul>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:40px;" class="rev">
+      </div>
+      <div class="vision-col rev d1">
+        <span class="eyebrow">The Vision</span>
+        <h2 class="display-title">More than<br>content.<br>A movement.</h2>
+        <p>From underground dance cyphers to global stages, we are building a world where creatives are valued, supported, and seen. Our work bridges film, community, and live experiences — locally and globally.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
           <a href="media.html" class="btn-fill">EXPLORE WORK</a>
           <a href="about.html" class="btn-ghost">ABOUT US</a>
         </div>
       </div>
-
-      <!-- RIGHT: sticky image mosaic -->
-      <div class="vision-col">
-        <div class="svc-mosaic" id="svc-mosaic">
-          <!-- panel per service item -->
-          <div class="svc-panel active" data-panel="0">
-            <div class="svc-panel-grid">
-              <div class="sp-img sp-main"><img src="assets/film-candle.jpg" alt="Film"></div>
-              <div class="sp-img sp-a"><img src="assets/film-directing.jpg" alt="Direction"></div>
-              <div class="sp-img sp-b"><img src="assets/film-monitor.jpg" alt="Monitor"></div>
-            </div>
-            <div class="sp-label"><span class="eyebrow">01 — Film</span><p>Cinematic storytelling for artists, brands &amp; culture.</p></div>
-          </div>
-          <div class="svc-panel" data-panel="1">
-            <div class="svc-panel-grid">
-              <div class="sp-img sp-main"><img src="assets/event-1.jpg" alt="Events"></div>
-              <div class="sp-img sp-a"><img src="assets/event-2.jpg" alt="Cypher"></div>
-              <div class="sp-img sp-b"><img src="assets/event-3.jpg" alt="Showcase"></div>
-            </div>
-            <div class="sp-label"><span class="eyebrow">02 — Events</span><p>Live experiences from intimate cyphers to global stages.</p></div>
-          </div>
-          <div class="svc-panel" data-panel="2">
-            <div class="svc-panel-grid">
-              <div class="sp-img sp-main"><img src="assets/bts-london.jpg" alt="Creative"></div>
-              <div class="sp-img sp-a"><img src="assets/news-set.jpg" alt="Brand"></div>
-              <div class="sp-img sp-b"><img src="assets/creative-work.jpg" alt="Strategy"></div>
-            </div>
-            <div class="sp-label"><span class="eyebrow">03 — Creative</span><p>Brand strategy &amp; storytelling that connects culture to commerce.</p></div>
-          </div>
-          <div class="svc-panel" data-panel="3">
-            <div class="svc-panel-grid">
-              <div class="sp-img sp-main"><img src="assets/about-1.jpg" alt="Community"></div>
-              <div class="sp-img sp-a"><img src="assets/about-2.jpg" alt="Talent"></div>
-              <div class="sp-img sp-b"><img src="assets/hero-1.jpg" alt="People"></div>
-            </div>
-            <div class="sp-label"><span class="eyebrow">04 — Community</span><p>Building ecosystems where creatives thrive &amp; grow.</p></div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -856,49 +772,7 @@ function playClick(){
 document.addEventListener('click', playClick);
 document.addEventListener('touchstart', playClick, {passive:true});
 
-/* ═══════════════════════════════════════
-   SERVICES MOSAIC — switch panel on hover/scroll
-═══════════════════════════════════════ */
-(function(){
-  const svcItems = document.querySelectorAll('.svc-item[data-svc]');
-  const panels   = document.querySelectorAll('.svc-panel[data-panel]');
 
-  function activatePanel(idx){
-    panels.forEach(p => p.classList.remove('active'));
-    svcItems.forEach(i => i.classList.remove('active-svc'));
-    const panel = document.querySelector('.svc-panel[data-panel="'+idx+'"]');
-    const item  = document.querySelector('.svc-item[data-svc="'+idx+'"]');
-    if(panel) panel.classList.add('active');
-    if(item)  item.classList.add('active-svc');
-  }
-
-  // Hover to switch
-  svcItems.forEach(item => {
-    item.addEventListener('mouseenter', () => activatePanel(item.dataset.svc));
-  });
-
-  // Scroll-based switching
-  const svcSection = document.getElementById('services');
-  if(svcSection){
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if(e.isIntersecting){
-          // cycle through panels as user scrolls
-          svcItems.forEach((item, i) => {
-            const rect = item.getBoundingClientRect();
-            if(rect.top < window.innerHeight * 0.6 && rect.bottom > 0){
-              activatePanel(i);
-            }
-          });
-        }
-      });
-    },{threshold:0, rootMargin:'-30% 0px -30% 0px'});
-    svcItems.forEach(item => io.observe(item));
-  }
-
-  // Init first panel
-  activatePanel(0);
-})();
 
 </script>
 </body>
