@@ -762,8 +762,8 @@ const statObs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting) animateStat(e.target); });
 },{threshold:0.1});
 statEls.forEach(el=>statObs.observe(el));
-// Fallback
-setTimeout(()=> statEls.forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<window.innerHeight) animateStat(el); }), 1000);
+// Fire immediately on load — stats are visible without scrolling
+setTimeout(()=> statEls.forEach(el=> animateStat(el)), 500);
 
 /* ═══════════════════════════════════════
    SERVICE SLIDE-IN
