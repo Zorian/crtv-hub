@@ -366,15 +366,7 @@
 }
 
 #manifesto > .container { position: relative; z-index: 1; }
-.mfloat {
-  position: absolute;
-  animation: mfloatAnim var(--dur, 14s) ease-in-out var(--delay, 0s) infinite;
-}
-@keyframes mfloatAnim {
-  0%   { opacity: 0; transform: translate(0, 0) rotate(var(--r0, 0deg)); }
-  15%  { opacity: var(--op, .55); }
-  50%  { transform: translate(var(--tx, 20px), var(--ty, -30px)) rotate(var(--r1, 10deg)); }
-  85%  { opacity: var(--op, .45); }
+
   100% { opacity: 0; transform: translate(0, 0) rotate(var(--r0, 0deg)); }
 }
 
