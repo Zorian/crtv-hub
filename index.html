@@ -280,6 +280,10 @@
 <!-- GRAIN OVERLAY -->
 <div id="grain"></div>
 
+<!-- CUSTOM CURSOR (always on top) -->
+<div id="dot" style="position:fixed;width:10px;height:10px;background:#1076F8;border-radius:50%;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:difference;"></div>
+<div id="ring" style="position:fixed;width:36px;height:36px;border:2px solid rgba(16,118,248,.5);border-radius:50%;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s;"></div>
+
 <!-- FLOATING FILM ELEMENTS -->
 <div id="film-floats"></div>
 
@@ -534,6 +538,7 @@
 
 <!-- YouTube IFrame API -->
 <script src="https://www.youtube.com/iframe_api"></script>
+<script>window.CURSOR_MANAGED=true;</script>
 <script src="shared.js"></script>
 <script>
 /* ═══════════════════════════════════════════════
@@ -696,6 +701,62 @@ document.addEventListener('keydown', e=>{
 // Init first slide content immediately
 updateContent();
 startSeg();
+
+/* ═══════════════════════════════════════════════
+   CURSOR
+═══════════════════════════════════════════════ */
+const dot  = document.getElementById('dot');
+const ring = document.getElementById('ring');
+let mx=window.innerWidth/2, my=window.innerHeight/2, rx=mx, ry=my;
+document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+(function animCursor(){
+  rx += (mx-rx)*.16; ry += (my-ry)*.16;
+  dot.style.transform  = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+  ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+  requestAnimationFrame(animCursor);
+})();
+document.querySelectorAll('a,button,.event-card,.brand-tile,.port-item,.stat-cell,.thumb-seg').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ ring.style.width='56px'; ring.style.height='56px'; ring.style.borderColor='#1076F8'; });
+  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(16,118,248,.5)'; });
+});
+
+/* ═══════════════════════════════════════════════
+   CLICK SOUND (Web Audio API - no file needed)
+═══════════════════════════════════════════════ */
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function playClick(){
+  try {
+    if(!audioCtx) audioCtx = new AudioCtx();
+    // Create a short mechanical click sound
+    const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.06, audioCtx.sampleRate);
+    const data = buf.getChannelData(0);
+    for(let i=0; i<data.length; i++){
+      // Sharp transient then rapid decay
+      const t = i / audioCtx.sampleRate;
+      data[i] = (Math.random()*2-1) * Math.exp(-t * 180);
+    }
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    // High-pass filter to make it crisp
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'highpass';
+    filter.frequency.value = 800;
+    // Gain
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0.18;
+    src.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+    src.start();
+  } catch(e){}
+}
+
+// Play on all clicks across the site
+document.addEventListener('click', playClick);
+// Also play on touch for mobile
+document.addEventListener('touchstart', playClick, {passive:true});
 
 /* ═══════════════════════════════════════════════
    WORD SLAM (manifesto)
