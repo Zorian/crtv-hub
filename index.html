@@ -266,6 +266,33 @@
 /* ─── SERVICES: no delayed reveal, show immediately ─── */
 #services .rev { opacity:1; transform:none; transition:none; }
 #services .svc-item { opacity:1; transform:none; }
+
+/* ─── PORTFOLIO: clean hover, no titles ─── */
+.port-overlay-minimal {
+  position:absolute; inset:0;
+  background: rgba(0,11,38,0);
+  transition: background .4s ease;
+}
+.port-item:hover .port-overlay-minimal {
+  background: rgba(0,11,38,.55);
+}
+.port-hover-cta {
+  position:absolute; inset:0; z-index:5;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; transition:opacity .35s ease;
+}
+.port-hover-cta span {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:13px; letter-spacing:.3em; text-transform:uppercase;
+  color:#fff; border:1.5px solid rgba(255,255,255,.6);
+  padding:12px 28px;
+  transition:border-color .2s, background .2s;
+}
+.port-item:hover .port-hover-cta { opacity:1; }
+.port-item:hover .port-hover-cta span {
+  border-color:#fff;
+  background: rgba(16,118,248,.25);
+}
 </style>
 </head>
 <body>
@@ -512,25 +539,25 @@
 <!-- PORTFOLIO TEASE -->
 <section id="portfolio-tease">
   <div class="container">
-    <div class="rev"><span class="eyebrow">Selected Work</span><h2 class="display-title">Our Projects.</h2></div>
+    <div class="rev"><span class="eyebrow">Selected Work</span><h2 class="display-title">Our Media.</h2></div>
     <div class="port-grid">
-      <a href="https://www.youtube.com/watch?v=dqJ8oud7l2Q" target="_blank" class="port-item span2 rev">
-        <img src="assets/port-1.jpg" alt="Biig Piig">
-        <div class="port-overlay"><div class="port-client">Client: Biig Piig</div><div class="port-name">Feels Right — Official Video</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      <a href="media.html" class="port-item span2 rev">
+        <img src="assets/port-1.jpg" alt="">
+        <div class="port-overlay port-overlay-minimal"></div>
+        <div class="port-hover-cta"><span>VIEW MEDIA</span></div>
       </a>
-      <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="port-item rev">
-        <img src="assets/hero-4.jpg" alt="JBEE">
-        <div class="port-overlay"><div class="port-client">Client: JBEE</div><div class="port-name">JBEE — 24'S</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      <a href="media.html" class="port-item rev">
+        <img src="assets/hero-4.jpg" alt="">
+        <div class="port-overlay port-overlay-minimal"></div>
+        <div class="port-hover-cta"><span>VIEW MEDIA</span></div>
       </a>
-      <a href="https://www.youtube.com/watch?v=HST5VJs8qC4" target="_blank" class="port-item rev d1">
-        <img src="assets/hero-3.jpg" alt="Upsycle">
-        <div class="port-overlay"><div class="port-client">Client: Upsycle Hypewear</div><div class="port-name">Vol.1 Short Film</div></div>
-        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1L13 8L2 15Z"/></svg></div>
+      <a href="media.html" class="port-item rev d1">
+        <img src="assets/hero-3.jpg" alt="">
+        <div class="port-overlay port-overlay-minimal"></div>
+        <div class="port-hover-cta"><span>VIEW MEDIA</span></div>
       </a>
     </div>
-    <div class="port-see-all rev"><a href="media.html" class="btn-ghost">VIEW ALL PROJECTS →</a></div>
+    <div class="port-see-all rev"><a href="media.html" class="btn-ghost">VIEW ALL MEDIA →</a></div>
   </div>
 </section>
 
