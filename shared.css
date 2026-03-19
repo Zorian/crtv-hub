@@ -1,3 +1,12 @@
+
+/* ─── CURSOR: always visible ─── */
+*, *::before, *::after { cursor: default; }
+a, button, [role="button"], .h-btn, .thumb-seg, .brand-tile,
+.port-item, .stat-cell, .event-card, .social-link, .filter-btn,
+.media-card, .car-card, .svc-item, .nav-cta, .btn-fill, .btn-ghost,
+.nav-links a, #mob-nav a, .ft-col a, .form-submit, .burger {
+  cursor: pointer !important;
+}
 /* ── CRTV HUB — SHARED STYLES ── */
 /* Brand Bible colours: #001138 (dark navy), #1076F8 (electric blue), #fff, #000 */
 /* Fonts: Stretch Pro (display) → Barlow Condensed Bold as web fallback, Made Outer Sans → DM Sans */
@@ -74,7 +83,7 @@ img { display: block; max-width: 100%; }
 .nav-cta:hover { background: var(--blue-dim) !important; opacity: 1 !important; }
 
 /* hamburger */
-.burger { display: none; flex-direction: column; gap: 5px; cursor: none; }
+.burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
 .burger span { display: block; width: 22px; height: 2px; background: var(--white); transition: all .3s; }
 .burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
 .burger.open span:nth-child(2) { opacity: 0; }
@@ -176,7 +185,7 @@ footer {
   font-weight: 700; font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
   color: var(--white); background: var(--blue);
   padding: 14px 32px;
-  display: inline-flex; align-items: center; gap: 8px; cursor: none;
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
   position: relative; overflow: hidden; transition: transform .2s, background .2s;
   border-radius: 2px;
 }
@@ -195,7 +204,7 @@ footer {
   color: var(--white);
   border: 1.5px solid rgba(255,255,255,.25);
   padding: 13px 30px;
-  display: inline-flex; align-items: center; gap: 8px; cursor: none;
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
   transition: border-color .25s, color .25s; border-radius: 2px;
 }
 .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
