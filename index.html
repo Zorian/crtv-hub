@@ -469,7 +469,7 @@
     var bubble  = document.getElementById('splash-bubble');
     var btn     = document.getElementById('enter-btn');
     if(splash)  splash.addEventListener('click', closeSplash);
-    if(bubble)  bubble.addEventListener('click', function(e){ e.stopPropagation(); closeSplash(); });
+    if(bubble)  bubble.addEventListener('click', function(e){ closeSplash(); });
     if(btn)     btn.addEventListener('click', closeSplash);
   });
   // Also wire immediately in case DOMContentLoaded already fired
