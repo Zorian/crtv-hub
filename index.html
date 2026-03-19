@@ -58,15 +58,13 @@
 /* ─── HERO VIDEO ─────────────────────────── */
 #hero{position:relative;height:100svh;overflow:hidden;background:var(--navy);}
 
-/* slides */
-.slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;z-index:1;transition:opacity .05s;}
-.slide.active{opacity:1;z-index:2;}
-.slide-flash{position:absolute;inset:0;background:var(--navy);opacity:0;pointer-events:none;z-index:3;}
-.slide.flickering .slide-flash{animation:flickAnim .28s steps(1) forwards;}
-@keyframes flickAnim{0%{opacity:0}15%{opacity:.9}30%{opacity:0}50%{opacity:.75}65%{opacity:0}82%{opacity:.45}100%{opacity:0}}
+/* slides — text overlay containers only */
+.slide{position:absolute;inset:0;opacity:0;z-index:4;pointer-events:none;}
+.slide.active{opacity:1;z-index:5;pointer-events:auto;}
+.slide-flash{display:none;}/* handled by #hero-flicker */
 
 /* hero content */
-.hero-fog{position:absolute;inset:0;z-index:4;background:linear-gradient(to top,rgba(0,17,56,.92) 0%,rgba(0,17,56,.25) 40%,transparent 70%),linear-gradient(to right,rgba(0,17,56,.65) 0%,transparent 55%);}
+.hero-fog{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to top,rgba(0,17,56,.88) 0%,rgba(0,17,56,.2) 45%,transparent 70%),linear-gradient(to right,rgba(0,17,56,.6) 0%,transparent 55%);}
 .hero-body{position:absolute;bottom:96px;left:52px;z-index:5;max-width:700px;}
 .hero-tag{display:inline-block;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;opacity:0;transform:translateY(16px);transition:opacity .5s .1s,transform .5s .1s;}
 .hero-tag.show{opacity:1;transform:none;}
@@ -74,6 +72,9 @@
 .hero-title.show{opacity:1;transform:none;}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:opacity .5s .42s,transform .5s .42s;}
 .hero-actions.show{opacity:1;transform:none;}
+
+/* YT iframe sizing — always covers full viewport */
+#yt-player{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78vh;height:100vh;min-width:100vw;min-height:56.25vw;pointer-events:none;}
 
 /* hero meta */
 .hero-meta{position:absolute;bottom:96px;right:52px;z-index:10;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
@@ -88,12 +89,13 @@
 .thumb-seg{flex:1;background:rgba(255,255,255,.1);position:relative;overflow:hidden;cursor:none;}
 .thumb-seg.done{background:rgba(255,255,255,.32);}
 .thumb-seg .seg-fill{position:absolute;inset:0;background:var(--blue);transform:scaleX(0);transform-origin:left;}
-
+@media(max-width:768px){#yt-bg{display:none;}#hero-fallback{z-index:1;}}
 @media(max-width:960px){.hero-body{left:24px;bottom:100px;}.hero-meta,.hero-nav{right:24px;}}
 
   .slide-fallback{opacity:1!important;}
 }
 
+@keyframes flickAnim{0%{opacity:0}15%{opacity:.9}30%{opacity:0}50%{opacity:.75}65%{opacity:0}82%{opacity:.45}100%{opacity:0}}
 /* ─── FILM GRAIN OVERLAY ─────────────────── */
 #grain{
   position:fixed;inset:0;z-index:200;
@@ -111,19 +113,19 @@
   100%{background-position:15px -5px}
 }
 
-/* ─── FLOATING FILM ELEMENTS ─────────────── */
-#film-floats{
-  position:fixed;inset:0;z-index:10;pointer-events:none;overflow:hidden;
-}
+/* ─── FLOATING GEOMETRIC ELEMENTS ─── */
+#film-floats{position:fixed;inset:0;z-index:10;pointer-events:none;overflow:hidden;}
 .float-el{
   position:absolute;
-  font-size:28px;
   opacity:0;
   animation:floatUp var(--dur,12s) linear var(--delay,0s) infinite;
-  filter:blur(.3px);
 }
 @keyframes floatUp{
-  0%  {opacity:0;transform:translateY(100vh) rotate(var(--rot0,0deg)) scale(.7);}
+  0%  {opacity:0;transform:translateY(100vh) rotate(var(--rot0,0deg));}
+  8%  {opacity:var(--op,.08);}
+  90% {opacity:var(--op,.05);}
+  100%{opacity:0;transform:translateY(-15vh) rotate(var(--rot1,20deg));}
+}
   5%  {opacity:.18;}
   90% {opacity:.12;}
   100%{opacity:0;transform:translateY(-15vh) rotate(var(--rot1,20deg)) scale(1);}
@@ -308,9 +310,23 @@
 
 <!-- HERO -->
 <section id="hero">
-  <!-- slides -->
-  <div class="slide active" id="slide-0" style="background-image:url('assets/hero-1.jpg')">
-    <div class="slide-flash"></div><div class="hero-fog"></div>
+
+  <!-- YouTube BG: one hidden iframe per slide, swapped on transition -->
+  <div id="yt-bg" style="position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;">
+    <div id="yt-player"></div>
+  </div>
+
+  <!-- Fallback image shown before YT loads or on mobile -->
+  <div id="hero-fallback" style="position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-image:url('assets/hero-1.jpg');"></div>
+
+  <!-- flicker overlay -->
+  <div id="hero-flicker" style="position:absolute;inset:0;z-index:3;background:var(--navy);opacity:0;pointer-events:none;"></div>
+
+  <!-- fog -->
+  <div class="hero-fog"></div>
+
+  <!-- Slides: text content only, no bg image -->
+  <div class="slide active" id="slide-0">
     <div class="hero-body">
       <div class="hero-tag show">Client: Nike</div>
       <h1 class="hero-title show">Lose Count —<br>Stronger<br>Than One</h1>
@@ -320,8 +336,7 @@
       </div>
     </div>
   </div>
-  <div class="slide" id="slide-1" style="background-image:url('assets/hero-2.jpg')">
-    <div class="slide-flash"></div><div class="hero-fog"></div>
+  <div class="slide" id="slide-1">
     <div class="hero-body">
       <div class="hero-tag">Client: JBEE</div>
       <h1 class="hero-title">JBEE —<br>24'S</h1>
@@ -331,8 +346,7 @@
       </div>
     </div>
   </div>
-  <div class="slide" id="slide-2" style="background-image:url('assets/port-1.jpg')">
-    <div class="slide-flash"></div><div class="hero-fog"></div>
+  <div class="slide" id="slide-2">
     <div class="hero-body">
       <div class="hero-tag">Client: Biig Piig</div>
       <h1 class="hero-title">Biig Piig —<br>Feels Right</h1>
@@ -342,8 +356,7 @@
       </div>
     </div>
   </div>
-  <div class="slide" id="slide-3" style="background-image:url('assets/hero-4.jpg')">
-    <div class="slide-flash"></div><div class="hero-fog"></div>
+  <div class="slide" id="slide-3">
     <div class="hero-body">
       <div class="hero-tag">Client: Upsycle Hypewear</div>
       <h1 class="hero-title">UPSYCLE<br>Vol.1 Short Film</h1>
@@ -353,8 +366,7 @@
       </div>
     </div>
   </div>
-  <div class="slide" id="slide-4" style="background-image:url('assets/hero-5.jpg')">
-    <div class="slide-flash"></div><div class="hero-fog"></div>
+  <div class="slide" id="slide-4">
     <div class="hero-body">
       <div class="hero-tag">New Gen Entertainment</div>
       <h1 class="hero-title">Dance Your<br>Style Cypher</h1>
@@ -364,8 +376,7 @@
       </div>
     </div>
   </div>
-  <div class="slide" id="slide-5" style="background-image:url('assets/about-3.jpg')">
-    <div class="slide-flash"></div><div class="hero-fog"></div>
+  <div class="slide" id="slide-5">
     <div class="hero-body">
       <div class="hero-tag">Get To Know Me</div>
       <h1 class="hero-title">Louis Lasa<br>Tarbuck</h1>
@@ -375,9 +386,6 @@
       </div>
     </div>
   </div>
-
-  <!-- flicker overlay -->
-  <div id="hero-flicker"></div>
 
   <!-- counter + nav -->
   <div class="hero-meta">
@@ -571,6 +579,7 @@
 </footer>
 
 <!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>window.CURSOR_MANAGED=true;</script>
 <script src="shared.js"></script>
 <script>
@@ -598,62 +607,79 @@ document.querySelectorAll('a,button,.event-card,.brand-tile,.port-item,.stat-cel
 });
 
 /* ═══════════════════════════════════════
-   HERO SLIDER
+   HERO — YouTube background + slide text
 ═══════════════════════════════════════ */
+const SLIDES = [
+  { ytId:'d18iNOeTkmk', thumb:'assets/hero-1.jpg' },
+  { ytId:'5P87JlJQ8-M', thumb:'assets/hero-2.jpg' },
+  { ytId:'dqJ8oud7l2Q', thumb:'assets/port-1.jpg' },
+  { ytId:'HST5VJs8qC4', thumb:'assets/hero-4.jpg' },
+  { ytId:'zy-ooB1l5QE', thumb:'assets/hero-5.jpg' },
+  { ytId:'KV8XAK4Fn6A', thumb:'assets/about-3.jpg'},
+];
+const N = SLIDES.length;
+let cur = 0, ytPlayer = null, ytReady = false;
+let animFrame = null, segStart = null;
+const SEG_MS = 10000;
 const slides = Array.from(document.querySelectorAll('.slide'));
-const N = slides.length;
-let cur = 0, animFrame = null, segStart = null;
-const SEG_MS = 7000;
+const fallback = document.getElementById('hero-fallback');
 
 document.getElementById('total-num').textContent = String(N).padStart(2,'0');
 
+// Build thumb strip
 const strip = document.getElementById('thumb-strip');
-slides.forEach((_,i)=>{
-  const s = document.createElement('div');
-  s.className = 'thumb-seg';
-  s.addEventListener('click', ()=> goTo(i));
-  strip.appendChild(s);
-});
+SLIDES.forEach((_,i)=>{ const s=document.createElement('div'); s.className='thumb-seg'; s.addEventListener('click',()=>goTo(i)); strip.appendChild(s); });
 const segs = Array.from(strip.querySelectorAll('.thumb-seg'));
 
-function showContent(slide){
-  const tag = slide.querySelector('.hero-tag');
-  const title = slide.querySelector('.hero-title');
-  const actions = slide.querySelector('.hero-actions');
-  [tag,title,actions].forEach(el=>{ if(el) el.classList.remove('show'); });
-  setTimeout(()=>{ if(tag) tag.classList.add('show'); }, 60);
-  setTimeout(()=>{ if(title) title.classList.add('show'); if(actions) actions.classList.add('show'); }, 120);
+// YouTube API callback
+window.onYouTubeIframeAPIReady = function(){
+  ytPlayer = new YT.Player('yt-player',{
+    width:'100%', height:'100%',
+    videoId: SLIDES[0].ytId,
+    playerVars:{ autoplay:1, mute:1, controls:0, disablekb:1, playsinline:1, rel:0, showinfo:0, modestbranding:1, iv_load_policy:3, loop:0 },
+    events:{
+      onReady: e => { e.target.mute(); e.target.setVolume(0); e.target.playVideo(); ytReady=true; },
+      onStateChange: e => { if(e.data===YT.PlayerState.ENDED) goTo(cur+1); }
+    }
+  });
+};
+
+function showContent(idx){
+  slides.forEach(s=>{ s.classList.remove('active'); const t=s.querySelector('.hero-tag'),ti=s.querySelector('.hero-title'),a=s.querySelector('.hero-actions'); if(t)t.classList.remove('show'); if(ti)ti.classList.remove('show'); if(a)a.classList.remove('show'); });
+  const sl = slides[idx]; sl.classList.add('active');
+  const tag=sl.querySelector('.hero-tag'), title=sl.querySelector('.hero-title'), actions=sl.querySelector('.hero-actions');
+  setTimeout(()=>{ if(tag) tag.classList.add('show'); },60);
+  setTimeout(()=>{ if(title) title.classList.add('show'); if(actions) actions.classList.add('show'); },120);
+}
+
+function flicker(cb){
+  const f=document.getElementById('hero-flicker');
+  f.style.animation='none'; f.style.opacity='0';
+  requestAnimationFrame(()=>{
+    f.style.animation='flickAnim .3s steps(1) forwards';
+    setTimeout(cb, 300);
+  });
 }
 
 function goTo(idx){
   cancelAnimationFrame(animFrame);
-  const prev = slides[cur];
-  cur = ((idx%N)+N)%N;
-  const next = slides[cur];
-  document.getElementById('curr-num').textContent = String(cur+1).padStart(2,'0');
+  cur=((idx%N)+N)%N;
+  document.getElementById('curr-num').textContent=String(cur+1).padStart(2,'0');
   segs.forEach((s,i)=>{ s.classList.remove('active','done'); s.innerHTML=''; if(i<cur) s.classList.add('done'); });
-  prev.classList.add('flickering');
-  setTimeout(()=>{
-    prev.classList.remove('active','flickering');
-    next.classList.add('active');
-    showContent(next);
+  // Update fallback image
+  if(fallback) fallback.style.backgroundImage=`url('${SLIDES[cur].thumb}')`;
+  flicker(()=>{
+    showContent(cur);
+    if(ytReady && ytPlayer){ ytPlayer.loadVideoById({videoId:SLIDES[cur].ytId,startSeconds:0}); ytPlayer.mute(); }
     startSeg();
-  }, 280);
+  });
 }
 
 function startSeg(){
-  const seg = segs[cur];
-  seg.classList.add('active');
-  const fill = document.createElement('div'); fill.className='seg-fill';
-  seg.innerHTML=''; seg.appendChild(fill);
-  segStart = performance.now(); let done=false;
-  function tick(now){
-    const pct = Math.min((now-segStart)/SEG_MS*100,100);
-    fill.style.transform=`scaleX(${pct/100})`;
-    document.getElementById('prog-bar').style.width=pct+'%';
-    if(pct<100){ animFrame=requestAnimationFrame(tick); }
-    else if(!done){ done=true; document.getElementById('prog-bar').style.width='0%'; goTo(cur+1); }
-  }
+  const seg=segs[cur]; seg.classList.add('active');
+  const fill=document.createElement('div'); fill.className='seg-fill'; seg.innerHTML=''; seg.appendChild(fill);
+  segStart=performance.now(); let done=false;
+  function tick(now){ const pct=Math.min((now-segStart)/SEG_MS*100,100); fill.style.transform=`scaleX(${pct/100})`; document.getElementById('prog-bar').style.width=pct+'%'; if(pct<100){ animFrame=requestAnimationFrame(tick); } else if(!done){ done=true; document.getElementById('prog-bar').style.width='0%'; goTo(cur+1); } }
   animFrame=requestAnimationFrame(tick);
 }
 
@@ -661,21 +687,38 @@ document.getElementById('next-btn').addEventListener('click',()=>goTo(cur+1));
 document.getElementById('prev-btn').addEventListener('click',()=>goTo(cur-1));
 document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') goTo(cur+1); if(e.key==='ArrowLeft') goTo(cur-1); });
 
+// Init — show first slide immediately, videos play when YT ready
+showContent(0);
+startSeg();
+
 // Init
 showContent(slides[0]);
 startSeg();
 
 /* ═══════════════════════════════════════
-   FLOATING FILM ELEMENTS
+   FLOATING GEOMETRIC ELEMENTS (no emojis)
 ═══════════════════════════════════════ */
-const ICONS = ['🎬','🎥','📽️','🎞️','🎤','💡','✦','◆','⬡'];
+const SHAPES = [
+  '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" stroke="rgba(16,118,248,0.3)" stroke-width="1.5" fill="none"/></svg>',
+  '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="rgba(16,118,248,0.25)" stroke-width="1.5" fill="none"/></svg>',
+  '<svg width="22" height="22" viewBox="0 0 22 22" fill="none"><polygon points="11,2 20,20 2,20" stroke="rgba(16,118,248,0.2)" stroke-width="1.5" fill="none"/></svg>',
+  '<svg width="18" height="18" viewBox="0 0 18 18" fill="rgba(16,118,248,0.15)"><rect x="4" y="4" width="10" height="10" rx="1"/></svg>',
+  '<svg width="16" height="16" viewBox="0 0 16 16" fill="rgba(16,118,248,0.12)"><circle cx="8" cy="8" r="6"/></svg>',
+  '<svg width="28" height="4" viewBox="0 0 28 4" fill="none"><line x1="0" y1="2" x2="28" y2="2" stroke="rgba(16,118,248,0.2)" stroke-width="1.5"/></svg>',
+  '<svg width="4" height="28" viewBox="0 0 4 28" fill="none"><line x1="2" y1="0" x2="2" y2="28" stroke="rgba(16,118,248,0.2)" stroke-width="1.5"/></svg>',
+];
 const floatContainer = document.getElementById('film-floats');
-for(let i=0;i<18;i++){
-  const el=document.createElement('div'); el.className='float-el';
-  el.textContent=ICONS[Math.floor(Math.random()*ICONS.length)];
-  const left=Math.random()*100, dur=10+Math.random()*14, delay=Math.random()*12;
-  const rot0=(Math.random()-.5)*30, rot1=rot0+(Math.random()-.5)*40;
-  el.style.cssText=`left:${left}%;--dur:${dur}s;--delay:${delay}s;--rot0:${rot0}deg;--rot1:${rot1}deg;font-size:${18+Math.random()*20}px;`;
+for(let i=0;i<22;i++){
+  const el = document.createElement('div');
+  el.className = 'float-el';
+  el.innerHTML = SHAPES[Math.floor(Math.random()*SHAPES.length)];
+  const left  = Math.random()*100;
+  const dur   = 14 + Math.random()*18;
+  const delay = Math.random()*16;
+  const rot0  = (Math.random()-.5)*20;
+  const rot1  = rot0 + (Math.random()-.5)*30;
+  const op    = (.04 + Math.random()*.08).toFixed(3);
+  el.style.cssText = `left:${left}%;--dur:${dur}s;--delay:${delay}s;--rot0:${rot0}deg;--rot1:${rot1}deg;--op:${op};`;
   floatContainer.appendChild(el);
 }
 
