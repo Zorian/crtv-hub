@@ -376,7 +376,6 @@
 #manifesto > .container { position: relative; z-index: 1; }
 .mfloat {
   position: absolute;
-  opacity: 0;
   animation: mfloatAnim var(--dur, 14s) ease-in-out var(--delay, 0s) infinite;
 }
 @keyframes mfloatAnim {
@@ -1043,7 +1042,7 @@ document.addEventListener('touchstart', playClick, {passive:true});
       var ty    = ((Math.random()-.5)*50).toFixed(1);
       var r0    = ((Math.random()-.5)*15).toFixed(1);
       var r1    = (parseFloat(r0)+(Math.random()-.5)*20).toFixed(1);
-      el.style.cssText = 'position:absolute;left:'+pos.l+';top:'+pos.t+';opacity:0;'
+      el.style.cssText = 'position:absolute;left:'+pos.l+';top:'+pos.t+';'
         +'--dur:'+dur+'s;--delay:'+delay+'s;--tx:'+tx+'px;--ty:'+ty+'px;'
         +'--r0:'+r0+'deg;--r1:'+r1+'deg;'
         +'animation:mfloatAnim '+dur+'s ease-in-out '+delay+'s infinite;';
