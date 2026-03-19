@@ -33,8 +33,8 @@ if(!window.CURSOR_MANAGED){
   document.addEventListener('touchstart', _playClick, {passive:true});
 }
     document.querySelectorAll('a,button,.card,.brand-tile,.port-item,.svc-item,.stat-cell,.filter-btn,.event-card').forEach(el=>{
-      el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
-      el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+      el.addEventListener('mouseenter',()=>);
+      el.addEventListener('mouseleave',()=>);
     });
   }
 
