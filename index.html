@@ -24,23 +24,30 @@
 #splash-bubble{
   width:210px;height:210px;border-radius:50%;background:#1076F8;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  position:relative;z-index:2;cursor:none;
+  position:relative;z-index:2;
+  cursor:pointer;
   box-shadow:0 16px 48px rgba(16,118,248,.35);
   opacity:0;animation:bubbleIn .6s cubic-bezier(.34,1.56,.64,1) .2s forwards;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s;
+  gap:6px;
 }
+#splash-bubble:hover{
+  transform:scale(1.08);
+  box-shadow:0 24px 64px rgba(16,118,248,.55);
+}
+#splash-bubble:active{ transform:scale(.96); }
 @keyframes bubbleIn{from{opacity:0;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
 .bubble-text{display:flex;flex-direction:column;align-items:center;line-height:.92;color:#fff;
   font-family:"Barlow Condensed",sans-serif;font-weight:900;text-transform:uppercase;text-align:center;}
 .bubble-text .b-the{font-size:28px;letter-spacing:.16em;}
 .bubble-text .b-crtv{font-size:52px;letter-spacing:.06em;}
 .bubble-text .b-hub{font-size:52px;letter-spacing:.06em;line-height:.85;}
-#enter-btn{
-  background:none;border:none;font-family:"Barlow Condensed",sans-serif;
-  font-weight:700;font-size:13px;letter-spacing:.35em;text-transform:uppercase;
-  color:#1076F8;cursor:none;position:relative;z-index:2;
-  opacity:0;animation:fadeUp .5s ease .75s forwards;transition:letter-spacing .3s;
+.bubble-cta{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;
+  font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);margin-top:4px;
 }
-#enter-btn:hover{letter-spacing:.5em;}
+#enter-btn{ display:none; }
 .splash-tag{
   font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:9px;
   letter-spacing:.4em;text-transform:uppercase;color:rgba(16,118,248,.3);
@@ -281,14 +288,14 @@
 <div id="grain"></div>
 
 <!-- CUSTOM CURSOR (always on top) -->
-<div id="dot" style="position:fixed;width:10px;height:10px;background:#1076F8;border-radius:50%;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:difference;"></div>
-<div id="ring" style="position:fixed;width:36px;height:36px;border:2px solid rgba(16,118,248,.5);border-radius:50%;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s;"></div>
+<div id="dot" style="position:fixed;width:10px;height:10px;background:#1076F8;border-radius:50%;top:0;left:0;pointer-events:none!important;z-index:9999;transform:translate(-50%,-50%);"></div>
+<div id="ring" style="position:fixed;width:36px;height:36px;border:2px solid rgba(16,118,248,.5);border-radius:50%;top:0;left:0;pointer-events:none!important;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s;"></div>
 
 <!-- FLOATING FILM ELEMENTS -->
 <div id="film-floats"></div>
 
 <!-- SPLASH -->
-<div id="splash">
+<div id="splash" onclick="closeSplash()">
   <div class="splash-ring"></div>
   <div id="splash-bubble">
     <div class="bubble-text">
@@ -296,8 +303,9 @@
       <span class="b-crtv">CRTV</span>
       <span class="b-hub">HUB</span>
     </div>
+    <div class="bubble-cta">CLICK TO ENTER</div>
   </div>
-  <button id="enter-btn">CLICK TO ENTER</button>
+  <button id="enter-btn" style="display:none"></button>
   <span class="splash-tag">ONLY REBELS RECREATE THE WORLD</span>
 </div>
 
@@ -549,8 +557,9 @@ function closeSplash(){
   document.getElementById('splash').classList.add('out');
   document.body.style.overflow = '';
 }
-document.getElementById('enter-btn').addEventListener('click', closeSplash);
-document.getElementById('splash-bubble').addEventListener('click', closeSplash);
+// Bubble is the main CTA - onclick already on #splash div
+// Also wire bubble directly as backup
+document.getElementById('splash-bubble').onclick = closeSplash;
 
 /* ═══════════════════════════════════════════════
    FLOATING FILM ELEMENTS
