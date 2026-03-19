@@ -4,6 +4,8 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE CRTV HUB — Home</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
@@ -199,6 +201,126 @@
   .events-grid { grid-template-columns:1fr; }
   .slide-body { left:24px; bottom:100px; }
   .hero-meta,.hero-nav { right:24px; }
+}
+
+/* ── FILM GRAIN ── */
+#grain {
+  position: fixed; inset: 0; z-index: 9990;
+  pointer-events: none;
+  opacity: .032;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+  animation: grainShift 0.15s steps(1) infinite;
+}
+@keyframes grainShift {
+  0%   { background-position: 0 0; }
+  25%  { background-position: -20px 10px; }
+  50%  { background-position: 10px -15px; }
+  75%  { background-position: -5px 20px; }
+  100% { background-position: 15px -5px; }
+}
+
+/* ── FLOATING FILM ELEMENTS ── */
+.float-el {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(16,118,248,.06);
+  font-size: clamp(80px, 12vw, 160px);
+  letter-spacing: .05em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ── WORD REVEAL ── */
+.word-reveal {
+  overflow: hidden;
+  display: block;
+}
+.word-reveal .word {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+}
+
+/* ── PARALLAX HERO ── */
+.slide-fog {
+  will-change: transform;
+}
+
+/* ── HORIZONTAL SCROLL PORTFOLIO ── */
+#portfolio-tease {
+  overflow: hidden;
+}
+.port-h-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  padding: 0 52px 0 0;
+}
+.port-h-card {
+  flex-shrink: 0;
+  width: 420px;
+  aspect-ratio: 16/10;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+}
+.port-h-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(.72);
+  transition: filter .5s;
+}
+.port-h-card:hover img { filter: brightness(.45); }
+.port-h-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,17,56,.88) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 24px;
+}
+.port-h-client { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; }
+.port-h-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: .04em; text-transform: uppercase; color: #fff; }
+.port-play { position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(.5); transition: opacity .3s, transform .3s; }
+.port-play svg { fill: #fff; margin-left: 3px; }
+.port-h-card:hover .port-play { opacity: 1; transform: scale(1); }
+.port-see-all-wrap { display: flex; justify-content: flex-end; padding: 32px 52px 0; }
+
+/* ── STAT COUNTER ── */
+.stat-num[data-count] { transition: none; }
+
+/* ── CURSOR TRAIL ── */
+.cursor-trail {
+  position: fixed;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+/* ── SECTION ENTRANCE LINES ── */
+.reveal-line {
+  overflow: hidden;
+  display: block;
+}
+.reveal-line .line-inner {
+  display: block;
+  transform: translateY(100%);
+}
+
+@media(max-width:960px){
+  .port-h-card { width: 320px; }
+  .port-h-track { padding: 0 24px 0 0; }
+  .port-see-all-wrap { padding: 24px 24px 0; }
 }
 </style>
 </head>
@@ -515,4 +637,207 @@ document.getElementById('prev-btn').addEventListener('click',()=>goTo(cur-1));
 document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') goTo(cur+1); if(e.key==='ArrowLeft') goTo(cur-1); });
 goTo(0);
 </script>
+
+<!-- FILM GRAIN -->
+<div id="grain"></div>
+
+<!-- FLOATING BG TEXT -->
+<div class="float-el" id="fl1">FILM</div>
+<div class="float-el" id="fl2">CULTURE</div>
+<div class="float-el" id="fl3">CREATIVE</div>
+
+<!-- CURSOR TRAILS -->
+<div class="cursor-trail" id="t1"></div>
+<div class="cursor-trail" id="t2"></div>
+<div class="cursor-trail" id="t3"></div>
+
+<script>
+/* ── GSAP SCROLL ANIMATIONS ── */
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── PARALLAX HERO IMAGES ── */
+document.querySelectorAll('.slide').forEach(slide => {
+  gsap.to(slide, {
+    yPercent: -18,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1
+    }
+  });
+});
+
+/* ── WORD-BY-WORD MANIFESTO REVEAL ── */
+function wrapWords(selector) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  el.innerHTML = el.innerText.split(' ').map(w =>
+    `<span class="word-reveal"><span class="word">${w}</span></span>`
+  ).join(' ');
+}
+wrapWords('#manifesto .display-title');
+
+gsap.utils.toArray('#manifesto .word').forEach((word, i) => {
+  gsap.to(word, {
+    y: 0, opacity: 1,
+    duration: 0.6,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: word,
+      start: "top 88%",
+    },
+    delay: i * 0.08
+  });
+});
+
+/* ── SERIF SUBTITLE FADE UP ── */
+gsap.from('#manifesto .serif-sub', {
+  y: 30, opacity: 0, duration: 1, ease: "power2.out",
+  scrollTrigger: { trigger: '#manifesto .serif-sub', start: "top 85%" }
+});
+gsap.from('#manifesto p', {
+  y: 24, opacity: 0, duration: 1, delay: 0.2, ease: "power2.out",
+  scrollTrigger: { trigger: '#manifesto p', start: "top 85%" }
+});
+
+/* ── STATS COUNTER ── */
+const statData = [
+  { el: document.querySelectorAll('.stat-num')[0], target: 50, suffix: '+' },
+  { el: document.querySelectorAll('.stat-num')[1], target: 12, suffix: '+' },
+  { el: document.querySelectorAll('.stat-num')[2], target: 4,  suffix: ''  },
+];
+statData.forEach(({ el, target, suffix }) => {
+  if (!el) return;
+  const obj = { val: 0 };
+  ScrollTrigger.create({
+    trigger: el,
+    start: "top 80%",
+    once: true,
+    onEnter: () => {
+      gsap.to(obj, {
+        val: target, duration: 1.8, ease: "power2.out",
+        onUpdate: () => { el.textContent = Math.round(obj.val) + suffix; }
+      });
+    }
+  });
+});
+
+/* ── HORIZONTAL PORTFOLIO SCRUB ── */
+const track = document.getElementById('port-track');
+if (track) {
+  const totalWidth = track.scrollWidth - window.innerWidth + 104;
+  gsap.to(track, {
+    x: () => -totalWidth,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#portfolio-tease",
+      start: "top top",
+      end: () => `+=${totalWidth}`,
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    }
+  });
+}
+
+/* ── SERVICES LIST STAGGER ── */
+gsap.utils.toArray('.svc-item').forEach((item, i) => {
+  gsap.from(item, {
+    x: -60, opacity: 0, duration: 0.7,
+    ease: "power3.out",
+    scrollTrigger: { trigger: item, start: "top 85%" },
+    delay: i * 0.1
+  });
+});
+
+/* ── BRANDS SCALE IN ── */
+gsap.utils.toArray('.brand-tile').forEach((tile, i) => {
+  gsap.from(tile, {
+    scale: 0.7, opacity: 0, duration: 0.5,
+    ease: "back.out(1.4)",
+    scrollTrigger: { trigger: tile, start: "top 88%" },
+    delay: (i % 6) * 0.06
+  });
+});
+
+/* ── FLOATING BG TEXT ── */
+const floaters = [
+  { id: 'fl1', x: '10vw',  y: '30vh',  rot: -8  },
+  { id: 'fl2', x: '60vw',  y: '60vh',  rot: 6   },
+  { id: 'fl3', x: '25vw',  y: '75vh',  rot: -4  },
+];
+floaters.forEach(({ id, x, y, rot }) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  gsap.set(el, { x, y, rotation: rot });
+  gsap.to(el, {
+    opacity: 1,
+    scrollTrigger: {
+      trigger: "body",
+      start: "top+=600 top",
+      end: "bottom bottom",
+      scrub: 2,
+      onUpdate: self => {
+        gsap.set(el, {
+          opacity: Math.sin(self.progress * Math.PI) * 0.06,
+          y: `calc(${y} - ${self.progress * 120}px)`,
+        });
+      }
+    }
+  });
+});
+
+/* ── VISION TEXT STICKY SCALE ── */
+gsap.from('.vision-col .display-title', {
+  scale: 0.85, opacity: 0, duration: 1, ease: "power3.out",
+  scrollTrigger: { trigger: '.vision-col', start: "top 75%" }
+});
+
+/* ── JOIN CTA TITLE SLAM ── */
+gsap.from('#join-cta .display-title', {
+  scale: 1.2, opacity: 0, duration: 0.9, ease: "power4.out",
+  scrollTrigger: { trigger: '#join-cta', start: "top 70%" }
+});
+
+/* ── CURSOR TRAILS ── */
+const trails = ['t1','t2','t3'].map(id => document.getElementById(id));
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+let delay = 0;
+trails.forEach((t, i) => {
+  let tx = 0, ty = 0;
+  const lag = 0.1 + i * 0.08;
+  (function animTrail(){
+    tx += (mx - tx) * lag;
+    ty += (my - ty) * lag;
+    t.style.transform = `translate(${tx}px,${ty}px) translate(-50%,-50%)`;
+    t.style.opacity = String(0.4 - i * 0.1);
+    t.style.width = t.style.height = `${6 - i * 1.5}px`;
+    requestAnimationFrame(animTrail);
+  })();
+});
+
+/* ── SECTION EYEBROW LINES ── */
+gsap.utils.toArray('.eyebrow').forEach(el => {
+  gsap.from(el, {
+    scaleX: 0, opacity: 0, duration: 0.7, ease: "power3.out",
+    transformOrigin: "left center",
+    scrollTrigger: { trigger: el, start: "top 85%" }
+  });
+});
+
+/* ── EVENT CARDS STAGGER ── */
+gsap.utils.toArray('.event-card').forEach((card, i) => {
+  gsap.from(card, {
+    y: 50, opacity: 0, duration: 0.7, ease: "power3.out",
+    scrollTrigger: { trigger: card, start: "top 85%" },
+    delay: i * 0.12
+  });
+});
+
+</script>
+
 </body></html>
