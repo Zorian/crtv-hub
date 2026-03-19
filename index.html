@@ -106,10 +106,10 @@
 .prog-track { width:72px; height:2px; background:var(--grey3); overflow:hidden; }
 .prog-bar { height:100%; background:var(--blue); width:0%; transition:width .1s linear; }
 .hero-nav { position:absolute; bottom:38px; right:52px; z-index:10; display:flex; gap:6px; }
-.h-btn { width:46px; height:46px; border:1.5px solid rgba(255,255,255,.18); background:none; color:#fff; font-size:18px; cursor:none; display:flex; align-items:center; justify-content:center; transition:background .2s,border-color .2s; }
+.h-btn { width:46px; height:46px; border:1.5px solid rgba(255,255,255,.18); background:none; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s,border-color .2s; pointer-events:auto; z-index:20; position:relative; }
 .h-btn:hover { background:var(--blue); border-color:var(--blue); }
 .thumb-strip { position:absolute; bottom:0; left:0; right:0; height:3px; display:flex; z-index:10; }
-.thumb-seg { flex:1; background:rgba(255,255,255,.1); position:relative; overflow:hidden; cursor:none; }
+.thumb-seg { flex:1; background:rgba(255,255,255,.1); position:relative; overflow:hidden; cursor:pointer; }
 .thumb-seg.done { background:rgba(255,255,255,.32); }
 .thumb-seg .seg-fill { position:absolute; inset:0; background:var(--blue); transform:scaleX(0); transform-origin:left; }
 
@@ -270,7 +270,7 @@
 <div id="splash">
   <div class="splash-ring"></div>
   <div id="splash-bubble">
-    <img src="assets/logo-stacked-white.png" alt="THE CRTV HUB" style="width:70%;height:auto;display:block;pointer-events:none;">
+    <img src="assets/logo-transparent.png" alt="THE CRTV HUB" style="width:82%;height:auto;display:block;pointer-events:none;">
   </div>
     <div class="bubble-cta">CLICK TO ENTER</div>
   </div>
@@ -307,7 +307,7 @@
 <!-- NAV -->
 <nav id="nav">
   <a class="nav-logo" href="index.html">
-    <img src="assets/logo-stacked-white.png" alt="THE CRTV HUB" style="height:58px;width:auto;display:block;">
+    <img src="assets/logo-transparent.png" alt="THE CRTV HUB" style="height:74px;width:auto;display:block;">
   </a>
   <ul class="nav-links">
     <li><a href="index.html" class="active">HOME</a></li>
@@ -717,9 +717,7 @@ if(firstVid) firstVid.play().catch(()=>{});
 showContent(0);
 startSeg();
 
-// Init
-showContent(slides[0]);
-startSeg();
+// Init handled above
 
 /* ═══════════════════════════════════════
    FLOATING GEOMETRIC ELEMENTS (no emojis)
