@@ -332,6 +332,28 @@
   .car-card { width: 220px; height: 160px; }
   #media-carousel-wrap { padding: 32px 0; }
 }
+
+/* ─── MANIFESTO FLOATING ELEMENTS ─── */
+#manifesto-floats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+#manifesto > .container { position: relative; z-index: 1; }
+.mfloat {
+  position: absolute;
+  opacity: 0;
+  animation: mfloatAnim var(--dur, 14s) ease-in-out var(--delay, 0s) infinite;
+}
+@keyframes mfloatAnim {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(var(--r0, 0deg)); }
+  15%  { opacity: var(--op, .12); }
+  50%  { transform: translate(var(--tx, 20px), var(--ty, -30px)) rotate(var(--r1, 10deg)); }
+  85%  { opacity: var(--op, .08); }
+  100% { opacity: 0; transform: translate(0, 0) rotate(var(--r0, 0deg)); }
+}
 </style>
 </head>
 <body>
@@ -501,7 +523,9 @@
 </div>
 
 <!-- MANIFESTO / ABOUT -->
-<section id="manifesto">
+<section id="manifesto" style="position:relative;overflow:hidden;">
+  <!-- FLOATING BACKGROUND ELEMENTS -->
+  <div id="manifesto-floats" aria-hidden="true"></div>
   <div class="container">
     <div class="manifesto-grid">
       <div>
