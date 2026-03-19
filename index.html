@@ -469,7 +469,14 @@
     var bubble  = document.getElementById('splash-bubble');
     var btn     = document.getElementById('enter-btn');
     if(splash)  splash.addEventListener('click', closeSplash);
-    if(bubble)  bubble.addEventListener('click', function(e){ closeSplash(); });
+    if(bubble){
+    bubble.addEventListener('click', function(){ playClick(); closeSplash(); });
+    bubble.addEventListener('touchstart', function(e){
+      e.preventDefault();
+      playClick();
+      closeSplash();
+    }, {passive:false});
+  }
     if(btn)     btn.addEventListener('click', closeSplash);
   });
   // Also wire immediately in case DOMContentLoaded already fired
@@ -941,6 +948,7 @@ let audioCtx = null;
 function playClick(){
   try{
     if(!audioCtx) audioCtx = new AudioCtx();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
     const buf=audioCtx.createBuffer(1,audioCtx.sampleRate*.06,audioCtx.sampleRate);
     const d=buf.getChannelData(0);
     for(let i=0;i<d.length;i++){ const t=i/audioCtx.sampleRate; d[i]=(Math.random()*2-1)*Math.exp(-t*180); }
