@@ -11,7 +11,7 @@
 #upcoming { padding:100px 0; }
 .events-list { display:flex; flex-direction:column; gap:2px; margin-top:56px; }
 .event-row {
-  display:grid; grid-template-columns:120px 1fr 200px auto;
+  display:grid; grid-template-columns:120px 1fr auto;
   align-items:center; gap:32px;
   background:var(--grey1); padding:36px 40px;
   border-left:2px solid transparent;
@@ -56,6 +56,7 @@
   .event-row-status,.event-row-cta { display:none; }
   .past-grid { grid-template-columns:1fr; }
 }
+.event-row-cta { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
 .event-row-desc { font-size:12px; line-height:1.7; color:rgba(240,237,232,.45); margin-top:8px; max-width:520px; }
 </style>
 </head>
@@ -101,8 +102,7 @@
           <div class="event-row-meta"><span>📍 Boxpark, London</span><span>🎟 Open Entry</span><span>💃 Qualifying Round</span></div>
           <div class="event-row-desc">The official qualifying rounds for Summer 2026. Dancers and crews compete for a spot on the main stage in London, with judges selecting standout talent across multiple styles.</div>
         </div>
-        <div class="event-row-status upcoming">UPCOMING</div>
-        <div class="event-row-cta"><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-fill">VIEW EVENT</a></div>
+        <div class="event-row-cta"><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-fill">BUY TICKETS — SPECTATORS</a><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-ghost">BUY TICKETS — COMPETITORS</a></div>
       </div>
 
       <div class="event-row rev d1">
@@ -112,8 +112,7 @@
           <div class="event-row-meta"><span>📍 Boxpark, London</span><span>🎟 Open Entry</span><span>💃 Multi-City Tour</span></div>
           <div class="event-row-desc">A multi-city qualifying tour for the London main stage, spotlighting emerging and established dancers across regions.</div>
         </div>
-        <div class="event-row-status upcoming">UPCOMING</div>
-        <div class="event-row-cta"><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-fill">VIEW EVENT</a></div>
+        <div class="event-row-cta"><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-fill">BUY TICKETS — SPECTATORS</a><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-ghost">BUY TICKETS — COMPETITORS</a></div>
       </div>
 
       <div class="event-row rev d1">
@@ -123,8 +122,7 @@
           <div class="event-row-meta"><span>📍 Boxpark, London</span><span>🎟 Limited Spots</span><span>🤝 Networking + Activities</span></div>
           <div class="event-row-desc">THE CRTV HUB's second annual camp. A full day of networking with creatives, workshops, and meeting pioneers across the creative field.</div>
         </div>
-        <div class="event-row-status upcoming">UPCOMING</div>
-        <div class="event-row-cta"><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-fill">VIEW EVENT</a></div>
+        <div class="event-row-cta"><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-fill">BUY TICKETS — SPECTATORS</a><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-ghost">BUY TICKETS — COMPETITORS</a></div>
       </div>
 
       <div class="event-row rev d2">
@@ -134,8 +132,7 @@
           <div class="event-row-meta"><span>📍 Box Park, London</span><span>🎟 Tickets Available</span><span>🏆 Cash Prize</span></div>
           <div class="event-row-desc">A high-energy summer dance competition bringing together top crews and soloists. Electrifying performances, fierce battles, vibrant community atmosphere — with a cash prize to be won.</div>
         </div>
-        <div class="event-row-status upcoming">UPCOMING</div>
-        <div class="event-row-cta"><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-fill">BUY TICKETS</a></div>
+        <div class="event-row-cta"><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-fill">BUY TICKETS — SPECTATORS</a><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-ghost">BUY TICKETS — COMPETITORS</a></div>
       </div>
 
       <div class="event-row rev d2">
@@ -145,8 +142,7 @@
           <div class="event-row-meta"><span>📍 London</span><span>🎟 Free Entry</span><span>🎉 End of Year Celebration</span></div>
           <div class="event-row-desc">A festive end-of-year gathering. Crews and soloists come together to vibe, closing out 2026 with performances, prizes, and a community party feel.</div>
         </div>
-        <div class="event-row-status soon">COMING SOON</div>
-        <div class="event-row-cta"><a href="join.html" class="btn-ghost">STAY UPDATED</a></div>
+        <div class="event-row-cta"><a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a><a href="https://crtv.axocreate.com/events/" target="_blank" class="btn-ghost">VIEW EVENT</a></div>
       </div>
 
     </div>
@@ -195,7 +191,7 @@
   <div class="footer-inner">
     <div class="footer-logo"><img src="assets/logo-transparent.png" style="height:62px;width:auto;" alt="CRTV Hub"></div>
     <div class="ft-col"><h5>PAGES</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="media.html">Media</a></li><li><a href="events.html">Events</a></li></ul></div>
-    <div class="ft-col"><h5>GET INVOLVED</h5><ul><li><a href="join.html">Join / Sign Up</a></li><li><a href="mailto:thecreativehub.hq@gmail.com">Contact Us</a></li></ul></div>
+    <div class="ft-col"><h5>GET INVOLVED</h5><ul><li><a href="join.html">Join / Sign Up</a></li><li><a href="mailto:info@thecrtvhub.com">Contact Us</a></li></ul></div>
     <div class="ft-col"><h5>FOLLOW</h5><ul><li><a href="http://tiktok.com/@thecreativehubagency" target="_blank">TikTok</a></li><li><a href="https://www.instagram.com/thecrtvhubuk" target="_blank">Instagram</a></li><li><a href="https://www.youtube.com/@thecrtvhub" target="_blank">YouTube</a></li></ul></div>
   </div>
   <div class="footer-bottom"><span class="ft-copy">© 2026 The CRTV Hub. All rights reserved.</span><span class="ft-copy">Built by Creatives. Powered by Culture.</span></div>
