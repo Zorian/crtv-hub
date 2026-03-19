@@ -93,6 +93,7 @@
 .hero-title { font-family:"Barlow Condensed",sans-serif; font-weight:900; font-size:clamp(58px,9vw,118px); line-height:.88; letter-spacing:.02em; text-transform:uppercase; color:#fff; margin-bottom:30px; opacity:0; transform:translateY(24px); transition:opacity .55s .25s,transform .55s .25s; }
 .hero-title.show { opacity:1; transform:none; }
 .hero-actions { display:flex; gap:14px; flex-wrap:wrap; opacity:0; transform:translateY(16px); transition:opacity .5s .42s,transform .5s .42s; }
+.hero-actions a, .hero-actions a.btn-fill, .hero-actions a.btn-ghost { cursor:pointer !important; }
 .hero-actions.show { opacity:1; transform:none; }
 
 /* flicker */
@@ -114,9 +115,6 @@
 .thumb-seg .seg-fill { position:absolute; inset:0; background:var(--blue); transform:scaleX(0); transform-origin:left; }
 
 @media(max-width:960px){ .hero-body{left:24px;bottom:100px;} .hero-meta,.hero-nav{right:24px;} }
-
-  .slide-fallback{opacity:1!important;}
-}
 
 @keyframes flickAnim{0%{opacity:0}15%{opacity:.9}30%{opacity:0}50%{opacity:.75}65%{opacity:0}82%{opacity:.45}100%{opacity:0}}
 /* ─── FILM GRAIN OVERLAY ─────────────────── */
@@ -148,10 +146,6 @@
   8%  {opacity:var(--op,.08);}
   90% {opacity:var(--op,.05);}
   100%{opacity:0;transform:translateY(-15vh) rotate(var(--rot1,20deg));}
-}
-  5%  {opacity:.18;}
-  90% {opacity:.12;}
-  100%{opacity:0;transform:translateY(-15vh) rotate(var(--rot1,20deg)) scale(1);}
 }
 
 /* ─── WORD SLAM (manifesto) ──────────────── */
@@ -270,8 +264,7 @@
 <div id="splash">
   <div class="splash-ring"></div>
   <div id="splash-bubble">
-    <img src="assets/logo-transparent.png" alt="THE CRTV HUB" style="width:82%;height:auto;display:block;pointer-events:none;">
-  </div>
+    <img src="assets/logo-transparent.png" alt="THE CRTV HUB" style="width:78%;height:auto;display:block;pointer-events:none;">
     <div class="bubble-cta">CLICK TO ENTER</div>
   </div>
   <button id="enter-btn" style="display:none"></button>
@@ -707,9 +700,16 @@ function startSeg(){
   animFrame=requestAnimationFrame(tick);
 }
 
-document.getElementById('next-btn').addEventListener('click',()=>goTo(cur+1));
-document.getElementById('prev-btn').addEventListener('click',()=>goTo(cur-1));
-document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') goTo(cur+1); if(e.key==='ArrowLeft') goTo(cur-1); });
+let navLocked = false;
+function safeGoTo(idx){
+  if(navLocked) return;
+  navLocked = true;
+  goTo(idx);
+  setTimeout(()=>{ navLocked = false; }, 400);
+}
+document.getElementById('next-btn').addEventListener('click',()=>safeGoTo(cur+1));
+document.getElementById('prev-btn').addEventListener('click',()=>safeGoTo(cur-1));
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') safeGoTo(cur+1); if(e.key==='ArrowLeft') safeGoTo(cur-1); });
 
 // Init — play first video
 const firstVid = slides[0].querySelector('video');
@@ -790,32 +790,7 @@ statEls.forEach(el=>statObs.observe(el));
 // Fire immediately on load — stats are visible without scrolling
 setTimeout(()=> statEls.forEach(el=> animateStat(el)), 500);
 
-/* ═══════════════════════════════════════
-   STATS COUNTER
-═══════════════════════════════════════ */
-function animateStat(el){
-  if(el.dataset.done) return;
-  el.dataset.done = '1';
-  const target = parseInt(el.dataset.count);
-  const suffix = el.dataset.suffix || '';
-  if(target === 0){ el.textContent = suffix; return; }
-  const dur = 1800, t0 = performance.now();
-  function tick(now){
-    const p = Math.min((now-t0)/dur, 1);
-    const ease = 1 - Math.pow(1-p, 3);
-    el.textContent = Math.floor(ease * target) + suffix;
-    if(p < 1) requestAnimationFrame(tick);
-    else el.textContent = target + suffix;
-  }
-  requestAnimationFrame(tick);
-}
-const statEls = document.querySelectorAll('[data-count]');
-setTimeout(()=> statEls.forEach(el=> animateStat(el)), 300);
-// Fire on load (stats visible without scrolling) AND on scroll
-setTimeout(()=> statEls.forEach(el=> animateStat(el)), 600);
-new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) animateStat(e.target); });
-},{threshold:0.05}).observe(document.getElementById('manifesto'));
+/* stats counter — single instance above */
 
 /* ═══════════════════════════════════════
    CLICK SOUND
