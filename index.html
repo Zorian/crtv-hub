@@ -295,7 +295,7 @@
 <div id="film-floats"></div>
 
 <!-- SPLASH -->
-<div id="splash" onclick="closeSplash()">
+<div id="splash">
   <div class="splash-ring"></div>
   <div id="splash-bubble">
     <div class="bubble-text">
@@ -308,6 +308,32 @@
   <button id="enter-btn" style="display:none"></button>
   <span class="splash-tag">ONLY REBELS RECREATE THE WORLD</span>
 </div>
+
+<!-- SPLASH SCRIPT - runs immediately, before any other JS -->
+<script>
+(function(){
+  document.body.style.overflow = 'hidden';
+  function closeSplash(){
+    var splash = document.getElementById('splash');
+    if(!splash) return;
+    splash.style.opacity = '0';
+    splash.style.visibility = 'hidden';
+    splash.style.pointerEvents = 'none';
+    document.body.style.overflow = '';
+  }
+  // Wire up as soon as DOM is ready
+  document.addEventListener('DOMContentLoaded', function(){
+    var splash  = document.getElementById('splash');
+    var bubble  = document.getElementById('splash-bubble');
+    var btn     = document.getElementById('enter-btn');
+    if(splash)  splash.addEventListener('click', closeSplash);
+    if(bubble)  bubble.addEventListener('click', function(e){ e.stopPropagation(); closeSplash(); });
+    if(btn)     btn.addEventListener('click', closeSplash);
+  });
+  // Also wire immediately in case DOMContentLoaded already fired
+  window.closeSplash = closeSplash;
+})();
+</script>
 
 <!-- NAV -->
 <nav id="nav">
@@ -552,14 +578,7 @@
 /* ═══════════════════════════════════════════════
    SPLASH
 ═══════════════════════════════════════════════ */
-document.body.style.overflow = 'hidden';
-function closeSplash(){
-  document.getElementById('splash').classList.add('out');
-  document.body.style.overflow = '';
-}
-// Bubble is the main CTA - onclick already on #splash div
-// Also wire bubble directly as backup
-document.getElementById('splash-bubble').onclick = closeSplash;
+// Splash handled by early inline script above
 
 /* ═══════════════════════════════════════════════
    FLOATING FILM ELEMENTS
