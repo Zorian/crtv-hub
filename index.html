@@ -354,6 +354,66 @@
   85%  { opacity: var(--op, .08); }
   100% { opacity: 0; transform: translate(0, 0) rotate(var(--r0, 0deg)); }
 }
+
+/* ─── SERVICES MAGAZINE LAYOUT ─── */
+#services { padding: 0; }
+
+.svc-mag-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.svc-mag-left {
+  background: var(--blue);
+  padding: 80px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+}
+.svc-mag-left::before {
+  content: 'CRTV';
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(160px, 24vw, 300px);
+  color: rgba(0,0,0,.12);
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  line-height: 1;
+  letter-spacing: .02em;
+  pointer-events: none;
+}
+.svc-mag-left .eyebrow { color: rgba(255,255,255,.65); }
+.svc-mag-left .display-title {
+  font-size: clamp(72px, 10vw, 130px);
+  color: #fff;
+  margin-top: 12px;
+}
+.svc-mag-right {
+  background: var(--grey1);
+  padding: 80px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-left: 1px solid rgba(16,118,248,.15);
+}
+.svc-mag-right .display-title {
+  font-size: clamp(48px, 7vw, 96px);
+  margin-top: 12px;
+}
+.svc-mag-right p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: rgba(240,237,232,.6);
+  margin-top: 20px;
+  max-width: 480px;
+}
+@media(max-width:960px) {
+  .svc-mag-top { grid-template-columns: 1fr; }
+  .svc-mag-left, .svc-mag-right { padding: 60px 28px; }
+}
 </style>
 </head>
 <body>
@@ -560,30 +620,21 @@
 </section>
 
 <!-- SERVICES -->
-<section id="services">
-  <div class="container">
-    <div class="svc-grid">
-
-      <div>
-        <div class="rev"><span class="eyebrow">What We Do</span><h2 class="display-title">Film.<br>Events.<br>Culture.</h2></div>
-        <ul class="svc-list">
-          <li class="svc-item">Film Production &amp; Visual Storytelling</li>
-          <li class="svc-item">Live Events &amp; Global Dance Platforms</li>
-          <li class="svc-item">Creative Strategy &amp; Brand Storytelling</li>
-          <li class="svc-item">Community Building &amp; Talent Development</li>
-        </ul>
+<section id="services" style="position:relative;overflow:hidden;">
+  <div id="services-floats" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;"></div>
+  <div class="svc-mag-top" style="position:relative;z-index:1;">
+    <div class="svc-mag-left">
+      <small class="eyebrow">What We Do</small>
+      <h2 class="display-title">Film.<br>Events.<br>Culture.</h2>
+    </div>
+    <div class="svc-mag-right rev d1">
+      <span class="eyebrow">The Vision</span>
+      <h2 class="display-title">More than<br>content.<br>A movement.</h2>
+      <p>From underground dance cyphers to global stages, we are building a world where creatives are valued, supported, and seen. Our work bridges film, community, and live experiences — locally and globally.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;">
+        <a href="media.html" class="btn-fill">EXPLORE WORK</a>
+        <a href="about.html" class="btn-ghost">ABOUT US</a>
       </div>
-
-      <div class="vision-col rev d1">
-        <span class="eyebrow">The Vision</span>
-        <h2 class="display-title">More than<br>content.<br>A movement.</h2>
-        <p>From underground dance cyphers to global stages, we are building a world where creatives are valued, supported, and seen. Our work bridges film, community, and live experiences — locally and globally.</p>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;">
-          <a href="media.html" class="btn-fill">EXPLORE WORK</a>
-          <a href="about.html" class="btn-ghost">ABOUT US</a>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -889,6 +940,37 @@ function playClick(){
 }
 document.addEventListener('click', playClick);
 document.addEventListener('touchstart', playClick, {passive:true});
+
+/* Services section floaters */
+(function(){
+  const c = document.getElementById('services-floats');
+  if(!c) return;
+  const ELS = [
+    '<svg width="52" height="42" viewBox="0 0 52 42" fill="none"><rect x="1" y="9" width="50" height="32" rx="3" stroke="rgba(16,118,248,OP)" stroke-width="1.5"/><circle cx="26" cy="25" r="9" stroke="rgba(16,118,248,OP)" stroke-width="1.5"/><circle cx="26" cy="25" r="5" stroke="rgba(16,118,248,OP)" stroke-width="1.5"/><rect x="18" y="1" width="8" height="8" rx="2" stroke="rgba(16,118,248,OP)" stroke-width="1.5"/></svg>',
+    '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="21" stroke="rgba(16,118,248,OP)" stroke-width="1.5"/><path d="M18 14l14 8-14 8V14z" fill="rgba(16,118,248,OP)"/></svg>',
+    '<svg width="64" height="44" viewBox="0 0 64 44" fill="none"><rect x="1" y="1" width="62" height="42" rx="2" stroke="rgba(16,118,248,OP)" stroke-width="1.5"/><rect x="1" y="1" width="8" height="42" stroke="rgba(16,118,248,OP)" stroke-width="1"/><rect x="55" y="1" width="8" height="42" stroke="rgba(16,118,248,OP)" stroke-width="1"/><rect x="3" y="7" width="4" height="5" rx="1" fill="rgba(16,118,248,OP)"/><rect x="3" y="17" width="4" height="5" rx="1" fill="rgba(16,118,248,OP)"/><rect x="57" y="7" width="4" height="5" rx="1" fill="rgba(16,118,248,OP)"/><rect x="57" y="17" width="4" height="5" rx="1" fill="rgba(16,118,248,OP)"/></svg>',
+    '<svg width="28" height="36" viewBox="0 0 28 36" fill="none"><path d="M14 2C8 2 3 7 3 13c0 4 2 7.5 5 9.5V26h12v-3.5c3-2 5-5.5 5-9.5C25 7 20 2 14 2z" stroke="rgba(16,118,248,OP)" stroke-width="1.5"/><rect x="8" y="28" width="12" height="2" rx="1" fill="rgba(16,118,248,OP)"/><rect x="9" y="32" width="10" height="2" rx="1" fill="rgba(16,118,248,OP)"/></svg>',
+    '<svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(16,118,248,OP)" stroke-width="1"/><circle cx="20" cy="20" r="6" stroke="rgba(16,118,248,OP)" stroke-width="1"/><line x1="20" y1="2" x2="20" y2="10" stroke="rgba(16,118,248,OP)" stroke-width="1"/><line x1="20" y1="30" x2="20" y2="38" stroke="rgba(16,118,248,OP)" stroke-width="1"/><line x1="2" y1="20" x2="10" y2="20" stroke="rgba(16,118,248,OP)" stroke-width="1"/><line x1="30" y1="20" x2="38" y2="20" stroke="rgba(16,118,248,OP)" stroke-width="1"/></svg>',
+  ];
+  const pos = [
+    {left:'5%',top:'15%'},{left:'20%',top:'70%'},{left:'38%',top:'30%'},
+    {left:'55%',top:'65%'},{left:'70%',top:'20%'},{left:'85%',top:'55%'},
+    {left:'12%',top:'45%'},{left:'60%',top:'80%'},{left:'90%',top:'25%'},
+    {left:'45%',top:'10%'},{left:'30%',top:'85%'},{left:'78%',top:'72%'},
+  ];
+  pos.forEach((p,i)=>{
+    const el=document.createElement('div');
+    el.className='mfloat';
+    const op=(.05+Math.random()*.09).toFixed(2);
+    el.innerHTML=ELS[i%ELS.length].replace(/OP/g,op);
+    const dur=10+Math.random()*12, delay=Math.random()*10;
+    const tx=(Math.random()-.5)*50, ty=(Math.random()-.5)*40;
+    const r0=(Math.random()-.5)*15, r1=r0+(Math.random()-.5)*20;
+    el.style.cssText=`left:${p.left};top:${p.top};--dur:${dur}s;--delay:${delay}s;--tx:${tx}px;--ty:${ty}px;--r0:${r0}deg;--r1:${r1}deg;--op:${op};`;
+    c.appendChild(el);
+  });
+})();
+
 
 
 
