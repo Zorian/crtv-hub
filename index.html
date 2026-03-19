@@ -245,69 +245,51 @@
 
 /* ─── SERVICES IMAGE MOSAIC ─────────────────── */
 #services { background: var(--grey1); padding: 130px 0; }
+.svc-mosaic { width: 100%; }
 
-.svc-mosaic { position: relative; width: 100%; }
-
-/* Each panel: hidden by default, shown when active */
+/* All panels hidden except active */
 .svc-panel {
-  position: absolute; inset: 0;
-  opacity: 0; pointer-events: none;
-  transform: translateY(18px);
-  transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1);
+  display: none;
+  animation: panelIn .5s cubic-bezier(.16,1,.3,1) both;
 }
-.svc-panel.active {
-  position: relative;
-  opacity: 1; pointer-events: auto;
-  transform: none;
+.svc-panel.active { display: block; }
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* 3-image asymmetric grid */
 .svc-panel-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: 220px 220px;
   gap: 4px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
-.sp-img { overflow: hidden; }
+.sp-img { overflow: hidden; background: var(--grey2); }
 .sp-img img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform .7s cubic-bezier(.25,.46,.45,.94), filter .5s;
-  filter: brightness(.82);
+  transition: transform .7s ease, filter .5s;
+  filter: brightness(.85);
 }
-.sp-img:hover img { transform: scale(1.05); filter: brightness(1); }
-
-/* main big image spans both rows on left */
-.sp-main {
-  grid-column: 1; grid-row: 1 / 3;
-  aspect-ratio: 3/4;
-}
-.sp-a {
-  grid-column: 2; grid-row: 1;
-  aspect-ratio: 4/3;
-}
-.sp-b {
-  grid-column: 2; grid-row: 2;
-  aspect-ratio: 4/3;
-}
+.sp-img:hover img { transform: scale(1.06); filter: brightness(1); }
+.sp-main { grid-column: 1; grid-row: 1 / 3; }
+.sp-a    { grid-column: 2; grid-row: 1; }
+.sp-b    { grid-column: 2; grid-row: 2; }
 
 .sp-label {
-  display: flex; flex-direction: column; gap: 8px;
   padding: 16px 0 0;
-  border-top: 1px solid rgba(16,118,248,.2);
+  border-top: 1px solid rgba(16,118,248,.25);
+  display: flex; flex-direction: column; gap: 6px;
 }
-.sp-label p {
-  font-size: 14px; line-height: 1.75; color: rgba(240,237,232,.6);
-  max-width: 400px;
-}
+.sp-label p { font-size: 14px; line-height: 1.8; color: rgba(240,237,232,.6); }
 
-/* Service items: highlight active */
-.svc-item.active-svc { color: var(--blue); }
-.svc-item.active-svc::before { color: var(--blue); }
+/* Highlight active service row */
+.svc-item.active-svc { color: var(--blue) !important; }
 
 @media(max-width:960px){
-  .svc-panel { position: relative; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 40px; }
-  .svc-panel:not(.active) { display: block; opacity: .55; }
+  .svc-panel { display: block !important; margin-bottom: 32px; }
+  .svc-panel-grid { grid-template-rows: 160px 160px; }
 }
 </style>
 </head>
@@ -427,6 +409,21 @@
   </div>
   <div class="vid-slide" id="slide-3">
     <video autoplay muted loop playsinline preload="auto" class="hero-video">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
+    </video>
+    <div class="hero-fog"></div>
+    <div class="hero-body">
+      <div class="hero-tag ">Client: JBEE</div>
+      <h1 class="hero-title ">JBEE —<br>24'S</h1>
+      <div class="hero-actions ">
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
+      </div>
+    </div>
+  </div>
+  <div class="vid-slide" id="slide-4">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video">
       <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915108/copy_DC5E2476-9E06-406A-9243-014FAE8F5F71_gcdbkj.mp4" type="video/mp4">
       <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915108/copy_DC5E2476-9E06-406A-9243-014FAE8F5F71_gcdbkj.mp4" type="video/mp4">
     </video>
@@ -442,22 +439,7 @@
   </div>
 
 
-<div class="vid-slide" id="slide-4">
-    <video autoplay muted loop playsinline preload="auto" class="hero-video">
-      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
-      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
-    </video>
-    <div class="hero-fog"></div>
-    <div class="hero-body">
-      <div class="hero-tag ">Client: JBEE</div>
-      <h1 class="hero-title ">JBEE —<br>24'S</h1>
-      <div class="hero-actions ">
-        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
-        <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
-      </div>
-    </div>
-  </div>
-    <!-- flicker overlay -->
+  <!-- flicker overlay -->
   <div id="hero-flicker"></div>
 
   <!-- counter + nav -->
