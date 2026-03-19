@@ -165,7 +165,7 @@
 .slam-line.in{transform:translateY(0);}
 .slam-line span{color:var(--blue);}
 .manifesto-sub{
-  font-size:17px;line-height:1.95;color:rgba(240,237,232,.68);max-width:500px;margin-top:28px;
+  font-size:17px;line-height:1.95;color:#fff;max-width:500px;margin-top:28px;
   opacity:0;transform:translateY(20px);transition:opacity .8s .3s,transform .8s .3s;
 }
 .manifesto-sub.in{opacity:1;transform:none;}
@@ -1005,6 +1005,55 @@ document.addEventListener('touchstart', playClick, {passive:true});
 
 
 
+
+
+/* ═══════════════════════════════════════
+   FLOATING ELEMENTS — manifesto + services
+═══════════════════════════════════════ */
+(function spawnFloaters(){
+  var SVGS = [
+    '<svg width="50" height="40" viewBox="0 0 50 40" fill="none"><rect x="1" y="8" width="48" height="30" rx="3" stroke="rgba(16,118,248,0.25)" stroke-width="1.5"/><circle cx="25" cy="23" r="8" stroke="rgba(16,118,248,0.25)" stroke-width="1.5"/><circle cx="25" cy="23" r="4" stroke="rgba(16,118,248,0.2)" stroke-width="1.5"/><rect x="17" y="1" width="7" height="7" rx="2" stroke="rgba(16,118,248,0.2)" stroke-width="1.5"/></svg>',
+    '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="rgba(16,118,248,0.22)" stroke-width="1.5"/><path d="M18 14l12 8-12 8V14z" fill="rgba(16,118,248,0.22)"/></svg>',
+    '<svg width="60" height="40" viewBox="0 0 60 40" fill="none"><rect x="1" y="1" width="58" height="38" rx="2" stroke="rgba(16,118,248,0.2)" stroke-width="1.5"/><rect x="1" y="1" width="7" height="38" stroke="rgba(16,118,248,0.15)" stroke-width="1"/><rect x="52" y="1" width="7" height="38" stroke="rgba(16,118,248,0.15)" stroke-width="1"/><rect x="3" y="6" width="3" height="4" rx="1" fill="rgba(16,118,248,0.25)"/><rect x="3" y="15" width="3" height="4" rx="1" fill="rgba(16,118,248,0.25)"/><rect x="3" y="24" width="3" height="4" rx="1" fill="rgba(16,118,248,0.25)"/><rect x="54" y="6" width="3" height="4" rx="1" fill="rgba(16,118,248,0.25)"/><rect x="54" y="15" width="3" height="4" rx="1" fill="rgba(16,118,248,0.25)"/><rect x="54" y="24" width="3" height="4" rx="1" fill="rgba(16,118,248,0.25)"/></svg>',
+    '<svg width="26" height="34" viewBox="0 0 26 34" fill="none"><path d="M13 2C7.5 2 3 6.5 3 12c0 3.8 2 7 5 9V24h10v-3c3-2 5-5.2 5-9C23 6.5 18.5 2 13 2z" stroke="rgba(16,118,248,0.25)" stroke-width="1.5"/><rect x="8" y="26" width="10" height="2" rx="1" fill="rgba(16,118,248,0.2)"/><rect x="9" y="30" width="8" height="2" rx="1" fill="rgba(16,118,248,0.2)"/></svg>',
+    '<svg width="38" height="38" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="17" stroke="rgba(16,118,248,0.2)" stroke-width="1"/><circle cx="19" cy="19" r="6" stroke="rgba(16,118,248,0.2)" stroke-width="1"/><line x1="19" y1="2" x2="19" y2="9" stroke="rgba(16,118,248,0.2)" stroke-width="1"/><line x1="19" y1="29" x2="19" y2="36" stroke="rgba(16,118,248,0.2)" stroke-width="1"/><line x1="2" y1="19" x2="9" y2="19" stroke="rgba(16,118,248,0.2)" stroke-width="1"/><line x1="29" y1="19" x2="36" y2="19" stroke="rgba(16,118,248,0.2)" stroke-width="1"/></svg>',
+    '<svg width="50" height="30" viewBox="0 0 50 30" fill="none"><rect x="1" y="1" width="48" height="28" rx="2" stroke="rgba(16,118,248,0.2)" stroke-width="1"/><circle cx="12" cy="9" r="2" fill="rgba(16,118,248,0.2)"/><circle cx="25" cy="9" r="2" fill="rgba(16,118,248,0.2)"/><circle cx="38" cy="9" r="2" fill="rgba(16,118,248,0.2)"/><circle cx="12" cy="21" r="2" fill="rgba(16,118,248,0.2)"/><circle cx="25" cy="21" r="2" fill="rgba(16,118,248,0.2)"/><circle cx="38" cy="21" r="2" fill="rgba(16,118,248,0.2)"/></svg>',
+    '<svg width="70" height="20" viewBox="0 0 70 20" fill="none"><text x="0" y="17" font-family="sans-serif" font-weight="900" font-size="18" letter-spacing="5" fill="rgba(16,118,248,0.18)">CRTV</text></svg>',
+    '<svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 1v28M1 15h28M5 5l20 20M25 5L5 25" stroke="rgba(16,118,248,0.18)" stroke-width="1"/><circle cx="15" cy="15" r="3" fill="rgba(16,118,248,0.2)"/></svg>'
+  ];
+
+  function spawnIn(containerId) {
+    var c = document.getElementById(containerId);
+    if(!c) return;
+    var positions = [
+      {l:'6%',t:'12%'},{l:'18%',t:'68%'},{l:'30%',t:'28%'},
+      {l:'48%',t:'78%'},{l:'58%',t:'14%'},{l:'72%',t:'52%'},
+      {l:'82%',t:'22%'},{l:'90%',t:'72%'},{l:'38%',t:'48%'},
+      {l:'65%',t:'36%'},{l:'9%',t:'44%'},{l:'94%',t:'38%'},
+      {l:'52%',t:'62%'},{l:'22%',t:'86%'},{l:'76%',t:'86%'},
+      {l:'44%',t:'6%'}
+    ];
+    positions.forEach(function(pos, i){
+      var el = document.createElement('div');
+      el.className = 'mfloat';
+      el.innerHTML = SVGS[i % SVGS.length];
+      var dur   = (10 + Math.random()*12).toFixed(1);
+      var delay = (Math.random()*8).toFixed(1);
+      var tx    = ((Math.random()-.5)*60).toFixed(1);
+      var ty    = ((Math.random()-.5)*50).toFixed(1);
+      var r0    = ((Math.random()-.5)*15).toFixed(1);
+      var r1    = (parseFloat(r0)+(Math.random()-.5)*20).toFixed(1);
+      el.style.cssText = 'position:absolute;left:'+pos.l+';top:'+pos.t+';opacity:0;'
+        +'--dur:'+dur+'s;--delay:'+delay+'s;--tx:'+tx+'px;--ty:'+ty+'px;'
+        +'--r0:'+r0+'deg;--r1:'+r1+'deg;'
+        +'animation:mfloatAnim '+dur+'s ease-in-out '+delay+'s infinite;';
+      c.appendChild(el);
+    });
+  }
+
+  spawnIn('manifesto-floats');
+  spawnIn('services-floats');
+})();
 
 </script>
 </body>
