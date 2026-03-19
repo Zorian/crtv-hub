@@ -58,39 +58,62 @@
 /* ─── HERO VIDEO ─────────────────────────── */
 #hero{position:relative;height:100svh;overflow:hidden;background:var(--navy);}
 
-/* slides — text overlay containers only */
-.slide{position:absolute;inset:0;opacity:0;z-index:4;pointer-events:none;}
-.slide.active{opacity:1;z-index:5;pointer-events:auto;}
-.slide-flash{display:none;}/* handled by #hero-flicker */
+/* VIDEO HERO SLIDES */
+#hero { position:relative; height:100svh; overflow:hidden; background:var(--navy); }
 
-/* hero content */
-.hero-fog{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to top,rgba(0,17,56,.88) 0%,rgba(0,17,56,.2) 45%,transparent 70%),linear-gradient(to right,rgba(0,17,56,.6) 0%,transparent 55%);}
-.hero-body{position:absolute;bottom:96px;left:52px;z-index:5;max-width:700px;}
-.hero-tag{display:inline-block;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;opacity:0;transform:translateY(16px);transition:opacity .5s .1s,transform .5s .1s;}
-.hero-tag.show{opacity:1;transform:none;}
-.hero-title{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:clamp(58px,9vw,118px);line-height:.88;letter-spacing:.02em;text-transform:uppercase;color:#fff;margin-bottom:30px;opacity:0;transform:translateY(24px);transition:opacity .55s .25s,transform .55s .25s;}
-.hero-title.show{opacity:1;transform:none;}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:opacity .5s .42s,transform .5s .42s;}
-.hero-actions.show{opacity:1;transform:none;}
+.vid-slide {
+  position:absolute; inset:0;
+  opacity:0; z-index:1;
+  transition:opacity .4s ease;
+}
+.vid-slide.active { opacity:1; z-index:2; }
 
-/* YT iframe sizing — always covers full viewport */
-#yt-player{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78vh;height:100vh;min-width:100vw;min-height:56.25vw;pointer-events:none;}
+/* fullscreen video cover */
+.hero-video {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  min-width:100%; min-height:100%;
+  width:auto; height:auto;
+  object-fit:cover;
+  pointer-events:none;
+}
 
-/* hero meta */
-.hero-meta{position:absolute;bottom:96px;right:52px;z-index:10;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
-.slide-counter{font-family:"Barlow Condensed",sans-serif;font-size:12px;letter-spacing:.2em;color:var(--muted);}
-.slide-counter em{color:#fff;font-style:normal;}
-.prog-track{width:72px;height:2px;background:var(--grey3);overflow:hidden;}
-.prog-bar{height:100%;background:var(--blue);width:0%;transition:width .1s linear;}
-.hero-nav{position:absolute;bottom:38px;right:52px;z-index:10;display:flex;gap:6px;}
-.h-btn{width:46px;height:46px;border:1.5px solid rgba(255,255,255,.18);background:none;color:#fff;font-size:18px;cursor:none;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,color .2s;}
-.h-btn:hover{background:var(--blue);border-color:var(--blue);}
-.thumb-strip{position:absolute;bottom:0;left:0;right:0;height:3px;display:flex;z-index:10;}
-.thumb-seg{flex:1;background:rgba(255,255,255,.1);position:relative;overflow:hidden;cursor:none;}
-.thumb-seg.done{background:rgba(255,255,255,.32);}
-.thumb-seg .seg-fill{position:absolute;inset:0;background:var(--blue);transform:scaleX(0);transform-origin:left;}
-@media(max-width:768px){#yt-bg{display:none;}#hero-fallback{z-index:1;}}
-@media(max-width:960px){.hero-body{left:24px;bottom:100px;}.hero-meta,.hero-nav{right:24px;}}
+/* fog overlay */
+.hero-fog {
+  position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:
+    linear-gradient(to top,rgba(0,17,56,.88) 0%,rgba(0,17,56,.2) 45%,transparent 70%),
+    linear-gradient(to right,rgba(0,17,56,.6) 0%,transparent 55%);
+}
+
+/* text content */
+.hero-body { position:absolute; bottom:96px; left:52px; z-index:5; max-width:700px; }
+.hero-tag { display:inline-block; font-size:10px; letter-spacing:.4em; text-transform:uppercase; color:var(--blue); margin-bottom:14px; opacity:0; transform:translateY(16px); transition:opacity .5s .1s,transform .5s .1s; }
+.hero-tag.show { opacity:1; transform:none; }
+.hero-title { font-family:"Barlow Condensed",sans-serif; font-weight:900; font-size:clamp(58px,9vw,118px); line-height:.88; letter-spacing:.02em; text-transform:uppercase; color:#fff; margin-bottom:30px; opacity:0; transform:translateY(24px); transition:opacity .55s .25s,transform .55s .25s; }
+.hero-title.show { opacity:1; transform:none; }
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; opacity:0; transform:translateY(16px); transition:opacity .5s .42s,transform .5s .42s; }
+.hero-actions.show { opacity:1; transform:none; }
+
+/* flicker */
+#hero-flicker { position:absolute; inset:0; z-index:8; background:var(--navy); opacity:0; pointer-events:none; }
+@keyframes flickAnim { 0%{opacity:0}15%{opacity:.9}30%{opacity:0}50%{opacity:.75}65%{opacity:0}82%{opacity:.45}100%{opacity:0} }
+
+/* meta + nav */
+.hero-meta { position:absolute; bottom:96px; right:52px; z-index:10; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+.slide-counter { font-family:"Barlow Condensed",sans-serif; font-size:12px; letter-spacing:.2em; color:var(--muted); }
+.slide-counter em { color:#fff; font-style:normal; }
+.prog-track { width:72px; height:2px; background:var(--grey3); overflow:hidden; }
+.prog-bar { height:100%; background:var(--blue); width:0%; transition:width .1s linear; }
+.hero-nav { position:absolute; bottom:38px; right:52px; z-index:10; display:flex; gap:6px; }
+.h-btn { width:46px; height:46px; border:1.5px solid rgba(255,255,255,.18); background:none; color:#fff; font-size:18px; cursor:none; display:flex; align-items:center; justify-content:center; transition:background .2s,border-color .2s; }
+.h-btn:hover { background:var(--blue); border-color:var(--blue); }
+.thumb-strip { position:absolute; bottom:0; left:0; right:0; height:3px; display:flex; z-index:10; }
+.thumb-seg { flex:1; background:rgba(255,255,255,.1); position:relative; overflow:hidden; cursor:none; }
+.thumb-seg.done { background:rgba(255,255,255,.32); }
+.thumb-seg .seg-fill { position:absolute; inset:0; background:var(--blue); transform:scaleX(0); transform-origin:left; }
+
+@media(max-width:960px){ .hero-body{left:24px;bottom:100px;} .hero-meta,.hero-nav{right:24px;} }
 
   .slide-fallback{opacity:1!important;}
 }
@@ -311,81 +334,99 @@
 <!-- HERO -->
 <section id="hero">
 
-  <!-- YouTube BG: one hidden iframe per slide, swapped on transition -->
-  <div id="yt-bg" style="position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;">
-    <div id="yt-player"></div>
-  </div>
-
-  <!-- Fallback image shown before YT loads or on mobile -->
-  <div id="hero-fallback" style="position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-image:url('assets/hero-1.jpg');"></div>
-
-  <!-- flicker overlay -->
-  <div id="hero-flicker" style="position:absolute;inset:0;z-index:3;background:var(--navy);opacity:0;pointer-events:none;"></div>
-
-  <!-- fog -->
-  <div class="hero-fog"></div>
-
-  <!-- Slides: text content only, no bg image -->
-  <div class="slide active" id="slide-0">
+  <div class="vid-slide active" id="slide-0">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773914933/YTDown.com_YouTube_NEW-GEN-ENTERTAINMENT-TV-Dance-Your-Styl_Media_zy-ooB1l5QE_001_1080p_3_vxr4id.mov" type="video/quicktime">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773914933/YTDown.com_YouTube_NEW-GEN-ENTERTAINMENT-TV-Dance-Your-Styl_Media_zy-ooB1l5QE_001_1080p_3_vxr4id.mov" type="video/mp4">
+    </video>
+    <div class="hero-fog"></div>
     <div class="hero-body">
-      <div class="hero-tag show">Client: Nike</div>
-      <h1 class="hero-title show">Lose Count —<br>Stronger<br>Than One</h1>
+      <div class="hero-tag show">New Gen Entertainment</div>
+      <h1 class="hero-title show">Dance Your<br>Style Cypher</h1>
       <div class="hero-actions show">
-        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
-        <a href="https://www.youtube.com/watch?v=d18iNOeTkmk" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
-      </div>
-    </div>
-  </div>
-  <div class="slide" id="slide-1">
-    <div class="hero-body">
-      <div class="hero-tag">Client: JBEE</div>
-      <h1 class="hero-title">JBEE —<br>24'S</h1>
-      <div class="hero-actions">
-        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
-        <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
-      </div>
-    </div>
-  </div>
-  <div class="slide" id="slide-2">
-    <div class="hero-body">
-      <div class="hero-tag">Client: Biig Piig</div>
-      <h1 class="hero-title">Biig Piig —<br>Feels Right</h1>
-      <div class="hero-actions">
-        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
-        <a href="https://www.youtube.com/watch?v=dqJ8oud7l2Q" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
-      </div>
-    </div>
-  </div>
-  <div class="slide" id="slide-3">
-    <div class="hero-body">
-      <div class="hero-tag">Client: Upsycle Hypewear</div>
-      <h1 class="hero-title">UPSYCLE<br>Vol.1 Short Film</h1>
-      <div class="hero-actions">
-        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
-        <a href="https://www.youtube.com/watch?v=HST5VJs8qC4" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
-      </div>
-    </div>
-  </div>
-  <div class="slide" id="slide-4">
-    <div class="hero-body">
-      <div class="hero-tag">New Gen Entertainment</div>
-      <h1 class="hero-title">Dance Your<br>Style Cypher</h1>
-      <div class="hero-actions">
         <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
         <a href="https://www.youtube.com/watch?v=zy-ooB1l5QE" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
       </div>
     </div>
   </div>
-  <div class="slide" id="slide-5">
+  <div class="vid-slide " id="slide-1">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773914955/copy_B9A124CF-6FE4-4FD2-AA34-DEB6CC9AB828_ij0hhc.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773914955/copy_B9A124CF-6FE4-4FD2-AA34-DEB6CC9AB828_ij0hhc.mp4" type="video/mp4">
+    </video>
+    <div class="hero-fog"></div>
     <div class="hero-body">
-      <div class="hero-tag">Get To Know Me</div>
-      <h1 class="hero-title">Louis Lasa<br>Tarbuck</h1>
-      <div class="hero-actions">
+      <div class="hero-tag ">Client: Nike</div>
+      <h1 class="hero-title ">Lose Count —<br>Stronger<br>Than One</h1>
+      <div class="hero-actions ">
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="https://www.youtube.com/watch?v=d18iNOeTkmk" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
+      </div>
+    </div>
+  </div>
+  <div class="vid-slide " id="slide-2">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915033/copy_C05BE923-02FF-4A30-B371-3F81BDC533F3_yzpr9n.mp4" type="video/mp4">
+    </video>
+    <div class="hero-fog"></div>
+    <div class="hero-body">
+      <div class="hero-tag ">Client: JBEE</div>
+      <h1 class="hero-title ">JBEE —<br>24'S</h1>
+      <div class="hero-actions ">
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="https://www.youtube.com/watch?v=5P87JlJQ8-M" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
+      </div>
+    </div>
+  </div>
+  <div class="vid-slide " id="slide-3">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915036/copy_1D6E9DB4-0313-4482-A8C9-EE481B420B9E_b2w089.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915036/copy_1D6E9DB4-0313-4482-A8C9-EE481B420B9E_b2w089.mp4" type="video/mp4">
+    </video>
+    <div class="hero-fog"></div>
+    <div class="hero-body">
+      <div class="hero-tag ">Client: Biig Piig</div>
+      <h1 class="hero-title ">Biig Piig —<br>Feels Right</h1>
+      <div class="hero-actions ">
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="https://www.youtube.com/watch?v=dqJ8oud7l2Q" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
+      </div>
+    </div>
+  </div>
+  <div class="vid-slide " id="slide-4">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915108/copy_DC5E2476-9E06-406A-9243-014FAE8F5F71_gcdbkj.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915108/copy_DC5E2476-9E06-406A-9243-014FAE8F5F71_gcdbkj.mp4" type="video/mp4">
+    </video>
+    <div class="hero-fog"></div>
+    <div class="hero-body">
+      <div class="hero-tag ">Client: Upsycle Hypewear</div>
+      <h1 class="hero-title ">UPSYCLE<br>Vol.1 Short Film</h1>
+      <div class="hero-actions ">
+        <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
+        <a href="https://www.youtube.com/watch?v=HST5VJs8qC4" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
+      </div>
+    </div>
+  </div>
+  <div class="vid-slide " id="slide-5">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915138/copy_CF0F4BF0-A25B-4F39-A67F-DA37E456DF9C_eoxaob.mov" type="video/quicktime">
+      <source src="https://res.cloudinary.com/dehmpo8go/video/upload/v1773915138/copy_CF0F4BF0-A25B-4F39-A67F-DA37E456DF9C_eoxaob.mov" type="video/mp4">
+    </video>
+    <div class="hero-fog"></div>
+    <div class="hero-body">
+      <div class="hero-tag ">Get To Know Me</div>
+      <h1 class="hero-title ">Louis Lasa<br>Tarbuck</h1>
+      <div class="hero-actions ">
         <a href="join.html" class="btn-fill">JOIN CREATING OUR MOTION</a>
         <a href="https://www.youtube.com/watch?v=KV8XAK4Fn6A" target="_blank" class="btn-ghost">▶ WATCH NOW</a>
       </div>
     </div>
   </div>
+
+  <!-- flicker overlay -->
+  <div id="hero-flicker"></div>
 
   <!-- counter + nav -->
   <div class="hero-meta">
@@ -579,7 +620,6 @@
 </footer>
 
 <!-- YouTube IFrame API -->
-<script src="https://www.youtube.com/iframe_api"></script>
 <script>window.CURSOR_MANAGED=true;</script>
 <script src="shared.js"></script>
 <script>
@@ -607,79 +647,70 @@ document.querySelectorAll('a,button,.event-card,.brand-tile,.port-item,.stat-cel
 });
 
 /* ═══════════════════════════════════════
-   HERO — YouTube background + slide text
+   HERO — Cloudinary video slides
 ═══════════════════════════════════════ */
-const SLIDES = [
-  { ytId:'d18iNOeTkmk', thumb:'assets/hero-1.jpg' },
-  { ytId:'5P87JlJQ8-M', thumb:'assets/hero-2.jpg' },
-  { ytId:'dqJ8oud7l2Q', thumb:'assets/port-1.jpg' },
-  { ytId:'HST5VJs8qC4', thumb:'assets/hero-4.jpg' },
-  { ytId:'zy-ooB1l5QE', thumb:'assets/hero-5.jpg' },
-  { ytId:'KV8XAK4Fn6A', thumb:'assets/about-3.jpg'},
-];
-const N = SLIDES.length;
-let cur = 0, ytPlayer = null, ytReady = false;
-let animFrame = null, segStart = null;
-const SEG_MS = 10000;
-const slides = Array.from(document.querySelectorAll('.slide'));
-const fallback = document.getElementById('hero-fallback');
+const slides = Array.from(document.querySelectorAll('.vid-slide'));
+const N = slides.length;
+let cur = 0, animFrame = null, segStart = null;
+const SEG_MS = 8000;
 
 document.getElementById('total-num').textContent = String(N).padStart(2,'0');
 
 // Build thumb strip
 const strip = document.getElementById('thumb-strip');
-SLIDES.forEach((_,i)=>{ const s=document.createElement('div'); s.className='thumb-seg'; s.addEventListener('click',()=>goTo(i)); strip.appendChild(s); });
+slides.forEach((_,i)=>{ const s=document.createElement('div'); s.className='thumb-seg'; s.addEventListener('click',()=>goTo(i)); strip.appendChild(s); });
 const segs = Array.from(strip.querySelectorAll('.thumb-seg'));
 
-// YouTube API callback
-window.onYouTubeIframeAPIReady = function(){
-  ytPlayer = new YT.Player('yt-player',{
-    width:'100%', height:'100%',
-    videoId: SLIDES[0].ytId,
-    playerVars:{ autoplay:1, mute:1, controls:0, disablekb:1, playsinline:1, rel:0, showinfo:0, modestbranding:1, iv_load_policy:3, loop:0 },
-    events:{
-      onReady: e => { e.target.mute(); e.target.setVolume(0); e.target.playVideo(); ytReady=true; },
-      onStateChange: e => { if(e.data===YT.PlayerState.ENDED) goTo(cur+1); }
-    }
-  });
-};
-
 function showContent(idx){
-  slides.forEach(s=>{ s.classList.remove('active'); const t=s.querySelector('.hero-tag'),ti=s.querySelector('.hero-title'),a=s.querySelector('.hero-actions'); if(t)t.classList.remove('show'); if(ti)ti.classList.remove('show'); if(a)a.classList.remove('show'); });
-  const sl = slides[idx]; sl.classList.add('active');
-  const tag=sl.querySelector('.hero-tag'), title=sl.querySelector('.hero-title'), actions=sl.querySelector('.hero-actions');
-  setTimeout(()=>{ if(tag) tag.classList.add('show'); },60);
-  setTimeout(()=>{ if(title) title.classList.add('show'); if(actions) actions.classList.add('show'); },120);
-}
-
-function flicker(cb){
-  const f=document.getElementById('hero-flicker');
-  f.style.animation='none'; f.style.opacity='0';
-  requestAnimationFrame(()=>{
-    f.style.animation='flickAnim .3s steps(1) forwards';
-    setTimeout(cb, 300);
+  slides.forEach(s=>{
+    const t=s.querySelector('.hero-tag'), ti=s.querySelector('.hero-title'), a=s.querySelector('.hero-actions');
+    if(t) t.classList.remove('show');
+    if(ti) ti.classList.remove('show');
+    if(a) a.classList.remove('show');
   });
+  const sl = slides[idx];
+  const tag=sl.querySelector('.hero-tag'), title=sl.querySelector('.hero-title'), actions=sl.querySelector('.hero-actions');
+  setTimeout(()=>{ if(tag) tag.classList.add('show'); }, 60);
+  setTimeout(()=>{ if(title) title.classList.add('show'); if(actions) actions.classList.add('show'); }, 140);
 }
 
 function goTo(idx){
   cancelAnimationFrame(animFrame);
-  cur=((idx%N)+N)%N;
-  document.getElementById('curr-num').textContent=String(cur+1).padStart(2,'0');
+  const prev = slides[cur];
+  cur = ((idx%N)+N)%N;
+  const next = slides[cur];
+
+  document.getElementById('curr-num').textContent = String(cur+1).padStart(2,'0');
   segs.forEach((s,i)=>{ s.classList.remove('active','done'); s.innerHTML=''; if(i<cur) s.classList.add('done'); });
-  // Update fallback image
-  if(fallback) fallback.style.backgroundImage=`url('${SLIDES[cur].thumb}')`;
-  flicker(()=>{
+
+  // Flicker transition
+  const flicker = document.getElementById('hero-flicker');
+  flicker.style.animation='none'; flicker.offsetHeight;
+  flicker.style.animation='flickAnim .3s steps(1) forwards';
+
+  setTimeout(()=>{
+    prev.classList.remove('active');
+    // Play the video in next slide
+    const vid = next.querySelector('video');
+    if(vid){ vid.currentTime=0; vid.play().catch(()=>{}); }
+    next.classList.add('active');
     showContent(cur);
-    if(ytReady && ytPlayer){ ytPlayer.loadVideoById({videoId:SLIDES[cur].ytId,startSeconds:0}); ytPlayer.mute(); }
     startSeg();
-  });
+  }, 300);
 }
 
 function startSeg(){
-  const seg=segs[cur]; seg.classList.add('active');
-  const fill=document.createElement('div'); fill.className='seg-fill'; seg.innerHTML=''; seg.appendChild(fill);
-  segStart=performance.now(); let done=false;
-  function tick(now){ const pct=Math.min((now-segStart)/SEG_MS*100,100); fill.style.transform=`scaleX(${pct/100})`; document.getElementById('prog-bar').style.width=pct+'%'; if(pct<100){ animFrame=requestAnimationFrame(tick); } else if(!done){ done=true; document.getElementById('prog-bar').style.width='0%'; goTo(cur+1); } }
+  const seg = segs[cur]; seg.classList.add('active');
+  const fill = document.createElement('div'); fill.className='seg-fill';
+  seg.innerHTML=''; seg.appendChild(fill);
+  segStart = performance.now(); let done=false;
+  function tick(now){
+    const pct = Math.min((now-segStart)/SEG_MS*100, 100);
+    fill.style.transform = `scaleX(${pct/100})`;
+    document.getElementById('prog-bar').style.width = pct+'%';
+    if(pct<100){ animFrame=requestAnimationFrame(tick); }
+    else if(!done){ done=true; document.getElementById('prog-bar').style.width='0%'; goTo(cur+1); }
+  }
   animFrame=requestAnimationFrame(tick);
 }
 
@@ -687,7 +718,9 @@ document.getElementById('next-btn').addEventListener('click',()=>goTo(cur+1));
 document.getElementById('prev-btn').addEventListener('click',()=>goTo(cur-1));
 document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') goTo(cur+1); if(e.key==='ArrowLeft') goTo(cur-1); });
 
-// Init — show first slide immediately, videos play when YT ready
+// Init — play first video
+const firstVid = slides[0].querySelector('video');
+if(firstVid) firstVid.play().catch(()=>{});
 showContent(0);
 startSeg();
 
