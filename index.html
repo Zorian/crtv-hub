@@ -177,13 +177,7 @@
 .stat-num{font-family:"Barlow Condensed",sans-serif;font-size:64px;color:var(--blue);line-height:1;}
 .stat-lbl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:10px;}
 
-/* ─── BRANDS ─────────────────────────────── */
-#brands{padding:100px 0;}
-.brand-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;margin-top:52px;}
-.brand-tile{aspect-ratio:1;background:var(--grey1);display:flex;align-items:center;justify-content:center;padding:22px;transition:background .3s;}
-.brand-tile:hover{background:var(--grey2);}
-.brand-tile img{width:100%;max-width:64px;height:64px;object-fit:contain;filter:grayscale(1) brightness(.45);transition:filter .3s;}
-.brand-tile:hover img{filter:grayscale(0) brightness(1);}
+
 
 /* ─── SERVICES ───────────────────────────── */
 #services{background:var(--grey1);padding:130px 0;}
@@ -244,10 +238,76 @@
   .manifesto-grid,.svc-grid{grid-template-columns:1fr;gap:48px;}
   .port-grid{grid-template-columns:1fr;}
   .port-item.span2{aspect-ratio:16/10;}
-  .brand-grid{grid-template-columns:repeat(3,1fr);}
   .events-grid{grid-template-columns:1fr;}
   .hero-body{left:24px;bottom:100px;}
   .hero-meta,.hero-nav{right:24px;}
+}
+
+/* ─── SERVICES IMAGE MOSAIC ─────────────────── */
+#services { background: var(--grey1); padding: 130px 0; }
+
+.svc-mosaic { position: relative; width: 100%; }
+
+/* Each panel: hidden by default, shown when active */
+.svc-panel {
+  position: absolute; inset: 0;
+  opacity: 0; pointer-events: none;
+  transform: translateY(18px);
+  transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1);
+}
+.svc-panel.active {
+  position: relative;
+  opacity: 1; pointer-events: auto;
+  transform: none;
+}
+
+/* 3-image asymmetric grid */
+.svc-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+.sp-img { overflow: hidden; }
+.sp-img img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .7s cubic-bezier(.25,.46,.45,.94), filter .5s;
+  filter: brightness(.82);
+}
+.sp-img:hover img { transform: scale(1.05); filter: brightness(1); }
+
+/* main big image spans both rows on left */
+.sp-main {
+  grid-column: 1; grid-row: 1 / 3;
+  aspect-ratio: 3/4;
+}
+.sp-a {
+  grid-column: 2; grid-row: 1;
+  aspect-ratio: 4/3;
+}
+.sp-b {
+  grid-column: 2; grid-row: 2;
+  aspect-ratio: 4/3;
+}
+
+.sp-label {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 16px 0 0;
+  border-top: 1px solid rgba(16,118,248,.2);
+}
+.sp-label p {
+  font-size: 14px; line-height: 1.75; color: rgba(240,237,232,.6);
+  max-width: 400px;
+}
+
+/* Service items: highlight active */
+.svc-item.active-svc { color: var(--blue); }
+.svc-item.active-svc::before { color: var(--blue); }
+
+@media(max-width:960px){
+  .svc-panel { position: relative; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 40px; }
+  .svc-panel:not(.active) { display: block; opacity: .55; }
 }
 </style>
 </head>
@@ -452,49 +512,65 @@
   </div>
 </section>
 
-<!-- BRANDS -->
-<section id="brands">
-  <div class="container">
-    <div class="rev"><span class="eyebrow">Trusted By</span><h2 class="display-title">Global Brands<br>&amp; Platforms.</h2></div>
-    <div class="brand-grid">
-      <div class="brand-tile rev"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_d7fa765a31084d72994472a2aa5c79a9mv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev d1"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_267fd969c6a74ad680ccca47664a7009mv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev d2"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_90a5f53ecd9342f2bf92db032222ab24mv2-1-150x150.avif" alt=""></div>
-      <div class="brand-tile rev"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_ee0062525aee4ea98658a28e4fc8940bmv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev d1"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_830ffda1183247fd8623e12c6362572bmv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev d2"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_a65b881173f5491e87f08708b5fd2ac2mv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_e9e0ddb52d124ed4a1073b89d73a9e55mv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev d1"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_325e2a8cf5e94a86b10b063b8ed58a0fmv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev d2"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_cd80cbed20af471482b75ed8183b7b35mv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_cba7791dff504db3a1dd87e06d92819amv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev d1"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_0832fec01d924faab3ab34ccbe28dacfmv2-150x150.avif" alt=""></div>
-      <div class="brand-tile rev d2"><img src="https://crtv.axocreate.com/wp-content/uploads/2026/01/5d48ba_630be51da24e44dbbf817f1d0c0dd43bmv2-150x150.avif" alt=""></div>
-    </div>
-  </div>
-</section>
-
 <!-- SERVICES -->
 <section id="services">
   <div class="container">
     <div class="svc-grid">
+
+      <!-- LEFT: title + list -->
       <div>
         <div class="rev"><span class="eyebrow">What We Do</span><h2 class="display-title">Film.<br>Events.<br>Culture.</h2></div>
         <ul class="svc-list">
-          <li class="svc-item">Film Production &amp; Visual Storytelling</li>
-          <li class="svc-item">Live Events &amp; Global Dance Platforms</li>
-          <li class="svc-item">Creative Strategy &amp; Brand Storytelling</li>
-          <li class="svc-item">Community Building &amp; Talent Development</li>
+          <li class="svc-item" data-svc="0">Film Production &amp; Visual Storytelling</li>
+          <li class="svc-item" data-svc="1">Live Events &amp; Global Dance Platforms</li>
+          <li class="svc-item" data-svc="2">Creative Strategy &amp; Brand Storytelling</li>
+          <li class="svc-item" data-svc="3">Community Building &amp; Talent Development</li>
         </ul>
-      </div>
-      <div class="vision-col rev d1">
-        <span class="eyebrow">The Vision</span>
-        <h2 class="display-title">More than<br>content.<br>A movement.</h2>
-        <p>From underground dance cyphers to global stages, we are building a world where creatives are valued, supported, and seen. Our work bridges film, community, and live experiences — locally and globally.</p>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:40px;" class="rev">
           <a href="media.html" class="btn-fill">EXPLORE WORK</a>
           <a href="about.html" class="btn-ghost">ABOUT US</a>
         </div>
       </div>
+
+      <!-- RIGHT: sticky image mosaic -->
+      <div class="vision-col">
+        <div class="svc-mosaic" id="svc-mosaic">
+          <!-- panel per service item -->
+          <div class="svc-panel active" data-panel="0">
+            <div class="svc-panel-grid">
+              <div class="sp-img sp-main"><img src="assets/film-candle.jpg" alt="Film"></div>
+              <div class="sp-img sp-a"><img src="assets/film-directing.jpg" alt="Direction"></div>
+              <div class="sp-img sp-b"><img src="assets/film-monitor.jpg" alt="Monitor"></div>
+            </div>
+            <div class="sp-label"><span class="eyebrow">01 — Film</span><p>Cinematic storytelling for artists, brands &amp; culture.</p></div>
+          </div>
+          <div class="svc-panel" data-panel="1">
+            <div class="svc-panel-grid">
+              <div class="sp-img sp-main"><img src="assets/event-1.jpg" alt="Events"></div>
+              <div class="sp-img sp-a"><img src="assets/event-2.jpg" alt="Cypher"></div>
+              <div class="sp-img sp-b"><img src="assets/event-3.jpg" alt="Showcase"></div>
+            </div>
+            <div class="sp-label"><span class="eyebrow">02 — Events</span><p>Live experiences from intimate cyphers to global stages.</p></div>
+          </div>
+          <div class="svc-panel" data-panel="2">
+            <div class="svc-panel-grid">
+              <div class="sp-img sp-main"><img src="assets/bts-london.jpg" alt="Creative"></div>
+              <div class="sp-img sp-a"><img src="assets/news-set.jpg" alt="Brand"></div>
+              <div class="sp-img sp-b"><img src="assets/creative-work.jpg" alt="Strategy"></div>
+            </div>
+            <div class="sp-label"><span class="eyebrow">03 — Creative</span><p>Brand strategy &amp; storytelling that connects culture to commerce.</p></div>
+          </div>
+          <div class="svc-panel" data-panel="3">
+            <div class="svc-panel-grid">
+              <div class="sp-img sp-main"><img src="assets/about-1.jpg" alt="Community"></div>
+              <div class="sp-img sp-a"><img src="assets/about-2.jpg" alt="Talent"></div>
+              <div class="sp-img sp-b"><img src="assets/hero-1.jpg" alt="People"></div>
+            </div>
+            <div class="sp-label"><span class="eyebrow">04 — Community</span><p>Building ecosystems where creatives thrive &amp; grow.</p></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -797,6 +873,51 @@ function playClick(){
 }
 document.addEventListener('click', playClick);
 document.addEventListener('touchstart', playClick, {passive:true});
+
+/* ═══════════════════════════════════════
+   SERVICES MOSAIC — switch panel on hover/scroll
+═══════════════════════════════════════ */
+(function(){
+  const svcItems = document.querySelectorAll('.svc-item[data-svc]');
+  const panels   = document.querySelectorAll('.svc-panel[data-panel]');
+
+  function activatePanel(idx){
+    panels.forEach(p => p.classList.remove('active'));
+    svcItems.forEach(i => i.classList.remove('active-svc'));
+    const panel = document.querySelector('.svc-panel[data-panel="'+idx+'"]');
+    const item  = document.querySelector('.svc-item[data-svc="'+idx+'"]');
+    if(panel) panel.classList.add('active');
+    if(item)  item.classList.add('active-svc');
+  }
+
+  // Hover to switch
+  svcItems.forEach(item => {
+    item.addEventListener('mouseenter', () => activatePanel(item.dataset.svc));
+  });
+
+  // Scroll-based switching
+  const svcSection = document.getElementById('services');
+  if(svcSection){
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          // cycle through panels as user scrolls
+          svcItems.forEach((item, i) => {
+            const rect = item.getBoundingClientRect();
+            if(rect.top < window.innerHeight * 0.6 && rect.bottom > 0){
+              activatePanel(i);
+            }
+          });
+        }
+      });
+    },{threshold:0, rootMargin:'-30% 0px -30% 0px'});
+    svcItems.forEach(item => io.observe(item));
+  }
+
+  // Init first panel
+  activatePanel(0);
+})();
+
 </script>
 </body>
 </html>
